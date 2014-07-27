@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app/app.js",
+  "engines": {
+    "node": "0.11.x"
+  },
   "scripts": {
     "build": "rm -rf app/static-dist; node_modules/.bin/broccoli build app/static-dist",
     "install-hook": "ln -s ../../hooks/pre-commit.sh .git/hooks/pre-commit; ln -s ../../hooks/post-commit.sh .git/hooks/post-commit",
