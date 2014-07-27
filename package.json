@@ -4,7 +4,7 @@
   "description": "",
   "main": "app/app.js",
   "scripts": {
-    "install-hook": "cp hooks/pre-commit.sh .git/hooks",
+    "install-hook": "cp hooks/pre-commit .git/hooks",
     "start": "node_modules/node-dev/bin/node-dev app/app.js"
   },
   "author": "jaketrent",
