@@ -3,11 +3,7 @@
 echo "Building static assets..."
 
 broccoli build app/static-dist
-git add app/static-dist
 
-RETVAL=$?
+touch .commit
 
-if [ $RETVAL -ne 0 ]
-then
-  exit 1
-fi
+exit
