@@ -24,7 +24,7 @@ js = filterReact(js, { extensions: [ 'js' ] })
 
 js = filterBrowserify(js, {
   entries: [ './js/main.js' ],
-  outputFile: 'main.js',
+  outputFile: 'js/main.js',
   bundle: {
     debug: !(process.env.NODE_ENV === 'production')
   }
