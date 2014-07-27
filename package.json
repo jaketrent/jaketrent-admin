@@ -4,7 +4,7 @@
   "description": "",
   "main": "app/app.js",
   "scripts": {
-    "install-hook": "cp hooks/pre-commit .git/hooks",
+    "install-hook": "ln -s ../../hooks/pre-commit.sh .git/hooks/pre-commit",
     "start": "node_modules/node-dev/bin/node-dev app/app.js"
   },
   "author": "jaketrent",
@@ -18,6 +18,7 @@
   "devDependencies": {
     "broccoli": "^0.12.3",
     "broccoli-browserify": "^0.1.0",
+    "broccoli-cli": "0.0.1",
     "broccoli-merge-trees": "^0.1.4",
     "broccoli-react": "^0.5.0",
     "broccoli-sass": "^0.2.1",
