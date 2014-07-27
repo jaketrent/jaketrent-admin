@@ -18,10 +18,7 @@ var js = pickFiles(assets, {
   srcDir: '/js',
   destDir: '/js'
 })
-
 js = filterReact(js, { extensions: [ 'js' ] })
-
-
 js = filterBrowserify(js, {
   entries: [ './js/client.js' ],
   outputFile: 'js/client.js',
@@ -30,8 +27,10 @@ js = filterBrowserify(js, {
   }
 })
 
-//var stylesheets = pickFiles('stylesheets', defaultSrcAndDest)
-//
-//var css = filterSass([stylesheets], 'main.scss', 'main.css')
+var css = pickFiles(assets, {
+  srcDir: '/css',
+  destDir: '/css'
+})
+css = filterSass([ css ], 'css/client.scss', 'css/client.css')
 
-module.exports = mergeTrees([ js ])
+module.exports = mergeTrees([ js, css ])

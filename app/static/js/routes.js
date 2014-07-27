@@ -2,6 +2,7 @@
 
 var React = require('react')
 var Route = require('react-router').Route
+var Routes = require('react-router').Routes
 
 var App = React.createClass({
   render: function () {
@@ -14,9 +15,11 @@ var App = React.createClass({
 })
 
 var routes = (
-  <Route handler={App}>
-    <Route name="index" path="/" handler={require('./components/index')} />
-  </Route>
+  <Routes>
+    <Route handler={App}>
+      <Route name="index" path="/" handler={require('./components/index')} />
+    </Route>
+  </Routes>
 )
 
 module.exports = routes
