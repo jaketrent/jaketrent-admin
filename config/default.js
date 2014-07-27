@@ -5,6 +5,7 @@ require('dotenv').load()
 module.exports = {
 
   assets: {
+    dir: 'static',
     host: 'http://localhost:4200'
   },
 

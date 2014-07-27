@@ -9,7 +9,7 @@ const app = express()
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 
-app.use(express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.join(__dirname, config.assets.dir)))
 
 app.get('/', function (req, res) {
   res.render('index', {

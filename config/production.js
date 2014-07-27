@@ -5,7 +5,8 @@ require('dotenv').load()
 module.exports = {
 
   assets: {
-    host: '/static-dist'
+    dir: 'static-dist',
+    host: './'
   }
 
 }
