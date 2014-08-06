@@ -5,7 +5,7 @@ require('dotenv').load()
 module.exports = {
 
   assets: {
-    dir: 'static',
+    dir: 'static-dist',
     host: 'http://localhost:4200'
   },
 
@@ -16,6 +16,6 @@ module.exports = {
     prod: 'production'
   },
 
-  port: process.env.PORT || 3000
+  port: process.env.PORT || 4200
 
 }

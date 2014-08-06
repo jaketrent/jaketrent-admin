@@ -1,25 +1,16 @@
 'use strict'
 
+require('dotenv').load()
+
 const config = require('config')
 const express = require('express')
+const gzippo = require('gzippo')
 const path = require('path')
 
 const app = express()
 
-app.set('views', __dirname + '/views')
-app.set('view engine', 'jade')
-
-app.use(express.static(path.join(__dirname, config.assets.dir)))
-
-app.get('/', function (req, res) {
-  res.render('index', {
-    assets: config.assets
-  })
-})
+app.use(gzippo.staticGzip(path.join(__dirname, config.assets.dir)))
 
 app.listen(config.port, function () {
   console.log('Listening on port ' + config.port)
 })
-
-if (config.env !== config.envs.prod)
-  require('./static/static-server').start()

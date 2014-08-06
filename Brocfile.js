@@ -1,6 +1,10 @@
 'use strict'
 
+require('dotenv').load()
+
+var config = require('config')
 var filterBrowserify = require('broccoli-browserify')
+var filterJade = require('broccoli-jade')
 var filterReact = require('broccoli-react')
 var filterSass = require('broccoli-sass')
 var freeze = Object.freeze
@@ -13,6 +17,16 @@ var defaultSrcAndDest = freeze({
 })
 
 var assets = pickFiles('app/static', defaultSrcAndDest)
+
+var tmpl = pickFiles(assets, {
+  srcDir: '/tmpl',
+  destDir: '/'
+})
+tmpl = filterJade(tmpl, {
+  data: {
+    assets: config.assets
+  }
+})
 
 var js = pickFiles(assets, {
   srcDir: '/js',
@@ -33,4 +47,4 @@ var css = pickFiles(assets, {
 })
 css = filterSass([ css ], 'css/client.scss', 'css/client.css')
 
-module.exports = mergeTrees([ js, css ])
+module.exports = mergeTrees([ tmpl, js, css ])
