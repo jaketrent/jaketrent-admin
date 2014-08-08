@@ -21,7 +21,6 @@ $app-nav-link-active-color: #e64a2d;
 }
 .app-title {
   display: inline-block;
-  margin-top: 0;
   line-height: $app-header-height;
   font-size: 26px;
   color: $app-header-color;
@@ -60,7 +59,7 @@ $app-nav-link-active-color: #e64a2d;
   &:active {
     line-height: $app-header-height + 3;
   }
-  }
+}
 .app-container {
 
 }

@@ -3,6 +3,7 @@ $page-header-padding-horz: $padding;
 $page-header-bg-color: #fff;
 $page-header-border-bottom-color: darken($page-header-bg-color, 15%);
 $page-header-color: #ababab;
+$page-body-padding-top: $sidebar-item-height;
 
 .page {
 }
@@ -16,22 +17,10 @@ $page-header-color: #ababab;
   box-shadow: inset 0 2px 5px rgba(0,0,0,.15),;
 }
 .page-title {
-  margin: 0;
   line-height: $page-header-height;
   font-size: 20px;
 }
-.sidebar {
-
-}
-.sidebar-list {
-
-}
-.sidebar-item {
-
-}
-.sidebar-link {
-
-}
 .page-body {
-  padding: $padding;
+  margin-left: $sidebar-width;
+  padding: $page-body-padding-top $padding 0 $padding;
 }
