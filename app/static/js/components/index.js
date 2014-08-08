@@ -7,14 +7,14 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div>
-        <header>
-          <h1>jaketrent-admin</h1>
-          <nav>
-            <Link to="books">Books</Link>
+      <div className="app">
+        <header className="app-header">
+          <h1 className="app-title">jaketrent-admin</h1>
+          <nav className="app-nav">
+            <Link className="app-nav-link" to="books">Books</Link>
           </nav>
         </header>
-        <div>
+        <div className="app-container">
           <this.props.activeRouteHandler />
         </div>
       </div>

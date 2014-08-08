@@ -9,8 +9,7 @@
   "scripts": {
     "build": "rm -rf app/static-dist; node_modules/.bin/broccoli build app/static-dist",
     "install-hook": "ln -s ../../hooks/pre-commit.sh .git/hooks/pre-commit; ln -s ../../hooks/post-commit.sh .git/hooks/post-commit",
-    "local": "node_modules/.bin/broccoli serve",
-    "start": "node_modules/.bin/node-dev --harmony app/app.js"
+    "start": "node_modules/.bin/broccoli serve"
   },
   "author": "jaketrent",
   "license": "MIT",
