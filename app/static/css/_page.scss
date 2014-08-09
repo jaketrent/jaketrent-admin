@@ -3,6 +3,9 @@ $page-header-padding-horz: $padding;
 $page-header-bg-color: #fff;
 $page-header-border-bottom-color: darken($page-header-bg-color, 15%);
 $page-header-color: #ababab;
+$page-create-button-margin: 5px;
+$page-create-button-height: $page-header-height - (2 * $page-create-button-margin);
+$page-create-button-bg-color: $highlight-color;
 $page-body-padding-top: $sidebar-item-height;
 
 .page {
@@ -17,8 +20,27 @@ $page-body-padding-top: $sidebar-item-height;
   box-shadow: inset 0 2px 5px rgba(0,0,0,.15),;
 }
 .page-title {
+  display: inline-block;
   line-height: $page-header-height;
   font-size: 20px;
+  margin-right: 20px;
+}
+.page-create-link {
+  float: right;
+  color: $page-header-color;
+  text-decoration: none;
+}
+.page-create-link-icon {
+  margin: $page-create-button-margin 10px $page-create-button-margin $page-create-button-margin;
+  height: $page-create-button-height;
+  line-height: $page-create-button-height - 5;
+  width: $page-create-button-height;
+  background-color: $page-create-button-bg-color;
+  border: none;
+  border-radius: 3px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
 }
 .page-body {
   margin-left: $sidebar-width;
