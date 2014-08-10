@@ -3,9 +3,17 @@
 var React = require('react')
 var Link = require('react-router').Link
 
+var BooksActions = require('./books-actions')
 var BooksList = require('./books-list')
 
 module.exports = React.createClass({
+
+  displayName: 'BooksIndex',
+
+  componentWillMount: function () {
+    BooksActions.read()
+  },
+
   render: function () {
     return (
       <div className="page">

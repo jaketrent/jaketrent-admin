@@ -10,10 +10,10 @@ module.exports = {
       model: model
     })
   },
-  read: function (id) {
+  read: function (filter) {
     AppDispatcher.handleViewAction({
       actionType: BooksConstants.READ,
-      id: id
+      filter: filter
     })
   },
   update: function (id, model) {

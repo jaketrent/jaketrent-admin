@@ -15,7 +15,7 @@ module.exports = React.createClass({
     BooksActions.create({
       title: this.refs.title.getDOMNode().value,
       description: this.refs.description.getDOMNode().value,
-      cover: this.refs.cover.getDOMNode().value,
+      coverUrl: this.refs.coverUrl.getDOMNode().value,
       reviewLink: this.refs.reviewLink.getDOMNode().value
     })
   },
@@ -36,10 +36,10 @@ module.exports = React.createClass({
               id="description" ref="description" value={this.state.book.description}></textarea>
           </label>
 
-          <label className="form-label" for="cover">
+          <label className="form-label" for="coverUrl">
             Cover Image:
             <input className="form-input form-input-text"
-              id="cover" ref="cover" type="text" value={this.state.book.cover} />
+              id="cover" ref="coverUrl" type="text" value={this.state.book.coverUrl} />
           </label>
 
           <label className="form-label" for="reviewLink">

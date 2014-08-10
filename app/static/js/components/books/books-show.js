@@ -8,7 +8,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      book: BooksStore.find({ id: this.props.params.id })
+      book: BooksStore.find({ id: this.props.params.id }) || {}
     }
   },
 
@@ -32,8 +32,8 @@ module.exports = React.createClass({
         <h2 className="books-title">Book {this.state.book.id}</h2>
         <div>{this.state.book.title}</div>
         <div>{this.state.book.description}</div>
-        <div><img src={this.state.book.cover} /></div>
-        <div>{this.state.book.reviewLink}</div>
+        <div><img src={this.state.book.coverUrl} /></div>
+        <div>{this.state.book.reviewUrl}</div>
       </header>
     )
   }
