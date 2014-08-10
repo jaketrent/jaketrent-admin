@@ -6,6 +6,7 @@ $page-header-color: #ababab;
 $page-create-button-margin: 5px;
 $page-create-button-height: $page-header-height - (2 * $page-create-button-margin);
 $page-create-button-bg-color: $highlight-color;
+$page-create-button-color: $color-inverted;
 $page-body-padding-top: $sidebar-item-height;
 
 .page {
@@ -36,6 +37,7 @@ $page-body-padding-top: $sidebar-item-height;
   line-height: $page-create-button-height - 5;
   width: $page-create-button-height;
   background-color: $page-create-button-bg-color;
+  color: $page-create-button-color;
   border: none;
   border-radius: 3px;
   font-size: 20px;

@@ -12,6 +12,15 @@ var CHANGE_EVENT = 'change'
 
 var _books = {}
 
+// TODO: rm when fixture not wanted
+_books['d2a20b977ab5406282dcf966408176d2'] = {
+  id: 'd2a20b977ab5406282dcf966408176d2',
+  title: 'Test Book',
+  description: 'Something here and there',
+  cover: 'http://i.imgur.com/8MmPYD0.jpg',
+  reviewLink: 'http://google.com'
+}
+
 // TODO: connect to api
 function create(book) {
   var id = genId()
@@ -29,8 +38,20 @@ function destroy(id) {
 
 var BookStore = merge(EventEmitter.prototype, {
 
-  find: function () {
-    return toArray(_books)
+  find: function (filter) {
+    if (filter) {
+      var books = toArray(_books).filter(function (book) {
+        return Object.keys(filter).every(function (key) {
+          return book[key] && book[key] === filter[key]
+        })
+      })
+      if (books && filter && filter.id)
+        return books[0]
+      else
+        return books
+    } else {
+      return toArray(_books)
+    }
   },
 
   emitChange: function() {

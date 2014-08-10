@@ -1,15 +1,58 @@
+$form-label-margin-bottom: 30px;
+$form-input-margin-top: 10px;
+$form-input-min-width: 320px;
+$form-input-padding-horz: 7px;
+$form-input-border-color: #DDDDDD;
+$form-input-focus-border-color: $highlight-color;
+$form-input-text-height: 40px;
+$form-input-textarea-min-height: $form-input-text-height * 3;
+$form-input-textarea-padding: $form-input-padding-horz;
+$form-input-button-bg-color: #fff;
+$form-input-button-color: $color;
+$form-input-button-height: $form-input-text-height;
+$form-input-button-padding-horz: 20px;
+$form-input-button-primary-bg-color: $highlight-color;
+$form-input-button-primary-color: $color-inverted;
+
 .form {
 
 }
 .form-label {
-
+  display: block;
+  margin-bottom: $form-label-margin-bottom;
 }
 .form-input {
+  display: block;
+  margin-top: $form-input-margin-top;
+  padding: 0 $form-input-padding-horz;
+  border: 1px solid $form-input-border-color;
+  font-size: 18px;
+  border-radius: 3px;
+  outline: none;
+  transition: all 200ms ease-in-out;
 
+  &:focus {
+    border: 1px solid $form-input-focus-border-color;
+    box-shadow: 0 0 5px $form-input-focus-border-color;
+  }
 }
 .form-input-text {
-
+  height: $form-input-text-height;
+  min-width: $form-input-min-width;
+}
+.form-input-textarea {
+  min-height: $form-input-textarea-min-height;
+  min-width: $form-input-min-width;
+  padding: $form-input-textarea-padding;
 }
 .form-input-button {
-
+  height: $form-input-button-height;
+  padding: 0 $form-input-button-padding-horz;
+  background-color: $form-input-button-bg-color;
+  color: $form-input-button-color;
+  cursor: pointer;
+}
+.form-input-button-primary {
+  background-color: $form-input-button-primary-bg-color;
+  color: $form-input-button-primary-color;
 }
