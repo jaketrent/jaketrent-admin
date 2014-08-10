@@ -1,5 +1,6 @@
 'use strict'
 
+var api = require('../../common/api')
 var EventEmitter = require('events').EventEmitter
 var JsonLinker = require('json-linker')
 var merge = require('react/lib/merge')
@@ -47,7 +48,7 @@ var BooksStore = merge(EventEmitter.prototype, {
     return new Promise(function (resolve, reject) {
       console.log('prom')
       request
-        .get('http://localhost:3000/api/v1/books')
+        .get(api.getHostBaseUrl() + '/books')
         .end(function (err, res) {
           if (err) reject(err)
 

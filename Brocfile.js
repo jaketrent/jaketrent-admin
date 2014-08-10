@@ -24,6 +24,7 @@ var tmpl = pickFiles(assets, {
 })
 tmpl = filterJade(tmpl, {
   data: {
+    api: config.api,
     assets: config.assets
   }
 })

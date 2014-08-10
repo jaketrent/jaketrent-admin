@@ -8,3 +8,5 @@ html
     #app
       block content
     script(src='#{assets.host}/js/client.js', defer)
+    script.
+      window.apiHostBaseUrl = '#{api.hostBaseUrl}'
