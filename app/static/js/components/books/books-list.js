@@ -22,7 +22,7 @@ module.exports = React.createClass({
     BooksStore.removeChangeListener(this._onChange)
   },
 
-  _onChange:function(){
+  _onChange: function() {
     this.setState({
       books: BooksStore.find()
     })

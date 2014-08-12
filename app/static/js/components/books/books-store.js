@@ -9,28 +9,11 @@ var request = require('superagent')
 var toArray = require('lodash-node/modern/collections/toArray')
 
 var AppDispatcher = require('../../common/app-dispatcher')
+var AppEvents = require('../../common/app-events')
 var BooksConstants = require('./books-constants')
-var genId = require('../../common/id').gen
-
-var CHANGE_EVENT = 'change'
+var BooksEvents = require('./books-events')
 
 var _books = {}
-
-// TODO: rm when fixture not wanted
-//_books['d2a20b977ab5406282dcf966408176d2'] = {
-//  id: 'd2a20b977ab5406282dcf966408176d2',
-//  title: 'Test Book',
-//  description: 'Something here and there',
-//  coverUrl: 'http://i.imgur.com/8MmPYD0.jpg',
-//  reviewUrl: 'http://google.com'
-//}
-
-// TODO: connect to api
-function create(book) {
-  var id = genId()
-  book.id = id
-  _books[id] = book
-}
 
 function update(book) {
   _books[book.id] = book
@@ -43,14 +26,35 @@ function destroy(id) {
 
 var BooksStore = merge(EventEmitter.prototype, {
 
-  fetch: function () {
-    console.log('fetch')
+
+  create: function (book) {
     return new Promise(function (resolve, reject) {
-      console.log('prom')
+      request
+        .post(api.getHostBaseUrl() + '/books')
+        .set('Content-Type', 'application/json')
+        .send(new JsonLinker(book, 'books').toJson())
+        .end(function (err, res) {
+          if (err) return reject(err)
+
+          if (res.status !== 201)
+            return reject(res.body)
+
+          var book
+          if (res.body && res.body.books) {
+            book = res.body.books[0]
+            cache(book)
+          }
+          resolve(book)
+        })
+    })
+  },
+
+  fetch: function () {
+    return new Promise(function (resolve, reject) {
       request
         .get(api.getHostBaseUrl() + '/books')
         .end(function (err, res) {
-          if (err) reject(err)
+          if (err) return reject(err)
 
           var books = []
           if (res.body && res.body.books) {
@@ -78,31 +82,64 @@ var BooksStore = merge(EventEmitter.prototype, {
     }
   },
 
-  emitChange: function() {
-    this.emit(CHANGE_EVENT, arguments)
+  emitChange: function (eventName) {
+    var args = arguments
+    if (!eventName) {
+      eventName = BooksEvents.CHANGE
+    } else {
+      args = Array.prototype.slice.call(arguments, 1)
+    }
+
+    this.emit.apply(this, [ eventName ].concat(args))
   },
 
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback)
+  // TODO: rename event listener
+  addChangeListener: function (eventNameOrCallback, callback) {
+    console.log('ADD listne: ' + eventNameOrCallback)
+    if (!eventNameOrCallback)
+      throw new Error('Must provide callback')
+
+    var eventName
+    if (!callback) {
+      callback = eventNameOrCallback
+      eventName = BooksEvents.CHANGE
+    } else {
+      eventName = eventNameOrCallback
+    }
+
+    this.on(eventName, callback)
   },
 
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback)
+  removeChangeListener: function (eventNameOrCallback, callback) {
+    if (!eventNameOrCallback)
+      throw new Error('Must provide callback')
+
+    var eventName
+    if (!callback) {
+      callback = eventNameOrCallback
+      eventName = BooksEvents.CHANGE
+    }
+
+    this.removeListener(eventName, callback)
   },
 
-  dispatcherIndex: AppDispatcher.register(function(payload) {
+  dispatcherIndex: AppDispatcher.register(function (payload) {
     var action = payload.action
 
     switch(action.actionType) {
       case BooksConstants.CREATE:
-        create(action.model)
-        BooksStore.emitChange()
+        BooksStore.create(action.model)
+          .then(function (book) {
+            BooksStore.emitChange(BooksEvents.CREATED, book)
+          }, function (errOrBodyWithErrors) {
+            BooksStore.emitChange(AppEvents.ERROR, errOrBodyWithErrors)
+          })
         break
 
       case BooksConstants.READ:
         BooksStore.fetch(action.filter)
           .then(function (books) {
-            BooksStore.emitChange(books)
+            BooksStore.emitChange()
             return true
           }, function (err) {
             return false
