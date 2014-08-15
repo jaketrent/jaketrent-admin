@@ -29,6 +29,7 @@ module.exports = React.createClass({
   },
 
   _onError: function (errOrBodyWithErrors) {
+    console.log(errOrBodyWithErrors)
     this.setState({
       errors: errOrBodyWithErrors && errOrBodyWithErrors.errors ? errOrBodyWithErrors.errors : errOrBodyWithErrors
     })
@@ -43,6 +44,7 @@ module.exports = React.createClass({
       title: this.refs.title.getDOMNode().value,
       description: this.refs.description.getDOMNode().value,
       coverUrl: this.refs.coverUrl.getDOMNode().value,
+      completeDate: this.refs.completeDate.getDOMNode().value,
       reviewLink: this.refs.reviewLink.getDOMNode().value
     })
   },
@@ -51,28 +53,35 @@ module.exports = React.createClass({
     return (
       <div className="body">
         <form className="form" onSubmit={this.onSubmit}>
-          <label className="form-label" for="title">
+          <label className="form-label" htmlFor="title">
             Title:
             <ErrorInline errors={this.state.errors} param="books.0.title" />
             <input className="form-input form-input-text"
               id="title" ref="title" type="text" value={this.state.book.title} />
           </label>
 
-          <label className="form-label" for="description">
+          <label className="form-label" htmlFor="description">
             Description:
             <ErrorInline errors={this.state.errors} param="books.0.description" />
             <textarea className="form-input form-input-textarea"
               id="description" ref="description" value={this.state.book.description}></textarea>
           </label>
 
-          <label className="form-label" for="coverUrl">
+          <label className="form-label" htmlFor="coverUrl">
             Cover Image Url:
             <ErrorInline errors={this.state.errors} param="books.0.coverUrl" />
             <input className="form-input form-input-text"
               id="cover" ref="coverUrl" type="text" value={this.state.book.coverUrl} />
           </label>
 
-          <label className="form-label" for="reviewLink">
+          <label className="form-label" htmlFor="completeDate">
+          Complete Date:
+            <ErrorInline errors={this.state.errors} param="books.0.completeDate" />
+            <input className="form-input form-input-text"
+            id="completeDate" ref="completeDate" type="text" value={this.state.book.completeDate} />
+          </label>
+
+          <label className="form-label" htmlFor="reviewLink">
             Review Url:
             <ErrorInline errors={this.state.errors} param="books.0.reviewUrl" />
             <input className="form-input form-input-text"

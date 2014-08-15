@@ -131,6 +131,7 @@ var BooksStore = merge(EventEmitter.prototype, {
         BooksStore.create(action.model)
           .then(function (book) {
             BooksStore.emitChange(BooksEvents.CREATED, book)
+            BooksStore.emitChange()
           }, function (errOrBodyWithErrors) {
             BooksStore.emitChange(AppEvents.ERROR, errOrBodyWithErrors)
           })

@@ -6,6 +6,10 @@ $sidebar-item-hover-border-bottom-color: darken($sidebar-item-hover-bg-color, 10
 $sidebar-item-bg-color: rgba(236, 185, 80, 0.23);
 $sidebar-item-border-top-color: lighten($sidebar-item-bg-color, 20%);
 $sidebar-item-border-bottom-color: desaturate(darken($sidebar-item-bg-color, 20%), 90%);
+$sidebar-search-margin-vert: 4px;
+$sidebar-search-margin-horz: $sidebar-item-padding-horz;
+$sidebar-search-height: $sidebar-item-height - (2 * $sidebar-search-margin-vert);
+$sidebar-search-width: $sidebar-width - (2 * $sidebar-search-margin-horz);
 $sidebar-link-color: $color;
 
 .sidebar {
@@ -17,6 +21,18 @@ $sidebar-link-color: $color;
   list-style: none;
 }
 .sidebar-item {
+}
+.sidebar-item-search {
+  height: $sidebar-item-height;
+  background-color: $sidebar-item-bg-color;
+  border-top: 1px solid $sidebar-item-border-top-color;
+  border-bottom: 1px solid $sidebar-item-border-bottom-color;
+}
+.sidebar-search-input {
+  min-width: 0;
+  width: $sidebar-search-width;
+  height: $sidebar-search-height;
+  margin: $sidebar-search-margin-vert $sidebar-search-margin-horz;
 }
 .sidebar-link {
   display: block;
