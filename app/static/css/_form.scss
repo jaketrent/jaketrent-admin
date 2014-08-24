@@ -7,12 +7,6 @@ $form-input-focus-border-color: $highlight-color;
 $form-input-text-height: 40px;
 $form-input-textarea-min-height: $form-input-text-height * 3;
 $form-input-textarea-padding: $form-input-padding-horz;
-$form-input-button-bg-color: #fff;
-$form-input-button-color: $color;
-$form-input-button-height: $form-input-text-height;
-$form-input-button-padding-horz: 20px;
-$form-input-button-primary-bg-color: $highlight-color;
-$form-input-button-primary-color: $color-inverted;
 
 .form {
 
@@ -46,15 +40,4 @@ $form-input-button-primary-color: $color-inverted;
   min-height: $form-input-textarea-min-height;
   min-width: $form-input-min-width;
   padding: $form-input-textarea-padding;
-}
-.form-input-button {
-  height: $form-input-button-height;
-  padding: 0 $form-input-button-padding-horz;
-  background-color: $form-input-button-bg-color;
-  color: $form-input-button-color;
-  cursor: pointer;
-}
-.form-input-button-primary {
-  background-color: $form-input-button-primary-bg-color;
-  color: $form-input-button-primary-color;
 }

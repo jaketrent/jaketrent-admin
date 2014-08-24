@@ -29,7 +29,6 @@ module.exports = React.createClass({
   },
 
   _onError: function (errOrBodyWithErrors) {
-    console.log(errOrBodyWithErrors)
     this.setState({
       errors: errOrBodyWithErrors && errOrBodyWithErrors.errors ? errOrBodyWithErrors.errors : errOrBodyWithErrors
     })
@@ -43,9 +42,9 @@ module.exports = React.createClass({
     BooksActions.create({
       title: this.refs.title.getDOMNode().value,
       description: this.refs.description.getDOMNode().value,
-      coverUrl: this.refs.coverUrl.getDOMNode().value,
-      completeDate: this.refs.completeDate.getDOMNode().value,
-      reviewLink: this.refs.reviewLink.getDOMNode().value
+      cover_url: this.refs.cover_url.getDOMNode().value,
+      complete_date: this.refs.complete_date.getDOMNode().value,
+      review_url: this.refs.review_url.getDOMNode().value
     })
   },
 
@@ -55,40 +54,40 @@ module.exports = React.createClass({
         <form className="form" onSubmit={this.onSubmit}>
           <label className="form-label" htmlFor="title">
             Title:
-            <ErrorInline errors={this.state.errors} param="books.0.title" />
+            <ErrorInline errors={this.state.errors} id="title" />
             <input className="form-input form-input-text"
               id="title" ref="title" type="text" value={this.state.book.title} />
           </label>
 
           <label className="form-label" htmlFor="description">
             Description:
-            <ErrorInline errors={this.state.errors} param="books.0.description" />
+            <ErrorInline errors={this.state.errors} id="description" />
             <textarea className="form-input form-input-textarea"
               id="description" ref="description" value={this.state.book.description}></textarea>
           </label>
 
-          <label className="form-label" htmlFor="coverUrl">
+          <label className="form-label" htmlFor="cover_url">
             Cover Image Url:
-            <ErrorInline errors={this.state.errors} param="books.0.coverUrl" />
+            <ErrorInline errors={this.state.errors} id="cover_url" />
             <input className="form-input form-input-text"
-              id="cover" ref="coverUrl" type="text" value={this.state.book.coverUrl} />
+              id="cover" ref="cover_url" type="text" value={this.state.book.cover_url} />
           </label>
 
-          <label className="form-label" htmlFor="completeDate">
-          Complete Date:
-            <ErrorInline errors={this.state.errors} param="books.0.completeDate" />
+          <label className="form-label" htmlFor="complete_date">
+            Complete Date:
+            <ErrorInline errors={this.state.errors} id="complete_date" />
             <input className="form-input form-input-text"
-            id="completeDate" ref="completeDate" type="text" value={this.state.book.completeDate} />
+            id="complete_date" ref="complete_date" type="text" value={this.state.book.complete_date} />
           </label>
 
-          <label className="form-label" htmlFor="reviewLink">
+          <label className="form-label" htmlFor="review_url">
             Review Url:
-            <ErrorInline errors={this.state.errors} param="books.0.reviewUrl" />
+            <ErrorInline errors={this.state.errors} id="review_url" />
             <input className="form-input form-input-text"
-              id="reviewLink" ref="reviewLink" type="text" value={this.state.book.reviewLink} />
+              id="review_url" ref="review_url" type="text" value={this.state.book.review_url} />
           </label>
 
-          <input className="form-input form-input-button form-input-button-primary" type="submit" value="Create" />
+          <input className="form-input btn btn-secondary" type="submit" value="Create" />
         </form>
       </div>
     )

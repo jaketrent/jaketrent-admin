@@ -1,0 +1,65 @@
+$btn-height: $form-input-text-height;
+$btn-padding-horz: 20px;
+$btn-color: $color-inverted;
+
+$btn-border-color: lighten($color, 40%);
+$btn-text-shadow-color: lighten($color, 50%);
+$btn-bg-color: lighten($color, 50%);
+
+$btn-secondary-border-color: #18ab29;
+$btn-secondary-text-shadow-color: #2f6627;
+$btn-secondary-bg-color: #98c339;
+
+$btn-danger-border-color: #e4685d;
+$btn-danger-text-shadow-color: #b23e35;
+$btn-danger-bg-color: #eb675e;
+
+@mixin colored-btn($border-color, $text-shadow-color, $bg-color) {
+  border: 1px solid $border-color;
+  text-shadow: 0px 1px 0px $text-shadow-color;
+  background-color: $bg-color;
+
+  &:hover {
+    background-color: darken($bg-color, 5%)
+  }
+  &:active {
+    background-color: darken($bg-color, 15%)
+  }
+}
+
+.btn {
+  display: inline-block;
+  height: $btn-height;
+  line-height: $btn-height;
+  padding: 0 $btn-padding-horz;
+  text-decoration: none;
+  color: $btn-color;
+  border:1px solid $btn-border-color;
+  text-shadow: 0px 1px 0px $btn-text-shadow-color;
+  background-color: $btn-bg-color;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
+  border-radius: 3px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 150ms linear;
+
+  &:hover {
+    text-decoration: none;
+  }
+  &:active {
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, .1);
+  }
+}
+
+.btn-full {
+  display: block;
+}
+
+%btn-secondary,
+.btn-secondary {
+  @include colored-btn($btn-secondary-border-color, $btn-secondary-text-shadow-color, $btn-secondary-bg-color);
+}
+%btn-danger,
+.btn-danger {
+  @include colored-btn($btn-danger-border-color, $btn-danger-text-shadow-color, $btn-danger-bg-color);
+}

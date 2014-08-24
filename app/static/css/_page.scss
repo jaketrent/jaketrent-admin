@@ -25,24 +25,7 @@ $page-body-padding-top: $sidebar-item-height;
   line-height: $page-header-height;
   font-size: 20px;
   margin-right: 20px;
-}
-.page-create-link {
-  float: right;
-  color: $page-header-color;
-  text-decoration: none;
-}
-.page-create-link-icon {
-  margin: $page-create-button-margin 10px $page-create-button-margin $page-create-button-margin;
-  height: $page-create-button-height;
-  line-height: $page-create-button-height - 5;
-  width: $page-create-button-height;
-  background-color: $page-create-button-bg-color;
-  color: $page-create-button-color;
-  border: none;
-  border-radius: 3px;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
+  text-shadow: 0 1px 0 darken($page-header-bg-color, 20%)
 }
 .page-body {
   margin-left: $sidebar-width;

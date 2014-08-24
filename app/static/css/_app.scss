@@ -1,12 +1,12 @@
 $app-header-height: 50px;
 $app-header-padding-horz: $padding;
 $app-header-color: #fff;
-$app-header-bg-color: #eca534;
+$app-header-bg-color: #69ad23;
 $app-header-border-top-color: lighten($app-header-bg-color, 20%);
 $app-header-border-bottom-color: darken($app-header-bg-color, 20%);
 $app-nav-link-padding-horz: 20px;
-$app-nav-link-hover-color: #e86d2f;
-$app-nav-link-active-color: #e64a2d;
+$app-nav-link-hover-color: $app-header-border-top-color;
+$app-nav-link-active-color: #fff;
 
 .app {
 }

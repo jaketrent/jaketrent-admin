@@ -1,13 +1,13 @@
 /** @jsx React.DOM */
 
-var find = require('lodash-node/modern/collections/find')
+var filter = require('lodash-node/modern/collections/filter')
 var React = require('react')
 
 module.exports = React.createClass({
 
   propTypes: {
     errors: React.PropTypes.array.isRequired,
-    param: React.PropTypes.string.isRequired
+    id: React.PropTypes.string.isRequired
   },
 
   getDefaultProps: function () {
@@ -16,26 +16,22 @@ module.exports = React.createClass({
     }
   },
 
-  errorFor: function (param) {
-    return find(this.props.errors, function (err) {
-      return err && err.param === param
+  errorsFor: function (id) {
+    return filter(this.props.errors, function (err) {
+      return err && err.id === id
     })
   },
 
-  errorMsgFor: function (param) {
-    return (this.errorFor(param) || {}).msg
+  renderErrorMsg: function (error) {
+    return (
+      <div className="message message-inline message-error">
+          {error.title}
+      </div>
+    )
   },
 
   render: function () {
-    var msg = this.errorMsgFor(this.props.param)
-    if (msg)
-      return (
-        <div className="message message-inline message-error">
-          {msg}
-        </div>
-      )
-    else
-      return <div></div>
+    return <span>{(this.errorsFor(this.props.id) || []).map(this.renderErrorMsg)}</span>
   }
 
 })

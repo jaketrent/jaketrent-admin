@@ -26,13 +26,12 @@ function destroy(id) {
 
 var BooksStore = merge(EventEmitter.prototype, {
 
-
   create: function (book) {
     return new Promise(function (resolve, reject) {
       request
         .post(api.getHostBaseUrl() + '/books')
         .set('Content-Type', 'application/json')
-        .send(new JsonLinker(book, 'books').toJson())
+        .send({ books: book })
         .end(function (err, res) {
           if (err) return reject(err)
 
@@ -40,8 +39,8 @@ var BooksStore = merge(EventEmitter.prototype, {
             return reject(res.body)
 
           var book
-          if (res.body && res.body.books) {
-            book = res.body.books[0]
+          if (res.body) {
+            book = res.body.books
             cache(book)
           }
           resolve(book)
@@ -68,11 +67,15 @@ var BooksStore = merge(EventEmitter.prototype, {
 
   find: function (filter) {
     if (filter) {
+      console.log('filter')
+      console.log(filter)
       var books = toArray(_books).filter(function (book) {
         return Object.keys(filter).every(function (key) {
-          return book[key] && book[key] === filter[key]
+          return book[key] && book[key] == filter[key]
         })
       })
+      console.log('filter books')
+      console.log(books)
       if (books && filter && filter.id)
         return books[0]
       else
@@ -95,7 +98,6 @@ var BooksStore = merge(EventEmitter.prototype, {
 
   // TODO: rename event listener
   addChangeListener: function (eventNameOrCallback, callback) {
-    console.log('ADD listne: ' + eventNameOrCallback)
     if (!eventNameOrCallback)
       throw new Error('Must provide callback')
 

@@ -31,11 +31,21 @@ module.exports = React.createClass({
     })
   },
 
+  renderCreate: function () {
+    return (
+      <li className="sidebar-item sidebar-item-no-link sidebar-item-create" key="books-create">
+        <Link to="books-create" className="btn btn-full btn-secondary sidebar-create-btn">
+          Create New
+        </Link>
+      </li>
+    )
+  },
+
   renderSearch: function () {
     return (
-      <li className="sidebar-item sidebar-item-search" key="books-search">
+      <li className="sidebar-item sidebar-item-no-link sidebar-item-search" key="books-search">
         <input type="text" className="form-input form-input-text form-input-search sidebar-search-input"
-          placholder="Search" ref="booksSearch" valueLink={this.linkState('searchTerm')}  />
+          placeholder="Search" ref="booksSearch" valueLink={this.linkState('searchTerm')} />
       </li>
     )
   },
@@ -65,6 +75,7 @@ module.exports = React.createClass({
     return (
       <section className="sidebar">
         <ul className="sidebar-list">
+          {this.renderCreate()}
           {this.renderSearch()}
           {this.renderBooks(this.state.books)}
         </ul>
