@@ -18,14 +18,14 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function () {
-    BooksStore.addChangeListener(this.onChangeStore)
+    BooksStore.addChangeListener(this._onChange)
   },
 
   componentDidUnmount: function () {
-    BooksStore.removeChangeListener(this.onChangeStore)
+    BooksStore.removeChangeListener(this._onChange)
   },
 
-  onChangeStore: function() {
+  _onChange: function() {
     this.setState({
       books: BooksStore.find()
     })

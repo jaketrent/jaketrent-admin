@@ -3,10 +3,9 @@
 var React = require('react')
 var Router = require('react-router')
 
-var AppEvents = require('../../common/app-events')
+var AppConstants = require('../../common/app-constants')
 var BooksActions = require('./books-actions')
-var BooksEvents = require('./books-events')
-var BooksStore = require('./books-store')
+var BooksCreateStore = require('./books-create-store')
 var ErrorInline = require('../../common/error-inline')
 
 module.exports = React.createClass({
@@ -19,26 +18,23 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function () {
-    BooksStore.addChangeListener(BooksEvents.CREATED, this._onCreated)
-    BooksStore.addChangeListener(AppEvents.ERROR, this._onError)
+    BooksCreateStore.addChangeListener(this._onChange)
   },
 
   componentDidUnmount: function () {
-    BooksStore.removeChangeListener(BooksEvents.CREATED, this._onCreated)
-    BooksStore.removeChangeListener(AppEvents.ERROR, this._onError)
+    BooksCreateStore.removeChangeListener(this._onChange)
   },
 
-  _onError: function (errOrBodyWithErrors) {
-    this.setState({
-      errors: errOrBodyWithErrors && errOrBodyWithErrors.errors ? errOrBodyWithErrors.errors : errOrBodyWithErrors
+  _onChange: function () {
+    this.setState(BooksCreateStore.getState(), function () {
+      if (this.state.book.id) {
+        Router.transitionTo('book', { id: this.state.book.id })
+      }
     })
   },
 
-  _onCreated: function(book) {
-    Router.transitionTo('book', { id: book.id })
-  },
-
-  onSubmit: function () {
+  onSubmit: function (evt) {
+    evt.preventDefault()
     BooksActions.create({
       title: this.refs.title.getDOMNode().value,
       description: this.refs.description.getDOMNode().value,

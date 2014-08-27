@@ -1,8 +1,15 @@
 'use strict'
 
+var keyMirror = require('react/lib/keyMirror')
+
 module.exports = {
-  'CREATE': 'CREATE',
-  'READ': 'READ',
-  'UPDATE': 'UPDATE',
-  'DESTROY': 'DESTROY'
+
+  ActionTypes: keyMirror({
+    CREATE: null,
+    CREATE_SUCCESS: null,
+    CREATE_ERROR: null,
+    FETCH: null,
+    FETCHED: null
+  })
+
 }
