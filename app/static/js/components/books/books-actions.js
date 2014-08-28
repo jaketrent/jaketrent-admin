@@ -11,16 +11,10 @@ exports.create = function (model) {
     type: ActionTypes.CREATE,
     model: model
   })
+  // TODO: could move this out, called directly from view
+  // see https://facebook.github.io/flux/docs/chat.html#content
   BooksApi.create(model)
 }
-
-//exports.created = function (model, errors) {
-//  AppDispatcher.handleServerAction({
-//    type: ActionTypes.CREATED,
-//    model: model,
-//    errors: errors
-//  })
-//}
 
 exports.createSuccess = function (model) {
   AppDispatcher.handleServerAction({
@@ -36,16 +30,30 @@ exports.createError = function (errors) {
   })
 }
 
+exports.update = function (model) {
+  AppDispatcher.handleViewAction({
+    type: ActionTypes.UPDATE,
+    model: model
+  })
+  BooksApi.update(model)
+}
 
+exports.updateSuccess = function (model) {
+  AppDispatcher.handleServerAction({
+    type: ActionTypes.UPDATE_SUCCESS,
+    model: model
+  })
+}
 
-//exports.errored = function (errors) {
-//  AppDispatcher.handleServerAction({
-//    type: ActionTypes.ERRORED,
-//    errors: errors
-//  })
-//}
+exports.updateError = function (errors) {
+  AppDispatcher.handleServerAction({
+    type: ActionTypes.UPDATE_ERROR,
+    errors: errors
+  })
+}
 
 exports.fetch = function (filter) {
+  // TODO: pull from books-store if filter matches there already as in the case of edit
   AppDispatcher.handleViewAction({
     type: ActionTypes.FETCH,
     filter: filter
@@ -53,9 +61,10 @@ exports.fetch = function (filter) {
   BooksApi.fetch(filter)
 }
 
-exports.fetched = function (models) {
+exports.fetched = function (models, filter) {
   AppDispatcher.handleServerAction({
     type: ActionTypes.FETCHED,
-    models: models
+    models: models,
+    filter: filter
   })
 }

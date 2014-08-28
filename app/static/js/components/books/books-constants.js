@@ -9,7 +9,11 @@ module.exports = {
     CREATE_SUCCESS: null,
     CREATE_ERROR: null,
     FETCH: null,
-    FETCHED: null
+    FETCHED: null,
+    UPDATE_SELECT: null,
+    UPDATE: null,
+    UPDATE_SUCCESS: null,
+    UPDATE_ERROR: null
   })
 
 }

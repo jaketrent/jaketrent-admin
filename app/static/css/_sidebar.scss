@@ -68,6 +68,9 @@ $sidebar-link-color: $color;
   border-top: 1px solid $sidebar-item-border-top-color;
   border-bottom: 1px solid $sidebar-item-border-bottom-color;
   text-decoration: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   transition: all 200ms;
 
   &:visited,

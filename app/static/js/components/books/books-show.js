@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react')
+var Link = require('react-router').Link
 
 var BooksStore = require('./books-store')
 
@@ -30,6 +31,9 @@ module.exports = React.createClass({
     return (
       <header className="books-header">
         <h2 className="books-title">Book {this.state.book.id}</h2>
+        <Link to="books-update" id={this.props.params.id} className="btn">
+          Edit
+        </Link>
         <div>{this.state.book.title}</div>
         <div>{this.state.book.description}</div>
         <div><img src={this.state.book.cover_url} /></div>

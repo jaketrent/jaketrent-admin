@@ -2,6 +2,7 @@
 
 var EventEmitter = require('events').EventEmitter
 var merge = require('react/lib/merge')
+var toArray = require('lodash-node/modern/collections/toArray')
 
 var AppConstants = require('../../common/app-constants')
 var AppDispatcher = require('../../common/app-dispatcher')
@@ -74,17 +75,18 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
+    case ActionTypes.FETCHED:
+      cache(action.models)
+      BooksStore.emitChange()
+      break
+
     case ActionTypes.CREATE_SUCCESS:
       cache(action.model)
       BooksStore.emitChange()
       break
 
-    case ActionTypes.FETCH:
-      // nothing?
-      break
-
-    case ActionTypes.FETCHED:
-      cache(action.models)
+    case ActionTypes.UPDATE_SUCCESS:
+      cache(action.model)
       BooksStore.emitChange()
       break
 

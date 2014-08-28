@@ -64,7 +64,7 @@ module.exports = React.createClass({
   renderBook: function (book) {
     return (
       <li className="sidebar-item" key={book.id}>
-        <Link className="sidebar-link" to="book" id={book.id}>
+        <Link className="sidebar-link" to="books-show" id={book.id}>
           {book.title}
         </Link>
       </li>
