@@ -1,7 +1,10 @@
 'use strict'
 
+var isEmpty = require('lodash-node/modern/objects/isEmpty')
+
 var BooksApi = require('./books-api')
 var BooksConstants = require('./books-constants')
+var BooksStore = require('./books-store')
 var AppDispatcher = require('../../common/app-dispatcher')
 
 var ActionTypes = BooksConstants.ActionTypes
@@ -80,7 +83,11 @@ exports.fetch = function (filter) {
     type: ActionTypes.FETCH,
     filter: filter
   })
-  BooksApi.fetch(filter)
+  var cachedBooks = BooksStore.find(filter)
+  if (cachedBooks && !isEmpty(cachedBooks))
+    this.fetchSuccess(cachedBooks, filter)
+  else
+    BooksApi.fetch(filter)
 }
 
 exports.fetchSuccess = function (models, filter) {
