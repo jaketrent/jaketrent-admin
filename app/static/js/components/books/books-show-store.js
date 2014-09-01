@@ -47,12 +47,12 @@ function setErrors(errors) {
 
 var _done = false
 
-var BooksUpdateStore = merge(EventEmitter.prototype, {
+var BooksShowStore = merge(EventEmitter.prototype, {
 
   getState: function () {
     return {
-      errors: _errors,
-      book: _book
+      errors: _errors || [],
+      book: _book || {}
     }
   },
 
@@ -73,38 +73,44 @@ var BooksUpdateStore = merge(EventEmitter.prototype, {
   }
 })
 
-BooksUpdateStore.dispatchToken = AppDispatcher.register(function (payload) {
+BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
   var action = payload.action
 
   switch(action.type) {
 
+//    case ActionTypes.SHOW:
+//      AppDispatcher.waitFor([ BooksStore.dispatchToken ])
+//      cache(BooksStore.find(action.filter))
+//      BooksShowStore.emitChange()
+//      break
+
     case ActionTypes.FETCH_SUCCESS:
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])
-      if (action.filter)
+      if (action.filter && action.filter.id)
         cache(BooksStore.find(action.filter))
-      BooksUpdateStore.emitChange()
+      BooksShowStore.emitChange()
       break
-
-    case ActionTypes.UPDATE:
-      _done = false
-      cache(action.model)
-      setErrors()
-      BooksUpdateStore.emitChange()
-      break
-
-    case ActionTypes.UPDATE_SUCCESS:
-      cache(action.model)
-      setErrors()
-      _done = true
-      BooksUpdateStore.emitChange()
-      break
-
-    case ActionTypes.UPDATE_ERROR:
-      setErrors(action.errors)
-      BooksUpdateStore.emitChange()
-      break
+//
+//    case ActionTypes.DESTROY:
+//      _done = false
+//      cache(action.model)
+//      setErrors()
+//      BooksShowStore.emitChange()
+//      break
+//
+//    case ActionTypes.DESTROY_SUCCESS:
+//      uncache(action.model)
+//      setErrors()
+//      _done = true
+//      BooksShowStore.emitChange()
+//      break
+//
+//    case ActionTypes.DESTROY_ERROR:
+//      setErrors(action.errors)
+//      BooksShowStore.emitChange()
+//      break
 
   }
 })
 
-module.exports = BooksUpdateStore
+module.exports = BooksShowStore

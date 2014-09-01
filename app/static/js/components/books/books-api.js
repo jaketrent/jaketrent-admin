@@ -14,14 +14,13 @@ exports.fetch = function (filter) {
     .get(url)
     .set('Content-Type', 'application/json')
     .end(function (err, res) {
-      // TODO: handle error evt
+      if (err || res.body.errors) return BooksActions.fetchError(err || res.body.errors)
 
-      BooksActions.fetched(res.body.books, filter)
+      BooksActions.fetchSuccess(res.body.books, filter)
     })
 }
 
 exports.create = function (model) {
-  // TODO: handle json serialization in standard way
   request
     .post(api.getHostBaseUrl() + '/books')
     .set('Content-Type', 'application/json')
@@ -34,7 +33,6 @@ exports.create = function (model) {
 }
 
 exports.update = function (model) {
-  // TODO: handle json serialization in standard way
   request
     .put(api.getHostBaseUrl() + '/books/' + model.id)
     .set('Content-Type', 'application/json')
@@ -44,5 +42,17 @@ exports.update = function (model) {
       if (err || res.body.errors) return BooksActions.updateError(err || res.body.errors)
 
       BooksActions.updateSuccess(res.body.books)
+    })
+}
+
+exports.destroy = function (model) {
+  request
+    .del(api.getHostBaseUrl() + '/books/' + model.id)
+    .set('Content-Type', 'application/json')
+    .end(function (err, res) {
+
+      if (res.status != 204) return BooksActions.destroyError(new Error('Failed to destroy book'))
+
+      BooksActions.destroySuccess(model)
     })
 }

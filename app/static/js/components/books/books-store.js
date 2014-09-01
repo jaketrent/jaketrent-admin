@@ -75,7 +75,7 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
-    case ActionTypes.FETCHED:
+    case ActionTypes.FETCH_SUCCESS:
       cache(action.models)
       BooksStore.emitChange()
       break
@@ -87,6 +87,11 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
 
     case ActionTypes.UPDATE_SUCCESS:
       cache(action.model)
+      BooksStore.emitChange()
+      break
+
+    case ActionTypes.DESTROY_SUCCESS:
+      uncache(action.model)
       BooksStore.emitChange()
       break
 

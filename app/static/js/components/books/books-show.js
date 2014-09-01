@@ -3,28 +3,31 @@
 var React = require('react')
 var Link = require('react-router').Link
 
-var BooksStore = require('./books-store')
+var BooksActions = require('./books-actions')
+var BooksShowStore = require('./books-show-store')
 
 module.exports = React.createClass({
 
   getInitialState: function () {
-    return {
-      book: BooksStore.find({ id: this.props.params.id }) || { title: 'not found' }
-    }
+    return BooksShowStore.getState()
   },
 
   componentWillMount: function () {
-    BooksStore.addChangeListener(this._onChange)
+    BooksShowStore.addChangeListener(this._onChange)
+    BooksActions.show({ id: this.props.params.id })
   },
 
   componentDidUnmount: function () {
-    BooksStore.removeChangeListener(this._onChange)
+    BooksShowStore.removeChangeListener(this._onChange)
   },
 
   _onChange:function(){
-    this.setState({
-      book: BooksStore.find({ id: this.props.params.id })
-    })
+    if (this.isMounted())
+      this.setState(BooksShowStore.getState())
+  },
+
+  destroy: function () {
+    BooksActions.destroy(this.state.book)
   },
 
   render: function () {
@@ -34,6 +37,9 @@ module.exports = React.createClass({
         <Link to="books-update" id={this.props.params.id} className="btn">
           Edit
         </Link>
+        <button className="btn btn-danger" onClick={this.destroy}>
+          Destroy
+        </button>
         <div>{this.state.book.title}</div>
         <div>{this.state.book.description}</div>
         <div><img src={this.state.book.cover_url} /></div>
