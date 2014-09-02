@@ -18,7 +18,7 @@ module.exports = React.createClass({
     }, BooksStore.getState({ id: this.props.params.id }))
   },
 
-  componentWillMount: function () {
+  componentDidMount: function () {
     BooksUpdateStore.addChangeListener(this._onChange)
     BooksActions.fetch({ id: this.props.params.id })
   },

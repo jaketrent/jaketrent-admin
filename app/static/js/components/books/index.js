@@ -9,7 +9,7 @@ module.exports = React.createClass({
 
   displayName: 'BooksIndex',
 
-  componentWillMount: function () {
+  componentDidMount: function () {
     BooksActions.fetch()
   },
 

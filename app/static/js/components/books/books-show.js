@@ -13,11 +13,8 @@ module.exports = React.createClass({
     return BooksShowStore.getState()
   },
 
-  componentWillMount: function () {
-    BooksShowStore.addChangeListener(this._onChange)
-  },
-
   componentDidMount: function () {
+    BooksShowStore.addChangeListener(this._onChange)
     BooksActions.show({ id: this.props.params.id })
   },
 

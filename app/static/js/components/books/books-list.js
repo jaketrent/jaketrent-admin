@@ -17,7 +17,7 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillMount: function () {
+  componentDidMount: function () {
     BooksStore.addChangeListener(this._onChange)
   },
 
