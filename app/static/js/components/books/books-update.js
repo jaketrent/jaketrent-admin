@@ -23,7 +23,7 @@ module.exports = React.createClass({
     BooksActions.fetch({ id: this.props.params.id })
   },
 
-  componentDidUnmount: function () {
+  componentWillUnmount: function () {
     BooksUpdateStore.removeChangeListener(this._onChange)
   },
 

@@ -21,14 +21,14 @@ module.exports = React.createClass({
     BooksCreateStore.addChangeListener(this._onChange)
   },
 
-  componentDidUnmount: function () {
+  componentWillUnmount: function () {
     BooksCreateStore.removeChangeListener(this._onChange)
   },
 
   _onChange: function () {
     this.setState(BooksCreateStore.getState(), function () {
       if (this.state.book.id) {
-        Router.transitionTo('book', { id: this.state.book.id })
+        Router.transitionTo('books-show', { id: this.state.book.id })
       }
     })
   },

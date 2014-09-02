@@ -18,7 +18,7 @@ module.exports = React.createClass({
     BooksActions.show({ id: this.props.params.id })
   },
 
-  componentDidUnmount: function () {
+  componentWillUnmount: function () {
     BooksShowStore.removeChangeListener(this._onChange)
   },
 

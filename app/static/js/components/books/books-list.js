@@ -21,7 +21,7 @@ module.exports = React.createClass({
     BooksStore.addChangeListener(this._onChange)
   },
 
-  componentDidUnmount: function () {
+  componentWillUnmount: function () {
     BooksStore.removeChangeListener(this._onChange)
   },
 
