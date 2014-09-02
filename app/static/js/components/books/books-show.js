@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react')
+var Router = require('react-router')
 var Link = require('react-router').Link
 
 var BooksActions = require('./books-actions')
@@ -14,6 +15,9 @@ module.exports = React.createClass({
 
   componentWillMount: function () {
     BooksShowStore.addChangeListener(this._onChange)
+  },
+
+  componentDidMount: function () {
     BooksActions.show({ id: this.props.params.id })
   },
 
@@ -22,8 +26,11 @@ module.exports = React.createClass({
   },
 
   _onChange:function(){
-    if (this.isMounted())
+    if (this.isMounted()) {
       this.setState(BooksShowStore.getState())
+      if (BooksShowStore.isDone())
+        Router.transitionTo('books')
+    }
   },
 
   destroy: function () {

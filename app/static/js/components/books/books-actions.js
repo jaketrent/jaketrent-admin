@@ -14,8 +14,6 @@ exports.create = function (model) {
     type: ActionTypes.CREATE,
     model: model
   })
-  // TODO: could move this out, called directly from view
-  // see https://facebook.github.io/flux/docs/chat.html#content
   BooksApi.create(model)
 }
 
@@ -78,7 +76,6 @@ exports.destroyError = function (errors) {
 }
 
 exports.fetch = function (filter) {
-  // TODO: pull from books-store if filter matches there already as in the case of edit
   AppDispatcher.handleViewAction({
     type: ActionTypes.FETCH,
     filter: filter

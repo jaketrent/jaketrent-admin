@@ -78,37 +78,20 @@ BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
-//    case ActionTypes.SHOW:
-//      AppDispatcher.waitFor([ BooksStore.dispatchToken ])
-//      cache(BooksStore.find(action.filter))
-//      BooksShowStore.emitChange()
-//      break
-
     case ActionTypes.FETCH_SUCCESS:
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])
+      _done = false
       if (action.filter && action.filter.id)
         cache(BooksStore.find(action.filter))
       BooksShowStore.emitChange()
       break
-//
-//    case ActionTypes.DESTROY:
-//      _done = false
-//      cache(action.model)
-//      setErrors()
-//      BooksShowStore.emitChange()
-//      break
-//
-//    case ActionTypes.DESTROY_SUCCESS:
-//      uncache(action.model)
-//      setErrors()
-//      _done = true
-//      BooksShowStore.emitChange()
-//      break
-//
-//    case ActionTypes.DESTROY_ERROR:
-//      setErrors(action.errors)
-//      BooksShowStore.emitChange()
-//      break
+
+    case ActionTypes.DESTROY_SUCCESS:
+      uncache(action.model)
+      setErrors()
+      _done = true
+      BooksShowStore.emitChange()
+      break
 
   }
 })

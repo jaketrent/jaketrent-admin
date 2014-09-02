@@ -17,12 +17,13 @@ function cache(books) {
     books = [ books ]
 
   books.forEach(function (book) {
-    _books[book.id] = book
+    if (book)
+      _books[book.id] = book
   })
 }
 
-function uncache(id) {
-  delete _books[id]
+function uncache(model) {
+  delete _books[model.id]
 }
 
 var BooksStore = merge(EventEmitter.prototype, {
