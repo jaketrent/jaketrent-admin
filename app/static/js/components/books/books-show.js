@@ -37,17 +37,26 @@ module.exports = React.createClass({
   render: function () {
     return (
       <header className="books-header">
-        <h2 className="books-title">Book {this.state.book.id}</h2>
-        <Link to="books-update" id={this.props.params.id} className="btn">
-          Edit
-        </Link>
-        <button className="btn btn-danger" onClick={this.destroy}>
-          Destroy
-        </button>
-        <div>{this.state.book.title}</div>
-        <div>{this.state.book.description}</div>
-        <div><img src={this.state.book.cover_url} /></div>
-        <div>{this.state.book.review_url}</div>
+        <h2 className="books-title">
+          {this.state.book.title}
+          <span className="books-title-id">
+            {this.state.book.id}
+          </span>
+        </h2>
+        <div className="btn-row books-btns">
+          <Link to="books-update" id={this.props.params.id} className="btn">
+            Edit
+          </Link>
+          <button className="btn btn-danger" onClick={this.destroy}>
+            Destroy
+          </button>
+        </div>
+        <div className="books-cover-img-container">
+          <img className="books-cover-img" src={this.state.book.cover_url} />
+        </div>
+
+        <div className="books-description">{this.state.book.description}</div>
+        <a href={this.state.book.review_url} className="books-review-url" target="_blank">{this.state.book.review_url}</a>
       </header>
     )
   }
