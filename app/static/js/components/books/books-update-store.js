@@ -1,6 +1,7 @@
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
+var isEmpty = require('lodash-node/modern/objects/isEmpty')
 var merge = require('react/lib/merge')
 
 var AppConstants = require('../../common/app-constants')
@@ -54,6 +55,10 @@ var BooksUpdateStore = merge(EventEmitter.prototype, {
       errors: _errors,
       book: _book
     }
+  },
+
+  hasBook: function () {
+    return _book && !isEmpty(_book)
   },
 
   isDone: function () {

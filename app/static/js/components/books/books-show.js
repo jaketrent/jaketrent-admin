@@ -24,9 +24,13 @@ module.exports = React.createClass({
 
   _onChange:function(){
     if (this.isMounted()) {
-      this.setState(BooksShowStore.getState())
-      if (BooksShowStore.isDone())
+      if (BooksShowStore.hasBook()) {
+        this.setState(BooksShowStore.getState())
+      } else if (BooksShowStore.isDone()) {
         Router.transitionTo('books')
+      } else {
+        Router.transitionTo('errors', { type: 404 })
+      }
     }
   },
 

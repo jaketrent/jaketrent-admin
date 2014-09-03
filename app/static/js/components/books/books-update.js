@@ -28,12 +28,16 @@ module.exports = React.createClass({
   },
 
   _onChange: function () {
-    if (this.isMounted())
-      this.setState(BooksUpdateStore.getState(), function () {
-        if (BooksUpdateStore.isDone()) {
-          Router.transitionTo('books-show', { id: this.props.params.id })
-        }
-      })
+    if (this.isMounted()) {
+      if (BooksUpdateStore.hasBook()) {
+        this.setState(BooksUpdateStore.getState(), function () {
+          if (BooksUpdateStore.isDone())
+            Router.transitionTo('books-show', { id: this.props.params.id })
+        })
+      } else {
+        Router.transitionTo('errors', { type: 404 })
+      }
+    }
   },
 
   updateState: function (evt) {

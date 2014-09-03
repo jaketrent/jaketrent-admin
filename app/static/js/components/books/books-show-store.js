@@ -1,6 +1,7 @@
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
+var isEmpty = require('lodash-node/modern/objects/isEmpty')
 var merge = require('react/lib/merge')
 
 var AppConstants = require('../../common/app-constants')
@@ -56,6 +57,10 @@ var BooksShowStore = merge(EventEmitter.prototype, {
     }
   },
 
+  hasBook: function () {
+    return _book && !isEmpty(_book)
+  },
+
   isDone: function () {
     return _done
   },
@@ -82,7 +87,7 @@ BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])
       _done = false
       if (action.filter && action.filter.id)
-        cache(BooksStore.find(action.filter))
+        cache(BooksStore.find(action.filter) || {})
       BooksShowStore.emitChange()
       break
 

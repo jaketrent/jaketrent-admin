@@ -12,6 +12,7 @@ var routes = (
         <Route name="books-show" path="/books/:id" handler={require('./components/books/books-show')} />
         <Route name="books-update" path="/books/:id/edit" handler={require('./components/books/books-update')} />
       </Route>
+      <Route name="errors" path="/errors/:type" handler={require('./components/errors/index')} />
     </Route>
   </Routes>
 )
