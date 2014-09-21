@@ -1,8 +1,8 @@
 should = require 'should'
 
-cache = require '../../../../../app/static/js/components/books/books-cache'
+cache = require '../../../../../app/static/js/common/cache'
 
-describe 'books-cache', ->
+describe 'cache', ->
 
   beforeEach ->
     cache.clear()
