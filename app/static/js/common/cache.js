@@ -2,18 +2,20 @@
 
 var isNumber = require('lodash-node/modern/objects/isNumber')
 
-exports.cache = cache
-exports.get = get
-exports.uncache = uncache
-exports.clear = clear
-exports._debugCache = _debugCache
-
 var NO_FILTER_KEY = '*'
-var _cache
 
-init()
+module.exports = Cache
 
-function cache(data, filterOrPage, page) {
+function Cache() {
+  this.init()
+}
+
+Cache.prototype.init = function init() {
+  this._cache = {}
+  this._cache[NO_FILTER_KEY] = []
+}
+
+Cache.prototype.setItem = function setItem(data, filterOrPage, page) {
   var meta = normalizeMetaArgs(filterOrPage, page)
   var filter = meta.filter
   var page = meta.page
@@ -21,51 +23,46 @@ function cache(data, filterOrPage, page) {
   filter = acceptFilterAsStringArray(filter)
 
   var key = formatFilterKey(data, filter)
-  if (!Array.isArray(_cache[key]))
-    _cache[key] = []
+  if (!Array.isArray(this._cache[key]))
+    this._cache[key] = []
 
-  _cache[key][page] = data
+  this._cache[key][page] = data
 
   return this
 }
 
-function get(filterOrPage, page) {
+Cache.prototype.getItem = function getItem(filterOrPage, page) {
   var meta = normalizeMetaArgs(filterOrPage, page)
   var filter = meta.filter
   var page = meta.page
 
   var key = formatFilterKey(filter, filter)
 
-  if (!Array.isArray(_cache[key])) return
+  if (!Array.isArray(this._cache[key])) return
 
-  return _cache[key][page]
+  return this._cache[key][page]
 }
 
-function uncache(filterOrPage, page) {
+Cache.prototype.removeItem = function removeItem(filterOrPage, page) {
   var meta = normalizeMetaArgs(filterOrPage, page)
   var filter = meta.filter
   var page = meta.page
 
   var key = formatFilterKey(filter, filter)
 
-  if (!Array.isArray(_cache[key])) return
+  if (!Array.isArray(this._cache[key])) return
 
-  delete _cache[key][page]
+  delete this._cache[key][page]
 
   return this
 }
 
-function clear() {
-  init()
+Cache.prototype.clear = function clear() {
+  this.init()
 }
 
-function init() {
-  _cache = {}
-  _cache[NO_FILTER_KEY] = []
-}
-
-function _debugCache() {
-  return _cache
+Cache.prototype._debugCache = function _debugCache() {
+  return this._cache
 }
 
 function formatFilterKey(data, filter) {
