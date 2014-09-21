@@ -61,7 +61,7 @@ describe 'cache', ->
     cache.setItem(models2, { type: null })
     cache.getItem({ type: 'something' }).should.eql models2
 
-  it 'uncaches wildcard filter but not other keys not uncached', ->
+  it 'uncaches default filter but not other keys not uncached', ->
     models = [{ id: 1 }, { id: 2 }]
     models2 = [{ id: 2 }, { id: 3 }]
     cache.setItem(models)
@@ -86,3 +86,30 @@ describe 'cache', ->
     models = [{ id: 2 }, { id: 3 }]
     cache.setItem(models, 2)
     cache.getItem(2).should.eql models
+
+  describe '#getAllItems', ->
+
+    it 'can return all items, in order, for all pages in the default filter', ->
+      models = [{ id: 0 }, { id: 1 }]
+      models2 = [{ id: 2 }, { id: 3 }]
+      cache.setItem(models, 1)
+      cache.setItem(models2, 2)
+      cache.getAllItems().should.eql models.concat(models2)
+
+    it 'collapses empty pages', ->
+      models = [{ id: 0 }, { id: 1 }]
+      models2 = [{ id: 2 }, { id: 3 }]
+      cache.setItem([], 1)
+      cache.setItem(models, 2)
+      cache.setItem(null, 3)
+      cache.setItem(models2, 4)
+      cache.getAllItems().should.eql models.concat(models2)
+
+    it 'all items are returned de-duped', ->
+      models = [{ id: 0 }, { id: 1 }]
+      models2 = [{ id: 2 }, { id: 3 }]
+      cache.setItem(models, 1)
+      cache.setItem(models2, 2)
+      cache.setItem(models, 3)
+      cache.getAllItems().should.eql models.concat(models2)
+

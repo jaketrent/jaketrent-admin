@@ -1,6 +1,8 @@
 'use strict'
 
 var isNumber = require('lodash-node/modern/objects/isNumber')
+var flatten = require('lodash-node/modern/arrays/flatten')
+var uniq = require('lodash-node/modern/arrays/uniq')
 
 var NO_FILTER_KEY = '*'
 
@@ -31,6 +33,7 @@ Cache.prototype.setItem = function setItem(data, filterOrPage, page) {
   return this
 }
 
+// TODO: impl page == 'all' where all pages are returned at once
 Cache.prototype.getItem = function getItem(filterOrPage, page) {
   var meta = normalizeMetaArgs(filterOrPage, page)
   var filter = meta.filter
@@ -55,6 +58,15 @@ Cache.prototype.removeItem = function removeItem(filterOrPage, page) {
   delete this._cache[key][page]
 
   return this
+}
+
+Cache.prototype.getAllItems = function getAllItems(filter) {
+  var key = formatFilterKey(filter, filter)
+
+  return uniq(flatten(this._cache[key], true)
+    .filter(function (pageData) {
+      return pageData
+    }))
 }
 
 Cache.prototype.clear = function clear() {
