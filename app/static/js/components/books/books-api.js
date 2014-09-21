@@ -1,5 +1,6 @@
 'use strict'
 
+var parseLinkHeader = require('parse-link-header')
 var request = require('superagent')
 
 var api = require('../../common/api')
@@ -15,6 +16,8 @@ exports.fetch = function (filter) {
     .set('Content-Type', 'application/json')
     .end(function (err, res) {
       if (err || res.body.errors) return BooksActions.fetchError(err || res.body.errors)
+
+//      parseLinkHeader(res.headers.link)
 
       BooksActions.fetchSuccess(res.body.books, filter)
     })

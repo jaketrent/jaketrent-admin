@@ -9,7 +9,8 @@
   "scripts": {
     "build": "rm -rf app/static-dist; node_modules/.bin/broccoli build app/static-dist",
     "install-hook": "ln -s ../../hooks/pre-commit.sh .git/hooks/pre-commit; ln -s ../../hooks/post-commit.sh .git/hooks/post-commit",
-    "start": "node_modules/.bin/broccoli serve"
+    "start": "node_modules/.bin/broccoli serve",
+    "test": "node_modules/mocha/bin/mocha \"test/unit/**/*.spec.coffee\" --watch"
   },
   "author": "jaketrent",
   "license": "MIT",
@@ -25,6 +26,7 @@
     "json-linker": "^1.4.1",
     "lodash-node": "^2.4.1",
     "node-uuid": "^1.4.1",
+    "parse-link-header": "^0.1.0",
     "superagent": "^0.18.2"
   },
   "devDependencies": {
@@ -35,8 +37,12 @@
     "broccoli-react": "^0.5.0",
     "broccoli-sass": "^0.2.1",
     "broccoli-static-compiler": "^0.1.4",
+    "coffee-script": "~1.7",
+    "mocha": "~1.17.1",
     "node-dev": "^2.3.0",
     "react": "^0.11.1",
-    "react-router": "^0.5.0"
+    "react-router": "^0.5.0",
+    "should": "~3.1.1",
+    "underscore": "^1.7.0"
   }
 }
