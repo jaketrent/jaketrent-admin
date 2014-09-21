@@ -1,30 +1,17 @@
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
+var find = require('lodash-node/modern/collections/find')
 var merge = require('react/lib/merge')
-var toArray = require('lodash-node/modern/collections/toArray')
 
 var AppConstants = require('../../common/app-constants')
 var AppDispatcher = require('../../common/app-dispatcher')
 var BooksConstants = require('./books-constants')
+var Cache = require('../../common/cache')
 
 var ActionTypes = BooksConstants.ActionTypes
 
-var _books = {}
-
-function cache(books) {
-  if (!Array.isArray(books))
-    books = [ books ]
-
-  books.forEach(function (book) {
-    if (book)
-      _books[book.id] = book
-  })
-}
-
-function uncache(model) {
-  delete _books[model.id]
-}
+var cache = new Cache()
 
 var BooksStore = merge(EventEmitter.prototype, {
 
@@ -41,20 +28,24 @@ var BooksStore = merge(EventEmitter.prototype, {
   },
 
   find: function (filter) {
+    var allBooks = cache.getAllItems()
+
     if (filter) {
 
       if (filter.id) {
-        return _books[filter.id]
+        return find(allBooks, function (book) {
+          return book.id === filter.id
+        })
       }
 
-      return toArray(_books)
+      return allBooks
         .filter(function (book) {
           return Object.keys(filter).every(function (key) {
             return book[key] && book[key] == filter[key]
           })
       })
     } else {
-      return toArray(_books)
+      return allBooks
     }
   },
 
@@ -77,22 +68,22 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
   switch(action.type) {
 
     case ActionTypes.FETCH_SUCCESS:
-      cache(action.models)
+      cache.setItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
     case ActionTypes.CREATE_SUCCESS:
-      cache(action.model)
+      cache.setItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
     case ActionTypes.UPDATE_SUCCESS:
-      cache(action.model)
+      cache.setItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
     case ActionTypes.DESTROY_SUCCESS:
-      uncache(action.model)
+      cache.removeItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
