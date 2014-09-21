@@ -14,16 +14,9 @@ var _cache
 init()
 
 function cache(data, filterOrPage, page) {
-  var filter
-  if (isNumber(filterOrPage)) {
-    page = filterOrPage
-    filter = null
-  } else {
-    filter = filterOrPage
-  }
-
-  if (!page)
-    page = 1
+  var meta = normalizeMetaArgs(filterOrPage, page)
+  var filter = meta.filter
+  var page = meta.page
 
   filter = acceptFilterAsStringArray(filter)
 
@@ -37,16 +30,9 @@ function cache(data, filterOrPage, page) {
 }
 
 function get(filterOrPage, page) {
-  var filter
-  if (isNumber(filterOrPage)) {
-    page = filterOrPage
-    filter = null
-  } else {
-    filter = filterOrPage
-  }
-
-  if (!page)
-    page = 1
+  var meta = normalizeMetaArgs(filterOrPage, page)
+  var filter = meta.filter
+  var page = meta.page
 
   var key = formatFilterKey(filter, filter)
 
@@ -56,16 +42,9 @@ function get(filterOrPage, page) {
 }
 
 function uncache(filterOrPage, page) {
-  var filter
-  if (isNumber(filterOrPage)) {
-    page = filterOrPage
-    filter = null
-  } else {
-    filter = filterOrPage
-  }
-
-  if (!page)
-    page = 1
+  var meta = normalizeMetaArgs(filterOrPage, page)
+  var filter = meta.filter
+  var page = meta.page
 
   var key = formatFilterKey(filter, filter)
 
@@ -78,6 +57,15 @@ function uncache(filterOrPage, page) {
 
 function clear() {
   init()
+}
+
+function init() {
+  _cache = {}
+  _cache[NO_FILTER_KEY] = []
+}
+
+function _debugCache() {
+  return _cache
 }
 
 function formatFilterKey(data, filter) {
@@ -101,11 +89,20 @@ function acceptFilterAsStringArray(filter) {
     return filter
 }
 
-function init() {
-  _cache = {}
-  _cache[NO_FILTER_KEY] = []
-}
+function normalizeMetaArgs(filterOrPage, page) {
+  var filter
+  if (isNumber(filterOrPage)) {
+    page = filterOrPage
+    filter = null
+  } else {
+    filter = filterOrPage
+  }
 
-function _debugCache() {
-  return _cache
+  if (!page)
+    page = 1
+
+  return {
+    filter: filter,
+    page: page
+  }
 }
