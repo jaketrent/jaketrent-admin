@@ -113,3 +113,36 @@ describe 'cache', ->
       cache.setItem(models, 3)
       cache.getAllItems().should.eql models.concat(models2)
 
+  describe '#getLastPageNumber', ->
+
+    it 'returns page 1 if nothing in the cache', ->
+      cache.getLastPageNumber().should.eql 1
+
+    it 'returns the last page number for default filter', ->
+      lastPage = 4
+      models = [{ id: 0 }, { id: 1 }]
+      models2 = [{ id: 2 }, { id: 3 }]
+      cache.setItem(models, 1)
+      cache.setItem(models2, lastPage)
+      cache.getLastPageNumber().should.eql lastPage
+
+    it 'returns the last page number for custom filter', ->
+      filter = { suchFilter: null }
+      lastPage = 4
+      models = [{ id: 0 }, { id: 1 }]
+      models2 = [{ id: 2 }, { id: 3 }]
+      cache.setItem(models, filter, 1)
+      cache.setItem(models2, filter, lastPage)
+      cache.getLastPageNumber(filter).should.eql lastPage
+
+    it 'returns last non-null page number', ->
+      filter = { suchFilter: null }
+      lastPage = 4
+      models = [{ id: 0 }, { id: 1 }]
+      models2 = [{ id: 2 }, { id: 3 }]
+      cache.setItem(models, filter, lastPage)
+      cache.setItem(models2, filter, 7)
+      cache.removeItem(filter, 7)
+      cache.getLastPageNumber(filter).should.eql lastPage
+
+

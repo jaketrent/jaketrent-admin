@@ -72,6 +72,7 @@ $sidebar-link-color: $color;
   text-overflow: ellipsis;
   overflow: hidden;
   transition: all 200ms;
+  cursor: pointer;
 
   &:visited,
   &:hover,

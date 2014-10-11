@@ -11,14 +11,6 @@ var ActionTypes = BooksConstants.ActionTypes
 
 var _book = {}
 
-function cache(book) {
-  _book = book
-}
-
-function uncache() {
-  _book = {}
-}
-
 var _errors = []
 
 function setErrors(errors) {
@@ -70,7 +62,7 @@ BooksCreateStore.dispatchToken = AppDispatcher.register(function (payload) {
   switch(action.type) {
 
     case ActionTypes.CREATE_SUCCESS:
-      cache(action.model)
+      _book = action.model
       setErrors()
       BooksCreateStore.emitChange()
       break

@@ -30,7 +30,7 @@ module.exports = React.createClass({
       if (this.state.book.id) {
         Router.transitionTo('books-show', { id: this.state.book.id })
       }
-    })
+    }.bind(this))
   },
 
   onSubmit: function (evt) {

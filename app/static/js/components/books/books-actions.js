@@ -103,9 +103,12 @@ exports.fetchError = function (errors) {
 }
 
 exports.show = function (filter) {
+  var foundBook = BooksStore.find(filter)
+  if (!foundBook)
+    BooksApi.fetch(filter)
+
   AppDispatcher.handleViewAction({
     type: ActionTypes.SHOW,
     filter: filter
   })
-  this.fetch(filter)
 }

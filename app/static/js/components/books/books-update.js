@@ -1,6 +1,5 @@
 /** @jsx React.DOM */
 
-var extend = require('lodash-node/modern/objects/assign')
 var React = require('react')
 var Router = require('react-router')
 
@@ -13,9 +12,10 @@ var ErrorInline = require('../../common/error-inline')
 module.exports = React.createClass({
 
   getInitialState: function () {
-    return extend({
+    return {
+      book: BooksStore.find({ id: this.props.params.id }),
       errors: []
-    }, BooksStore.getState({ id: this.props.params.id }))
+    }
   },
 
   componentDidMount: function () {

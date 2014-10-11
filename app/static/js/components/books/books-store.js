@@ -15,18 +15,6 @@ var cache = new Cache()
 
 var BooksStore = merge(EventEmitter.prototype, {
 
-  getState: function (filter) {
-    if (filter && filter.id) {
-      return {
-        book: BooksStore.find(filter) || {}
-      }
-    } else {
-      return {
-        books: BooksStore.find(filter) || []
-      }
-    }
-  },
-
   find: function (filter) {
     var allBooks = cache.getAllItems()
 
@@ -34,7 +22,8 @@ var BooksStore = merge(EventEmitter.prototype, {
 
       if (filter.id) {
         return find(allBooks, function (book) {
-          return book.id === filter.id
+          // props.params is a string, api is a number
+          return book.id == filter.id
         })
       }
 

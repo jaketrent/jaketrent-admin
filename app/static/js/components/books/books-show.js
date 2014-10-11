@@ -9,8 +9,16 @@ var BooksShowStore = require('./books-show-store')
 
 module.exports = React.createClass({
 
+  displayName: 'BooksShow',
+
   getInitialState: function () {
-    return BooksShowStore.getState()
+    return this.getStateFromStores()
+  },
+
+  getStateFromStores: function () {
+    return {
+      book: BooksShowStore.get()
+    }
   },
 
   componentDidMount: function () {
@@ -24,13 +32,14 @@ module.exports = React.createClass({
 
   _onChange:function(){
     if (this.isMounted()) {
-      if (BooksShowStore.hasBook()) {
-        this.setState(BooksShowStore.getState())
-      } else if (BooksShowStore.isDone()) {
-        Router.transitionTo('books')
-      } else {
-        Router.transitionTo('errors', { type: 404 })
-      }
+      this.setState(this.getStateFromStores())
+//      if (BooksShowStore.hasBook()) {
+//        this.setState(BooksShowStore.getState())
+//      } else if (BooksShowStore.isDone()) {
+//        Router.transitionTo('books')
+//      } else {
+//        Router.replaceState('errors', { type: 404 })
+//      }
     }
   },
 

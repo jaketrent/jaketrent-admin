@@ -1,9 +1,12 @@
 /** @jsx React.DOM */
 
 var React = require('react/addons')
-var Link = require('react-router').Link
+var Router = require('react-router')
 
+var BooksActions = require('./books-actions')
 var BooksStore = require('./books-store')
+
+var Link = Router.Link
 
 module.exports = React.createClass({
 
@@ -60,6 +63,11 @@ module.exports = React.createClass({
 
     return filtered.map(this.renderBook)
   },
+
+//  handleBookClick: function (bookId) {
+//    BooksActions.show({ id: bookId })
+//    Router.transitionTo('books-show', { id: bookId })
+//  },
 
   renderBook: function (book) {
     return (

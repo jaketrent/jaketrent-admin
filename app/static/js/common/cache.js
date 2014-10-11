@@ -33,7 +33,6 @@ Cache.prototype.setItem = function setItem(data, filterOrPage, page) {
   return this
 }
 
-// TODO: impl page == 'all' where all pages are returned at once
 Cache.prototype.getItem = function getItem(filterOrPage, page) {
   var meta = normalizeMetaArgs(filterOrPage, page)
   var filter = meta.filter
@@ -71,6 +70,19 @@ Cache.prototype.getAllItems = function getAllItems(filter) {
 
 Cache.prototype.clear = function clear() {
   this.init()
+}
+
+Cache.prototype.getLastPageNumber = function getLastPageNumber(filter) {
+  var key = formatFilterKey(filter, filter)
+
+  if (!Array.isArray(this._cache[key])) return 1
+
+  var lastNonNullPage = 1
+  this._cache[key].forEach(function (cachedData, indx) {
+    if (Array.isArray(cachedData))
+      lastNonNullPage = indx
+  })
+  return lastNonNullPage
 }
 
 Cache.prototype._debugCache = function _debugCache() {

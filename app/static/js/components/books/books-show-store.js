@@ -13,56 +13,16 @@ var ActionTypes = BooksConstants.ActionTypes
 
 var _book = {}
 
-function cache(book) {
-  if (Array.isArray(book))
-    book = book[0]
-  _book = book
-}
-
-function uncache() {
-  _book = {}
-}
-
-var _errors = []
-
-function setErrors(errors) {
-  if (!errors) {
-    _errors = []
-    return
-  }
-
-  if (!Array.isArray(errors))
-    errors = [ errors ]
-
-  _errors = errors.map(function (err) {
-    if (!err.hasOwnProperty('id'))
-      return {
-        id: 'general',
-        title: err.message,
-        stack: err.stack
-      }
-    else
-      return err
-  })
-}
-
 var _done = false
 
 var BooksShowStore = merge(EventEmitter.prototype, {
 
-  getState: function () {
-    return {
-      errors: _errors || [],
-      book: _book || {}
-    }
+  get: function () {
+    return _book
   },
 
   hasBook: function () {
     return _book && !isEmpty(_book)
-  },
-
-  isDone: function () {
-    return _done
   },
 
   emitChange: function () {
@@ -83,18 +43,21 @@ BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
+//    case ActionTypes.SHOW:
+//      AppDispatcher.waitFor([ BooksStore.dispatchToken ])
+//      _book = BooksStore.find(action.filter) || {}
+//      BooksShowStore.emitChange()
+//      break
+
     case ActionTypes.FETCH_SUCCESS:
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])
-      _done = false
       if (action.filter && action.filter.id)
-        cache(BooksStore.find(action.filter) || {})
+        _book = BooksStore.find(action.filter) || {}
       BooksShowStore.emitChange()
       break
 
     case ActionTypes.DESTROY_SUCCESS:
-      uncache(action.model)
-      setErrors()
-      _done = true
+      _book = {}
       BooksShowStore.emitChange()
       break
 
