@@ -43,11 +43,11 @@ BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
-//    case ActionTypes.SHOW:
-//      AppDispatcher.waitFor([ BooksStore.dispatchToken ])
-//      _book = BooksStore.find(action.filter) || {}
-//      BooksShowStore.emitChange()
-//      break
+    case ActionTypes.SHOW:
+      AppDispatcher.waitFor([ BooksStore.dispatchToken ])
+      _book = BooksStore.find(action.filter) || {}
+      BooksShowStore.emitChange()
+      break
 
     case ActionTypes.FETCH_SUCCESS:
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])

@@ -7,34 +7,63 @@ var merge = require('react/lib/merge')
 var AppConstants = require('../../common/app-constants')
 var AppDispatcher = require('../../common/app-dispatcher')
 var BooksConstants = require('./books-constants')
-var Cache = require('../../common/cache')
+//var Cache = require('../../common/cache')
 
 var ActionTypes = BooksConstants.ActionTypes
 
-var cache = new Cache()
+//var cache = new Cache()
+
+var _books = []
+
+function cache(books, page) {
+  if (!books) return
+
+  if (!Array.isArray(books))
+    books = [ books ]
+
+  if (!page)
+    page = 1
+
+  _books = _books.concat(books.map(function (book) {
+    return {
+      book: book,
+      page: page
+    }
+  }))
+}
 
 var BooksStore = merge(EventEmitter.prototype, {
 
   find: function (filter) {
-    var allBooks = cache.getAllItems()
+    var records = _books
 
     if (filter) {
 
       if (filter.id) {
-        return find(allBooks, function (book) {
+        var foundRecord = find(records, function (record) {
           // props.params is a string, api is a number
-          return book.id == filter.id
+          return record.book.id == filter.id
         })
+
+        if (foundRecord)
+          return foundRecord.book
+        else
+          return
       }
 
-      return allBooks
-        .filter(function (book) {
+      return records
+        .filter(function (record) {
           return Object.keys(filter).every(function (key) {
-            return book[key] && book[key] == filter[key]
+            return record.book[key] && record.book[key] == filter[key]
           })
-      })
+        })
+        .map(function (record) {
+          return record.book
+        })
     } else {
-      return allBooks
+      return records.map(function (record) {
+        return record.book
+      })
     }
   },
 
@@ -57,22 +86,23 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
   switch(action.type) {
 
     case ActionTypes.FETCH_SUCCESS:
-      cache.setItem(action.models, action.filter, action.page)
+//      cache.setItem(action.models, action.filter, action.page)
+      cache(action.models, action.page)
       BooksStore.emitChange()
       break
 
     case ActionTypes.CREATE_SUCCESS:
-      cache.setItem(action.models, action.filter, action.page)
+//      cache.setItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
     case ActionTypes.UPDATE_SUCCESS:
-      cache.setItem(action.models, action.filter, action.page)
+//      cache.setItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
     case ActionTypes.DESTROY_SUCCESS:
-      cache.removeItem(action.models, action.filter, action.page)
+//      cache.removeItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
