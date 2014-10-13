@@ -82,12 +82,13 @@ exports.fetch = function (filter) {
   })
 }
 
-exports.fetchSuccess = function (models, filter, page) {
+exports.fetchSuccess = function (models, filter, page, linkHeader) {
   AppDispatcher.handleServerAction({
     type: ActionTypes.FETCH_SUCCESS,
     models: models,
     filter: filter,
-    page: page
+    page: page,
+    linkHeader: linkHeader
   })
 }
 
@@ -101,7 +102,7 @@ exports.fetchError = function (errors) {
 exports.show = function (filter) {
   var foundBook = BooksStore.find(filter)
   if (!foundBook)
-    BooksApi.fetch(filter)
+    BooksApi.fetch(null, filter)
 
   AppDispatcher.handleViewAction({
     type: ActionTypes.SHOW,

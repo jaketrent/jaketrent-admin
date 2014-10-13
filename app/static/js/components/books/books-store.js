@@ -8,13 +8,11 @@ var AppConstants = require('../../common/app-constants')
 var AppDispatcher = require('../../common/app-dispatcher')
 var BooksApi = require('./books-api')
 var BooksConstants = require('./books-constants')
-//var Cache = require('../../common/cache')
 
 var ActionTypes = BooksConstants.ActionTypes
 
-//var cache = new Cache()
-
 var _books = []
+var _latestLinkHeader
 
 function cache(books, page) {
   if (!books) return
@@ -31,6 +29,19 @@ function cache(books, page) {
       page: page
     }
   }))
+}
+
+
+function getUrl() {
+  if (BooksStore.hasNextPage())
+    return _latestLinkHeader.next.url
+}
+
+function getPage() {
+  if (BooksStore.hasNextPage())
+    return _latestLinkHeader.next.page
+  else if (!_latestLinkHeader)
+    return 1
 }
 
 var BooksStore = merge(EventEmitter.prototype, {
@@ -68,6 +79,13 @@ var BooksStore = merge(EventEmitter.prototype, {
     }
   },
 
+  hasNextPage: function () {
+    return _latestLinkHeader
+      && _latestLinkHeader.next
+      && _latestLinkHeader.last
+      && (_latestLinkHeader.next.page !== _latestLinkHeader.last.page)
+  },
+
   emitChange: function () {
     this.emit(AppConstants.Events.CHANGE, arguments)
   },
@@ -81,23 +99,17 @@ var BooksStore = merge(EventEmitter.prototype, {
   }
 })
 
-var _currentPage = 0
-
-function nextPage() {
-  return ++_currentPage
-}
-
 BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
   var action = payload.action
 
   switch(action.type) {
 
     case ActionTypes.FETCH:
-      BooksApi.fetch(action.filter, nextPage())
+      BooksApi.fetch(getUrl(), action.filter, getPage())
       break
 
     case ActionTypes.FETCH_SUCCESS:
-//      cache.setItem(action.models, action.filter, action.page)
+      _latestLinkHeader = action.linkHeader
       cache(action.models, action.page)
       BooksStore.emitChange()
       break

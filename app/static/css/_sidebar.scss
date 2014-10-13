@@ -21,6 +21,7 @@ $sidebar-link-color: $color;
   display: block;
   list-style: none;
   max-height: 600px;
+  margin-bottom: 50px;
 }
 .sidebar-item {
   border-right: 1px solid $sidebar-item-outline-color;
@@ -85,4 +86,14 @@ $sidebar-link-color: $color;
     background-color: $sidebar-item-hover-bg-color;
     border-bottom: 1px solid $sidebar-item-hover-border-bottom-color;
   }
+}
+.sidebar-load-more {
+  position: relative;
+  top: 10px;
+  display: block;
+  margin: 0 auto 20px auto;
+  background: #fff;
+  border: 1px solid #ababab;
+  border-radius: 3px;
+  cursor: pointer;
 }

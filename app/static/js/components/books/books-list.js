@@ -15,8 +15,13 @@ module.exports = React.createClass({
   mixins: [ React.addons.LinkedStateMixin ],
 
   getInitialState: function () {
+    return this.getStateFromStores()
+  },
+
+  getStateFromStores: function () {
     return {
-      books: BooksStore.find()
+      books: BooksStore.find(),
+      hasMoreBooks: BooksStore.hasNextPage()
     }
   },
 
@@ -29,9 +34,11 @@ module.exports = React.createClass({
   },
 
   _onChange: function() {
-    this.setState({
-      books: BooksStore.find()
-    })
+    this.setState(this.getStateFromStores())
+  },
+
+  handleLoadMoreClick: function () {
+    BooksActions.fetch()
   },
 
   renderCreate: function () {
@@ -74,6 +81,15 @@ module.exports = React.createClass({
     )
   },
 
+  renderMoreButton: function () {
+    if (this.state.hasMoreBooks)
+      return (
+        <li className="sidebar-item" key="loadmore-btn">
+          <button className="sidebar-load-more" onClick={this.handleLoadMoreClick}>Load More</button>
+        </li>
+      )
+  },
+
   render: function () {
     return (
       <section className="sidebar">
@@ -81,6 +97,7 @@ module.exports = React.createClass({
           {this.renderCreate()}
           {this.renderSearch()}
           {this.renderBooks(this.state.books)}
+          {this.renderMoreButton()}
         </ul>
       </section>
     )

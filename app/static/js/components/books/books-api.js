@@ -6,14 +6,12 @@ var request = require('superagent')
 var api = require('../../common/api')
 var BooksActions = require('./books-actions')
 
-function requestBooks(url, filter, page, done) {
+function requestBooks(url, filter, done) {
   if (!url)
     url = api.getHostBaseUrl() + '/books'
 
   if (filter && filter.id)
     url += '/' + filter.id
-
-  url += '?page=' + (page || 1)
 
   request
     .get(url)
@@ -25,28 +23,19 @@ function requestBooks(url, filter, page, done) {
     })
 }
 
-function hasNextPage(linkHeaderObj) {
-  return linkHeaderObj
-      && linkHeaderObj.next
-      && linkHeaderObj.last
-      && (linkHeaderObj.next.page !== linkHeaderObj.last.page)
-}
-
-exports.fetch = function (filter, page) {
+exports.fetch = function (url, filter, page) {
   function requestBooksCallback(err, res) {
     if (err) return BooksActions.fetchError(err || res.body.errors)
 
-    if (res.headers && res.headers.link) {
-      var linkHeaderObj = parseLinkHeader(res.headers.link)
+    var linkHeader
 
-      if (hasNextPage(linkHeaderObj))
-        requestBooks(linkHeaderObj.next.url, filter, linkHeaderObj.next.page, requestBooksCallback)
-    }
+    if (res.headers && res.headers.link)
+      linkHeader = parseLinkHeader(res.headers.link)
 
-    BooksActions.fetchSuccess(res.body.books, filter, page)
+    BooksActions.fetchSuccess(res.body.books, filter, page, linkHeader)
   }
 
-  requestBooks(null, filter, page, requestBooksCallback)
+  requestBooks(url, filter, requestBooksCallback)
 }
 
 exports.create = function (model) {
