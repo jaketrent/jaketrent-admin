@@ -6,21 +6,47 @@ var request = require('superagent')
 var api = require('../../common/api')
 var BooksActions = require('./books-actions')
 
-exports.fetch = function (filter) {
-  var url = api.getHostBaseUrl() + '/books'
+function requestBooks(url, filter, page, done) {
+  if (!url)
+    url = api.getHostBaseUrl() + '/books'
+
   if (filter && filter.id)
     url += '/' + filter.id
+
+  url += '?page=' + (page || 1)
 
   request
     .get(url)
     .set('Content-Type', 'application/json')
     .end(function (err, res) {
-      if (err || res.body.errors) return BooksActions.fetchError(err || res.body.errors)
+      if (err || res.body.errors) return done(err || res.body.errors)
 
-//      parseLinkHeader(res.headers.link)
-
-      BooksActions.fetchSuccess(res.body.books, filter)
+      done(null, res)
     })
+}
+
+function hasNextPage(linkHeaderObj) {
+  return linkHeaderObj
+      && linkHeaderObj.next
+      && linkHeaderObj.last
+      && (linkHeaderObj.next.page !== linkHeaderObj.last.page)
+}
+
+exports.fetch = function (filter, page) {
+  function requestBooksCallback(err, res) {
+    if (err) return BooksActions.fetchError(err || res.body.errors)
+
+    if (res.headers && res.headers.link) {
+      var linkHeaderObj = parseLinkHeader(res.headers.link)
+
+      if (hasNextPage(linkHeaderObj))
+        requestBooks(linkHeaderObj.next.url, filter, linkHeaderObj.next.page, requestBooksCallback)
+    }
+
+    BooksActions.fetchSuccess(res.body.books, filter, page)
+  }
+
+  requestBooks(null, filter, page, requestBooksCallback)
 }
 
 exports.create = function (model) {

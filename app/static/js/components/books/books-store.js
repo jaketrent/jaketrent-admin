@@ -6,6 +6,7 @@ var merge = require('react/lib/merge')
 
 var AppConstants = require('../../common/app-constants')
 var AppDispatcher = require('../../common/app-dispatcher')
+var BooksApi = require('./books-api')
 var BooksConstants = require('./books-constants')
 //var Cache = require('../../common/cache')
 
@@ -80,10 +81,20 @@ var BooksStore = merge(EventEmitter.prototype, {
   }
 })
 
+var _currentPage = 0
+
+function nextPage() {
+  return ++_currentPage
+}
+
 BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
   var action = payload.action
 
   switch(action.type) {
+
+    case ActionTypes.FETCH:
+      BooksApi.fetch(action.filter, nextPage())
+      break
 
     case ActionTypes.FETCH_SUCCESS:
 //      cache.setItem(action.models, action.filter, action.page)

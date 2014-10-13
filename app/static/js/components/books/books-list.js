@@ -64,11 +64,6 @@ module.exports = React.createClass({
     return filtered.map(this.renderBook)
   },
 
-//  handleBookClick: function (bookId) {
-//    BooksActions.show({ id: bookId })
-//    Router.transitionTo('books-show', { id: bookId })
-//  },
-
   renderBook: function (book) {
     return (
       <li className="sidebar-item" key={book.id}>

@@ -80,18 +80,14 @@ exports.fetch = function (filter) {
     type: ActionTypes.FETCH,
     filter: filter
   })
-  var cachedBooks = BooksStore.find(filter)
-  if (cachedBooks && !isEmpty(cachedBooks))
-    this.fetchSuccess(cachedBooks, filter)
-  else
-    BooksApi.fetch(filter)
 }
 
-exports.fetchSuccess = function (models, filter) {
+exports.fetchSuccess = function (models, filter, page) {
   AppDispatcher.handleServerAction({
     type: ActionTypes.FETCH_SUCCESS,
     models: models,
-    filter: filter
+    filter: filter,
+    page: page
   })
 }
 
