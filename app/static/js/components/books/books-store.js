@@ -31,7 +31,7 @@ function cache(books, page) {
   }))
 }
 
-
+// TODO: use just pages or just urls
 function getUrl() {
   if (BooksStore.hasNextPage())
     return _latestLinkHeader.next.url
@@ -42,6 +42,11 @@ function getPage() {
     return _latestLinkHeader.next.page
   else if (!_latestLinkHeader)
     return 1
+}
+
+function getLastPage() {
+  if (_latestLinkHeader && _latestLinkHeader.last)
+    return _latestLinkHeader.last.page
 }
 
 var BooksStore = merge(EventEmitter.prototype, {
@@ -115,7 +120,7 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
       break
 
     case ActionTypes.CREATE_SUCCESS:
-//      cache.setItem(action.models, action.filter, action.page)
+      cache(action.models, getLastPage())
       BooksStore.emitChange()
       break
 
