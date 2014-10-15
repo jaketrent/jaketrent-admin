@@ -12,15 +12,19 @@ var ErrorInline = require('../../common/error-inline')
 module.exports = React.createClass({
 
   getInitialState: function () {
+    return this.getStateFromStores()
+  },
+
+  getStateFromStores: function () {
     return {
-      book: BooksStore.find({ id: this.props.params.id }),
-      errors: []
+      book: BooksUpdateStore.getBook() || {},
+      errors: BooksUpdateStore.getErrors() || []
     }
   },
 
   componentDidMount: function () {
     BooksUpdateStore.addChangeListener(this._onChange)
-    BooksActions.fetch({ id: this.props.params.id })
+    BooksActions.updateSelect({ id: this.props.params.id })
   },
 
   componentWillUnmount: function () {
@@ -30,12 +34,12 @@ module.exports = React.createClass({
   _onChange: function () {
     if (this.isMounted()) {
       if (BooksUpdateStore.hasBook()) {
-        this.setState(BooksUpdateStore.getState(), function () {
-          if (BooksUpdateStore.isDone())
+        this.setState(this.getStateFromStores(), function () {
+          if (BooksUpdateStore.isPersisted())
             Router.transitionTo('books-show', { id: this.props.params.id })
         })
       } else {
-        Router.transitionTo('errors', { type: 404 })
+        Router.replaceWith('errors', { type: 404 })
       }
     }
   },
@@ -51,6 +55,10 @@ module.exports = React.createClass({
   onSubmit: function (evt) {
     evt.preventDefault()
     BooksActions.update(this.state.book)
+  },
+
+  onClickCancel: function (evt) {
+    Router.goBack()
   },
 
   render: function () {
@@ -92,7 +100,8 @@ module.exports = React.createClass({
              id="review_url" ref="review_url" type="text" value={this.state.book.review_url} onChange={this.updateState} />
           </label>
 
-          <input className="form-input btn btn-secondary" type="submit" value="Edit" />
+          <input className="form-input btn btn-secondary" type="submit" value="Save Changes" />
+          <button className="form-input btn" onClick={this.onClickCancel}>Cancel</button>
         </form>
       </div>
     )

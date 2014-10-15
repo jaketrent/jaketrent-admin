@@ -2,7 +2,9 @@
 
 var EventEmitter = require('events').EventEmitter
 var find = require('lodash-node/modern/collections/find')
+var findIndex = require('lodash-node/modern/arrays/findIndex')
 var merge = require('react/lib/merge')
+var uniq = require('lodash-node/modern/arrays/uniq')
 
 var AppConstants = require('../../common/app-constants')
 var AppDispatcher = require('../../common/app-dispatcher')
@@ -23,12 +25,19 @@ function cache(books, page) {
   if (!page)
     page = 1
 
-  _books = _books.concat(books.map(function (book) {
+  _books = uniq(_books.concat(books.map(function (book) {
     return {
       book: book,
       page: page
     }
-  }))
+  })))
+}
+
+function uncache(book) {
+  var indx = findIndex(_books, function (b) {
+    return b.book.id == book.id
+  })
+  _books.splice(indx, 1)
 }
 
 // TODO: use just pages or just urls
@@ -116,6 +125,10 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
     case ActionTypes.FETCH_SUCCESS:
       _latestLinkHeader = action.linkHeader
       cache(action.models, action.page)
+
+      if (!_latestLinkHeader)
+        BooksApi.fetch(getUrl(), null, getPage())
+
       BooksStore.emitChange()
       break
 
@@ -125,12 +138,13 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
       break
 
     case ActionTypes.UPDATE_SUCCESS:
+      // TODO: clone out so that this is required coming back in
 //      cache.setItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
     case ActionTypes.DESTROY_SUCCESS:
-//      cache.removeItem(action.models, action.filter, action.page)
+      uncache(action.model)
       BooksStore.emitChange()
       break
 

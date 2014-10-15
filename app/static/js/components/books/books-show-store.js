@@ -13,7 +13,7 @@ var ActionTypes = BooksConstants.ActionTypes
 
 var _book = {}
 
-var _done = false
+var _destroyed = false
 
 var BooksShowStore = merge(EventEmitter.prototype, {
 
@@ -23,6 +23,10 @@ var BooksShowStore = merge(EventEmitter.prototype, {
 
   hasBook: function () {
     return _book && !isEmpty(_book)
+  },
+
+  isDestroyed: function () {
+    return _destroyed
   },
 
   emitChange: function () {
@@ -57,7 +61,9 @@ BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
       break
 
     case ActionTypes.DESTROY_SUCCESS:
+      AppDispatcher.waitFor([ BooksStore.dispatchToken ])
       _book = {}
+      _destroyed = true
       BooksShowStore.emitChange()
       break
 

@@ -32,14 +32,13 @@ module.exports = React.createClass({
 
   _onChange:function(){
     if (this.isMounted()) {
-      this.setState(this.getStateFromStores())
-//      if (BooksShowStore.hasBook()) {
-//        this.setState(BooksShowStore.getState())
-//      } else if (BooksShowStore.isDone()) {
-//        Router.transitionTo('books')
-//      } else {
-//        Router.replaceState('errors', { type: 404 })
-//      }
+      if (BooksShowStore.hasBook()) {
+        this.setState(this.getStateFromStores())
+      } else if (BooksShowStore.isDestroyed()) {
+        Router.transitionTo('books')
+      } else {
+        Router.replaceWith('errors', { type: 404 })
+      }
     }
   },
 

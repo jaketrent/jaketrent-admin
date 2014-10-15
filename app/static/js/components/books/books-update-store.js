@@ -12,17 +12,6 @@ var BooksStore = require('./books-store')
 var ActionTypes = BooksConstants.ActionTypes
 
 var _book = {}
-
-function cache(book) {
-  if (Array.isArray(book))
-    book = book[0]
-  _book = book
-}
-
-function uncache() {
-  _book = {}
-}
-
 var _errors = []
 
 function setErrors(errors) {
@@ -46,23 +35,24 @@ function setErrors(errors) {
   })
 }
 
-var _done = false
+var _persisted = false
 
 var BooksUpdateStore = merge(EventEmitter.prototype, {
 
-  getState: function () {
-    return {
-      errors: _errors,
-      book: _book
-    }
+  getBook: function () {
+    return _book
+  },
+
+  getErrors: function () {
+    return _errors
   },
 
   hasBook: function () {
     return _book && !isEmpty(_book)
   },
 
-  isDone: function () {
-    return _done
+  isPersisted: function () {
+    return _persisted
   },
 
   emitChange: function () {
@@ -86,21 +76,27 @@ BooksUpdateStore.dispatchToken = AppDispatcher.register(function (payload) {
     case ActionTypes.FETCH_SUCCESS:
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])
       if (action.filter)
-        cache(BooksStore.find(action.filter))
+        _book = BooksStore.find(action.filter)
+      BooksUpdateStore.emitChange()
+      break
+
+    case ActionTypes.UPDATE_SELECT:
+      AppDispatcher.waitFor([ BooksStore.dispatchToken ])
+      _persisted = false
+      _book = BooksStore.find(action.filter)
       BooksUpdateStore.emitChange()
       break
 
     case ActionTypes.UPDATE:
-      _done = false
-      cache(action.model)
+      _persisted = false
       setErrors()
       BooksUpdateStore.emitChange()
       break
 
     case ActionTypes.UPDATE_SUCCESS:
-      cache(action.model)
+      _book = action.model
       setErrors()
-      _done = true
+      _persisted = true
       BooksUpdateStore.emitChange()
       break
 

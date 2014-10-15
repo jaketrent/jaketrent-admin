@@ -9,6 +9,12 @@ var AppDispatcher = require('../../common/app-dispatcher')
 
 var ActionTypes = BooksConstants.ActionTypes
 
+function ensureFindable(filter) {
+  var foundBook = BooksStore.find(filter)
+  if (!foundBook)
+    BooksApi.fetch(null, filter)
+}
+
 exports.create = function (model) {
   AppDispatcher.handleViewAction({
     type: ActionTypes.CREATE,
@@ -28,6 +34,14 @@ exports.createError = function (errors) {
   AppDispatcher.handleServerAction({
     type: ActionTypes.CREATE_ERROR,
     errors: errors
+  })
+}
+
+exports.updateSelect = function (filter) {
+  ensureFindable(filter)
+  AppDispatcher.handleViewAction({
+    type: ActionTypes.UPDATE_SELECT,
+    filter: filter
   })
 }
 
@@ -100,10 +114,7 @@ exports.fetchError = function (errors) {
 }
 
 exports.show = function (filter) {
-  var foundBook = BooksStore.find(filter)
-  if (!foundBook)
-    BooksApi.fetch(null, filter)
-
+  ensureFindable(filter)
   AppDispatcher.handleViewAction({
     type: ActionTypes.SHOW,
     filter: filter
