@@ -2,12 +2,15 @@
 
 var React = require('react')
 
+var AuthenticatedRoute = require('../../common/authenticated-route')
 var BooksActions = require('./books-actions')
 var BooksList = require('./books-list')
 
 module.exports = React.createClass({
 
   displayName: 'BooksIndex',
+
+  mixins: [ AuthenticatedRoute ],
 
   componentDidMount: function () {
     BooksActions.fetch()

@@ -16,6 +16,7 @@ function requestBooks(url, filter, done) {
   request
     .get(url)
     .set('Content-Type', 'application/json')
+    .withCredentials()
     .end(function (err, res) {
       if (err || res.body.errors) return done(err || res.body.errors)
 
@@ -42,6 +43,7 @@ exports.create = function (model) {
   request
     .post(api.getHostBaseUrl() + '/books')
     .set('Content-Type', 'application/json')
+    .withCredentials()
     .send({ books: model })
     .end(function (err, res) {
       if (err || res.body.errors) return BooksActions.createError(err || res.body.errors)
@@ -54,6 +56,7 @@ exports.update = function (model) {
   request
     .put(api.getHostBaseUrl() + '/books/' + model.id)
     .set('Content-Type', 'application/json')
+    .withCredentials()
     .send({ books: model })
     .end(function (err, res) {
 
@@ -67,6 +70,7 @@ exports.destroy = function (model) {
   request
     .del(api.getHostBaseUrl() + '/books/' + model.id)
     .set('Content-Type', 'application/json')
+    .withCredentials()
     .end(function (err, res) {
 
       if (res.status != 204) return BooksActions.destroyError(new Error('Failed to destroy book'))
