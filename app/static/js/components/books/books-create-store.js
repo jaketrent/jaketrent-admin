@@ -10,8 +10,8 @@ var BooksConstants = require('./books-constants')
 var ActionTypes = BooksConstants.ActionTypes
 
 var _book = {}
-
 var _errors = []
+var _isCreated = false
 
 function setErrors(errors) {
   if (!errors) {
@@ -36,11 +36,16 @@ function setErrors(errors) {
 
 var BooksCreateStore = merge(EventEmitter.prototype, {
 
-  getState: function (filter) {
-    return {
-      errors: _errors,
-      book: _book
-    }
+  getBook: function () {
+    return _book
+  },
+
+  getErrors: function () {
+    return _errors
+  },
+
+  isCreated: function () {
+    return _isCreated
   },
 
   emitChange: function () {
@@ -61,8 +66,13 @@ BooksCreateStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
+    case ActionTypes.CREATE:
+      _isCreated = false
+      break
+
     case ActionTypes.CREATE_SUCCESS:
       _book = action.model
+      _isCreated = true
       setErrors()
       BooksCreateStore.emitChange()
       break

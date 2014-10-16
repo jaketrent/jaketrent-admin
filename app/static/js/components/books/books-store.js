@@ -133,7 +133,7 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
       break
 
     case ActionTypes.CREATE_SUCCESS:
-      cache(action.models, getLastPage())
+      cache(action.model, getLastPage())
       BooksStore.emitChange()
       break
 

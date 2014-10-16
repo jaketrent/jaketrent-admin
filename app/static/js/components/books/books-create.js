@@ -11,9 +11,13 @@ var ErrorInline = require('../../common/error-inline')
 module.exports = React.createClass({
 
   getInitialState: function () {
+    return this.getStateFromStores()
+  },
+
+  getStateFromStores: function () {
     return {
-      book: {},
-      errors: []
+      book: BooksCreateStore.getBook(),
+      errors: BooksCreateStore.getErrors()
     }
   },
 
@@ -26,8 +30,8 @@ module.exports = React.createClass({
   },
 
   _onChange: function () {
-    this.setState(BooksCreateStore.getState(), function () {
-      if (this.state.book.id) {
+    this.setState(this.getStateFromStores(), function () {
+      if (BooksCreateStore.isCreated()) {
         Router.transitionTo('books-show', { id: this.state.book.id })
       }
     }.bind(this))
