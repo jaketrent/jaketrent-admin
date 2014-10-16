@@ -48,6 +48,10 @@ module.exports = React.createClass({
     })
   },
 
+  onClickCancel: function () {
+    Router.goBack()
+  },
+
   render: function () {
     return (
       <div className="body">
@@ -88,6 +92,7 @@ module.exports = React.createClass({
           </label>
 
           <input className="form-input btn btn-secondary" type="submit" value="Create" />
+          <button className="form-input btn" onClick={this.onClickCancel}>Cancel</button>
         </form>
       </div>
     )

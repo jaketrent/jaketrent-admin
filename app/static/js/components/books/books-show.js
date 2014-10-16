@@ -42,8 +42,9 @@ module.exports = React.createClass({
     }
   },
 
-  destroy: function () {
-    BooksActions.destroy(this.state.book)
+  onClickDestroy: function () {
+    if (confirm('Permanently destroy?'))
+      BooksActions.destroy(this.state.book)
   },
 
   render: function () {
@@ -59,7 +60,7 @@ module.exports = React.createClass({
           <Link to="books-update" id={this.props.params.id} className="btn">
             Edit
           </Link>
-          <button className="btn btn-danger" onClick={this.destroy}>
+          <button className="btn btn-danger" onClick={this.onClickDestroy}>
             Destroy
           </button>
         </div>

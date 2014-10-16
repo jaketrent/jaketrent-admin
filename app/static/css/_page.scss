@@ -29,5 +29,5 @@ $page-body-padding-top: $sidebar-item-height;
 }
 .page-body {
   margin-left: $sidebar-width;
-  padding: $page-body-padding-top $padding 0 $padding;
+  padding: $page-body-padding-top $padding $padding $padding;
 }
