@@ -146,6 +146,13 @@ a.btn {
   .app-nav-link:active {
     line-height: 53px; }
 
+.errors-container {
+  margin: 50px;
+  text-align: center; }
+
+.errors-title {
+  color: #ababab; }
+
 .sidebar {
   position: absolute;
   width: 250px; }
@@ -153,7 +160,8 @@ a.btn {
 .sidebar-list {
   display: block;
   list-style: none;
-  max-height: 600px; }
+  max-height: 600px;
+  margin-bottom: 50px; }
 
 .sidebar-item {
   border-right: 1px solid #ababab; }
@@ -200,13 +208,24 @@ a.btn {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  transition: all 200ms; }
+  transition: all 200ms;
+  cursor: pointer; }
   .sidebar-link:visited, .sidebar-link:hover, .sidebar-link:active {
     color: rgba(25, 25, 25, 0.96); }
   .sidebar-link:hover {
     margin-left: 10px;
     background-color: #fff;
     border-bottom: 1px solid #e6e6e6; }
+
+.sidebar-load-more {
+  position: relative;
+  top: 10px;
+  display: block;
+  margin: 0 auto 20px auto;
+  background: #fff;
+  border: 1px solid #ababab;
+  border-radius: 3px;
+  cursor: pointer; }
 
 .page-header {
   display: block;
@@ -226,7 +245,7 @@ a.btn {
 
 .page-body {
   margin-left: 250px;
-  padding: 40px 30px 0 30px; }
+  padding: 40px 30px 30px 30px; }
 
 .books-title-id {
   color: #cccccc;
