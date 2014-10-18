@@ -45,7 +45,7 @@ module.exports = React.createClass({
     return (
       <ErrorsTextLayout>
         <div>401 Not Authenticated</div>
-        <button onClick={this.onClickSignIn}>Sign in with Twitter</button>
+        <button className="btn btn-secondary sign-in-btn" onClick={this.onClickSignIn}>Sign in with Twitter</button>
       </ErrorsTextLayout>
     )
   }
