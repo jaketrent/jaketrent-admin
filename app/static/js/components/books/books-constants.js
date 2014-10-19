@@ -5,6 +5,7 @@ var keyMirror = require('react/lib/keyMirror')
 module.exports = {
 
   ActionTypes: keyMirror({
+    CREATE_SELECT: null,
     CREATE: null,
     CREATE_SUCCESS: null,
     CREATE_ERROR: null,

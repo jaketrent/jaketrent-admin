@@ -15,6 +15,12 @@ function ensureFindable(filter) {
     BooksApi.fetch(null, filter)
 }
 
+exports.createSelect = function () {
+  AppDispatcher.handleViewAction({
+    type: ActionTypes.CREATE_SELECT
+  })
+}
+
 exports.create = function (model) {
   AppDispatcher.handleViewAction({
     type: ActionTypes.CREATE,

@@ -66,6 +66,11 @@ BooksCreateStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
+    case ActionTypes.CREATE_SELECT:
+      _isCreated = false
+      _book = {}
+      break
+
     case ActionTypes.CREATE:
       _isCreated = false
       break

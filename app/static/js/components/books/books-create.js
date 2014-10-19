@@ -28,6 +28,7 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     BooksCreateStore.addChangeListener(this._onChange)
+    BooksActions.createSelect()
   },
 
   componentWillUnmount: function () {
@@ -96,8 +97,10 @@ module.exports = React.createClass({
               id="review_url" ref="review_url" type="text" value={this.state.book.review_url} />
           </label>
 
-          <input className="form-input btn btn-secondary" type="submit" value="Create" />
-          <button className="form-input btn" onClick={this.onClickCancel}>Cancel</button>
+          <div className="btn-row">
+            <input className="form-input btn btn-secondary" type="submit" value="Create" />
+            <button className="form-input btn" onClick={this.onClickCancel}>Cancel</button>
+          </div>
         </form>
       </div>
     )
