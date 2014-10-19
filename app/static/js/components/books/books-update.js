@@ -14,7 +14,7 @@ module.exports = React.createClass({
 
   displayName: 'BooksUpdate',
 
-  mixins: [ AuthenticatedRoute ], 
+  mixins: [ AuthenticatedRoute ],
 
   getInitialState: function () {
     return this.getStateFromStores()
@@ -77,6 +77,13 @@ module.exports = React.createClass({
               id="title" ref="title" type="text" value={this.state.book.title} onChange={this.updateState} />
           </label>
 
+          <label className="form-label" htmlFor="author">
+            Author:
+            <ErrorInline errors={this.state.errors} id="author" />
+            <input className="form-input form-input-text" name="author"
+              id="author" ref="author" type="text" value={this.state.book.author} onChange={this.updateState} />
+          </label>
+
           <label className="form-label" htmlFor="description">
             Description:
             <ErrorInline errors={this.state.errors} id="description" />
@@ -105,8 +112,10 @@ module.exports = React.createClass({
              id="review_url" ref="review_url" type="text" value={this.state.book.review_url} onChange={this.updateState} />
           </label>
 
-          <input className="form-input btn btn-secondary" type="submit" value="Save Changes" />
-          <button className="form-input btn" onClick={this.onClickCancel}>Cancel</button>
+          <div className="btn-row">
+            <input className="form-input btn btn-secondary" type="submit" value="Save Changes" />
+            <button className="form-input btn" onClick={this.onClickCancel}>Cancel</button>
+          </div>
         </form>
       </div>
     )

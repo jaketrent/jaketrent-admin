@@ -101,6 +101,7 @@ BooksUpdateStore.dispatchToken = AppDispatcher.register(function (payload) {
       break
 
     case ActionTypes.UPDATE_ERROR:
+      _persisted = false
       setErrors(action.errors)
       BooksUpdateStore.emitChange()
       break

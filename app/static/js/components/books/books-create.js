@@ -47,6 +47,7 @@ module.exports = React.createClass({
     evt.preventDefault()
     BooksActions.create({
       title: this.refs.title.getDOMNode().value,
+      author: this.refs.author.getDOMNode().value,
       description: this.refs.description.getDOMNode().value,
       cover_url: this.refs.cover_url.getDOMNode().value,
       complete_date: this.refs.complete_date.getDOMNode().value,
@@ -67,6 +68,13 @@ module.exports = React.createClass({
             <ErrorInline errors={this.state.errors} id="title" />
             <input className="form-input form-input-text"
               id="title" ref="title" type="text" value={this.state.book.title} />
+          </label>
+
+          <label className="form-label" htmlFor="author">
+            Author:
+            <ErrorInline errors={this.state.errors} id="author" />
+            <input className="form-input form-input-text"
+              id="author" ref="author" type="text" value={this.state.book.author} />
           </label>
 
           <label className="form-label" htmlFor="description">

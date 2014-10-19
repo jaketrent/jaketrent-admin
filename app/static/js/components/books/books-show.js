@@ -12,7 +12,7 @@ module.exports = React.createClass({
 
   displayName: 'BooksShow',
 
-  mixins: [ AuthenticatedRoute ], 
+  mixins: [ AuthenticatedRoute ],
 
   getInitialState: function () {
     return this.getStateFromStores()
@@ -67,6 +67,7 @@ module.exports = React.createClass({
             Destroy
           </button>
         </div>
+        <div className="books-author">{this.state.book.author}</div>
         <div className="books-cover-img-container">
           <img className="books-cover-img" src={this.state.book.cover_url} />
         </div>
