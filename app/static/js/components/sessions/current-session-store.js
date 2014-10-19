@@ -12,6 +12,7 @@ var SessionsConstants = require('./sessions-constants')
 var ActionTypes = SessionsConstants.ActionTypes
 
 var _session = {}
+var _isQueried = false
 
 var CurrentSessionStore = merge(EventEmitter.prototype, {
 
@@ -20,8 +21,11 @@ var CurrentSessionStore = merge(EventEmitter.prototype, {
   },
 
   hasSession: function () {
-    console.log('_session', _session && !isEmpty(_session), _session)
     return _session && !isEmpty(_session)
+  },
+
+  isQueried: function () {
+    return _isQueried
   },
 
   emitChange: function () {
@@ -47,10 +51,14 @@ CurrentSessionStore.dispatchToken = AppDispatcher.register(function (payload) {
       break
 
     case ActionTypes.FETCH_CURRENT_SUCCESS:
+      _isQueried = true
       _session = action.model
       CurrentSessionStore.emitChange()
       break
 
+    case ActionTypes.FETCH_CURRENT_ERROR:
+      _isQueried = true
+      break
   }
 })
 

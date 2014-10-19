@@ -28,9 +28,6 @@ $btn-danger-bg-color: #eb675e;
   }
 }
 
-.btn-row {
-  display: block;
-}
 .btn {
   display: inline-block;
   height: $btn-height;
@@ -71,4 +68,15 @@ a.btn {
 %btn-danger,
 .btn-danger {
   @include colored-btn($btn-danger-border-color, $btn-danger-text-shadow-color, $btn-danger-bg-color);
+}
+
+.btn-row {
+  display: block;
+}
+.btn-row .btn {
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
