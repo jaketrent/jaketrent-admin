@@ -28782,7 +28782,7 @@ var React = require('react')
 React.renderComponent(require('./routes'),
   document.getElementById('app'))
 
-},{"./routes":297,"react":270}],275:[function(require,module,exports){
+},{"./routes":303,"react":270}],275:[function(require,module,exports){
 'use strict'
 
 exports.getHostBaseUrl = function getHostBaseUrl() {
@@ -28834,7 +28834,28 @@ module.exports = copyProperties(new Dispatcher(), {
 
 })
 
-},{"./app-constants":276,"./dispatcher":278,"react/lib/copyProperties":221}],278:[function(require,module,exports){
+},{"./app-constants":276,"./dispatcher":279,"react/lib/copyProperties":221}],278:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var CurrentSessionStore = require('../components/sessions/current-session-store')
+
+function isAuthenticated() {
+  return CurrentSessionStore.hasSession()
+}
+
+var AuthenticatedRoute = {
+  statics: {
+    willTransitionTo: function (transition) {
+      if (!isAuthenticated()) {
+        return transition.redirect('/errors/not-authenticated')
+      }
+    }
+  }
+}
+
+module.exports = AuthenticatedRoute
+
+},{"../components/sessions/current-session-store":299}],279:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -29084,7 +29105,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":280}],279:[function(require,module,exports){
+},{"./invariant":281}],280:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var filter = require('lodash-node/modern/collections/filter')
@@ -29122,7 +29143,7 @@ module.exports = React.createClass({displayName: 'exports',
   }
 
 })
-},{"lodash-node/modern/collections/filter":20,"react":270}],280:[function(require,module,exports){
+},{"lodash-node/modern/collections/filter":20,"react":270}],281:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -29177,7 +29198,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],281:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 'use strict'
 
 var isEmpty = require('lodash-node/modern/objects/isEmpty')
@@ -29193,6 +29214,12 @@ function ensureFindable(filter) {
   var foundBook = BooksStore.find(filter)
   if (!foundBook)
     BooksApi.fetch(null, filter)
+}
+
+exports.createSelect = function () {
+  AppDispatcher.handleViewAction({
+    type: ActionTypes.CREATE_SELECT
+  })
 }
 
 exports.create = function (model) {
@@ -29301,7 +29328,7 @@ exports.show = function (filter) {
   })
 }
 
-},{"../../common/app-dispatcher":277,"./books-api":282,"./books-constants":283,"./books-store":289,"lodash-node/modern/objects/isEmpty":51}],282:[function(require,module,exports){
+},{"../../common/app-dispatcher":277,"./books-api":283,"./books-constants":284,"./books-store":290,"lodash-node/modern/objects/isEmpty":51}],283:[function(require,module,exports){
 'use strict'
 
 var parseLinkHeader = require('parse-link-header')
@@ -29320,6 +29347,7 @@ function requestBooks(url, filter, done) {
   request
     .get(url)
     .set('Content-Type', 'application/json')
+    .withCredentials()
     .end(function (err, res) {
       if (err || res.body.errors) return done(err || res.body.errors)
 
@@ -29346,6 +29374,7 @@ exports.create = function (model) {
   request
     .post(api.getHostBaseUrl() + '/books')
     .set('Content-Type', 'application/json')
+    .withCredentials()
     .send({ books: model })
     .end(function (err, res) {
       if (err || res.body.errors) return BooksActions.createError(err || res.body.errors)
@@ -29358,6 +29387,7 @@ exports.update = function (model) {
   request
     .put(api.getHostBaseUrl() + '/books/' + model.id)
     .set('Content-Type', 'application/json')
+    .withCredentials()
     .send({ books: model })
     .end(function (err, res) {
 
@@ -29371,6 +29401,7 @@ exports.destroy = function (model) {
   request
     .del(api.getHostBaseUrl() + '/books/' + model.id)
     .set('Content-Type', 'application/json')
+    .withCredentials()
     .end(function (err, res) {
 
       if (res.status != 204) return BooksActions.destroyError(new Error('Failed to destroy book'))
@@ -29378,7 +29409,7 @@ exports.destroy = function (model) {
       BooksActions.destroySuccess(model)
     })
 }
-},{"../../common/api":275,"./books-actions":281,"parse-link-header":59,"superagent":271}],283:[function(require,module,exports){
+},{"../../common/api":275,"./books-actions":282,"parse-link-header":59,"superagent":271}],284:[function(require,module,exports){
 'use strict'
 
 var keyMirror = require('react/lib/keyMirror')
@@ -29386,6 +29417,7 @@ var keyMirror = require('react/lib/keyMirror')
 module.exports = {
 
   ActionTypes: keyMirror({
+    CREATE_SELECT: null,
     CREATE: null,
     CREATE_SUCCESS: null,
     CREATE_ERROR: null,
@@ -29407,7 +29439,8 @@ module.exports = {
   })
 
 }
-},{"react/lib/keyMirror":251}],284:[function(require,module,exports){
+
+},{"react/lib/keyMirror":251}],285:[function(require,module,exports){
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
@@ -29476,6 +29509,11 @@ BooksCreateStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
+    case ActionTypes.CREATE_SELECT:
+      _isCreated = false
+      _book = {}
+      break
+
     case ActionTypes.CREATE:
       _isCreated = false
       break
@@ -29496,18 +29534,24 @@ BooksCreateStore.dispatchToken = AppDispatcher.register(function (payload) {
 })
 
 module.exports = BooksCreateStore
-},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./books-constants":283,"events":1,"react/lib/merge":255}],285:[function(require,module,exports){
+
+},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./books-constants":284,"events":1,"react/lib/merge":255}],286:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
 var Router = require('react-router')
 
 var AppConstants = require('../../common/app-constants')
+var AuthenticatedRoute = require('../../common/authenticated-route')
 var BooksActions = require('./books-actions')
 var BooksCreateStore = require('./books-create-store')
 var ErrorInline = require('../../common/error-inline')
 
-module.exports = React.createClass({displayName: 'exports',
+module.exports = React.createClass({
+
+  displayName: 'BooksCreate',
+
+  mixins: [ AuthenticatedRoute ],
 
   getInitialState: function () {
     return this.getStateFromStores()
@@ -29522,6 +29566,7 @@ module.exports = React.createClass({displayName: 'exports',
 
   componentDidMount: function () {
     BooksCreateStore.addChangeListener(this._onChange)
+    BooksActions.createSelect()
   },
 
   componentWillUnmount: function () {
@@ -29540,6 +29585,7 @@ module.exports = React.createClass({displayName: 'exports',
     evt.preventDefault()
     BooksActions.create({
       title: this.refs.title.getDOMNode().value,
+      author: this.refs.author.getDOMNode().value,
       description: this.refs.description.getDOMNode().value,
       cover_url: this.refs.cover_url.getDOMNode().value,
       complete_date: this.refs.complete_date.getDOMNode().value,
@@ -29560,6 +29606,13 @@ module.exports = React.createClass({displayName: 'exports',
             ErrorInline({errors: this.state.errors, id: "title"}), 
             React.DOM.input({className: "form-input form-input-text", 
               id: "title", ref: "title", type: "text", value: this.state.book.title})
+          ), 
+
+          React.DOM.label({className: "form-label", htmlFor: "author"}, 
+            "Author:", 
+            ErrorInline({errors: this.state.errors, id: "author"}), 
+            React.DOM.input({className: "form-input form-input-text", 
+              id: "author", ref: "author", type: "text", value: this.state.book.author})
           ), 
 
           React.DOM.label({className: "form-label", htmlFor: "description"}, 
@@ -29590,14 +29643,17 @@ module.exports = React.createClass({displayName: 'exports',
               id: "review_url", ref: "review_url", type: "text", value: this.state.book.review_url})
           ), 
 
-          React.DOM.input({className: "form-input btn btn-secondary", type: "submit", value: "Create"}), 
-          React.DOM.button({className: "form-input btn", onClick: this.onClickCancel}, "Cancel")
+          React.DOM.div({className: "btn-row"}, 
+            React.DOM.input({className: "form-input btn btn-secondary", type: "submit", value: "Create"}), 
+            React.DOM.button({className: "form-input btn", onClick: this.onClickCancel}, "Cancel")
+          )
         )
       )
     )
   }
 })
-},{"../../common/app-constants":276,"../../common/error-inline":279,"./books-actions":281,"./books-create-store":284,"react":270,"react-router":73}],286:[function(require,module,exports){
+
+},{"../../common/app-constants":276,"../../common/authenticated-route":278,"../../common/error-inline":280,"./books-actions":282,"./books-create-store":285,"react":270,"react-router":73}],287:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react/addons')
@@ -29703,7 +29759,7 @@ module.exports = React.createClass({
     )
   }
 })
-},{"./books-actions":281,"./books-store":289,"react-router":73,"react/addons":111}],287:[function(require,module,exports){
+},{"./books-actions":282,"./books-store":290,"react-router":73,"react/addons":111}],288:[function(require,module,exports){
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
@@ -29777,19 +29833,22 @@ BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
 })
 
 module.exports = BooksShowStore
-},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./books-constants":283,"./books-store":289,"events":1,"lodash-node/modern/objects/isEmpty":51,"react/lib/merge":255}],288:[function(require,module,exports){
+},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./books-constants":284,"./books-store":290,"events":1,"lodash-node/modern/objects/isEmpty":51,"react/lib/merge":255}],289:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
 var Router = require('react-router')
 var Link = require('react-router').Link
 
+var AuthenticatedRoute = require('../../common/authenticated-route')
 var BooksActions = require('./books-actions')
 var BooksShowStore = require('./books-show-store')
 
 module.exports = React.createClass({
 
   displayName: 'BooksShow',
+
+  mixins: [ AuthenticatedRoute ],
 
   getInitialState: function () {
     return this.getStateFromStores()
@@ -29844,6 +29903,7 @@ module.exports = React.createClass({
             "Destroy"
           )
         ), 
+        React.DOM.div({className: "books-author"}, this.state.book.author), 
         React.DOM.div({className: "books-cover-img-container"}, 
           React.DOM.img({className: "books-cover-img", src: this.state.book.cover_url})
         ), 
@@ -29854,7 +29914,8 @@ module.exports = React.createClass({
     )
   }
 })
-},{"./books-actions":281,"./books-show-store":287,"react":270,"react-router":73}],289:[function(require,module,exports){
+
+},{"../../common/authenticated-route":278,"./books-actions":282,"./books-show-store":288,"react":270,"react-router":73}],290:[function(require,module,exports){
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
@@ -30009,7 +30070,7 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
 })
 
 module.exports = BooksStore
-},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./books-api":282,"./books-constants":283,"events":1,"lodash-node/modern/arrays/findIndex":18,"lodash-node/modern/arrays/uniq":19,"lodash-node/modern/collections/find":21,"react/lib/merge":255}],290:[function(require,module,exports){
+},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./books-api":283,"./books-constants":284,"events":1,"lodash-node/modern/arrays/findIndex":18,"lodash-node/modern/arrays/uniq":19,"lodash-node/modern/collections/find":21,"react/lib/merge":255}],291:[function(require,module,exports){
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
@@ -30113,6 +30174,7 @@ BooksUpdateStore.dispatchToken = AppDispatcher.register(function (payload) {
       break
 
     case ActionTypes.UPDATE_ERROR:
+      _persisted = false
       setErrors(action.errors)
       BooksUpdateStore.emitChange()
       break
@@ -30121,19 +30183,25 @@ BooksUpdateStore.dispatchToken = AppDispatcher.register(function (payload) {
 })
 
 module.exports = BooksUpdateStore
-},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./books-constants":283,"./books-store":289,"events":1,"lodash-node/modern/objects/isEmpty":51,"react/lib/merge":255}],291:[function(require,module,exports){
+
+},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./books-constants":284,"./books-store":290,"events":1,"lodash-node/modern/objects/isEmpty":51,"react/lib/merge":255}],292:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
 var Router = require('react-router')
 
 var AppConstants = require('../../common/app-constants')
+var AuthenticatedRoute = require('../../common/authenticated-route')
 var BooksActions = require('./books-actions')
 var BooksUpdateStore = require('./books-update-store')
 var BooksStore = require('./books-store')
 var ErrorInline = require('../../common/error-inline')
 
-module.exports = React.createClass({displayName: 'exports',
+module.exports = React.createClass({
+
+  displayName: 'BooksUpdate',
+
+  mixins: [ AuthenticatedRoute ],
 
   getInitialState: function () {
     return this.getStateFromStores()
@@ -30196,6 +30264,13 @@ module.exports = React.createClass({displayName: 'exports',
               id: "title", ref: "title", type: "text", value: this.state.book.title, onChange: this.updateState})
           ), 
 
+          React.DOM.label({className: "form-label", htmlFor: "author"}, 
+            "Author:", 
+            ErrorInline({errors: this.state.errors, id: "author"}), 
+            React.DOM.input({className: "form-input form-input-text", name: "author", 
+              id: "author", ref: "author", type: "text", value: this.state.book.author, onChange: this.updateState})
+          ), 
+
           React.DOM.label({className: "form-label", htmlFor: "description"}, 
             "Description:", 
             ErrorInline({errors: this.state.errors, id: "description"}), 
@@ -30224,24 +30299,30 @@ module.exports = React.createClass({displayName: 'exports',
              id: "review_url", ref: "review_url", type: "text", value: this.state.book.review_url, onChange: this.updateState})
           ), 
 
-          React.DOM.input({className: "form-input btn btn-secondary", type: "submit", value: "Save Changes"}), 
-          React.DOM.button({className: "form-input btn", onClick: this.onClickCancel}, "Cancel")
+          React.DOM.div({className: "btn-row"}, 
+            React.DOM.input({className: "form-input btn btn-secondary", type: "submit", value: "Save Changes"}), 
+            React.DOM.button({className: "form-input btn", onClick: this.onClickCancel}, "Cancel")
+          )
         )
       )
     )
   }
 })
-},{"../../common/app-constants":276,"../../common/error-inline":279,"./books-actions":281,"./books-store":289,"./books-update-store":290,"react":270,"react-router":73}],292:[function(require,module,exports){
+
+},{"../../common/app-constants":276,"../../common/authenticated-route":278,"../../common/error-inline":280,"./books-actions":282,"./books-store":290,"./books-update-store":291,"react":270,"react-router":73}],293:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
 
+var AuthenticatedRoute = require('../../common/authenticated-route')
 var BooksActions = require('./books-actions')
 var BooksList = require('./books-list')
 
 module.exports = React.createClass({
 
   displayName: 'BooksIndex',
+
+  mixins: [ AuthenticatedRoute ],
 
   componentDidMount: function () {
     BooksActions.fetch()
@@ -30261,7 +30342,61 @@ module.exports = React.createClass({
     )
   }
 })
-},{"./books-actions":281,"./books-list":286,"react":270}],293:[function(require,module,exports){
+},{"../../common/authenticated-route":278,"./books-actions":282,"./books-list":287,"react":270}],294:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react')
+var Router = require('react-router')
+
+var api = require('../../common/api')
+var CurrentSessionStore = require('../sessions/current-session-store')
+var ErrorsTextLayout = require('./layouts/text')
+var SessionsActions = require('../sessions/sessions-actions')
+
+module.exports = React.createClass({
+
+  displayName: '401NotAuthenticated',
+
+  componentDidMount: function () {
+    CurrentSessionStore.addChangeListener(this._onChange)
+  },
+
+  componentWillUnmount: function () {
+    CurrentSessionStore.removeChangeListener(this._onChange)
+  },
+
+  _onChange: function () {
+    Router.transitionTo('index')
+  },
+
+  onClickSignIn: function () {
+    // TODO: move this into action?
+    var win = this.openWindow(api.getHostBaseUrl() + '/login', 'Login', 800, 600)
+    this.interval = window.setInterval(function () {
+      if (win.closed) {
+        window.clearInterval(this.interval)
+        SessionsActions.fetchCurrent()
+      }
+    }.bind(this), 1000)
+  },
+
+  openWindow: function (url, title, width, height) {
+    var left = (screen.width / 2) - (width / 2)
+    var top = (screen.height / 2) - (height / 2)
+    return window.open(url, title, 'location=0,status=0,width=' + width + ',height=' + height + ',top=' + top + ',left=' + left)
+  },
+
+  render: function () {
+    return (
+      ErrorsTextLayout(null, 
+        React.DOM.div(null, "401 Not Authenticated"), 
+        React.DOM.button({className: "btn btn-secondary sign-in-btn", onClick: this.onClickSignIn}, "Sign in with Twitter")
+      )
+    )
+  }
+
+})
+},{"../../common/api":275,"../sessions/current-session-store":299,"../sessions/sessions-actions":300,"./layouts/text":297,"react":270,"react-router":73}],295:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
@@ -30281,18 +30416,21 @@ module.exports = React.createClass({
   }
 
 })
-},{"./layouts/text":295,"react":270}],294:[function(require,module,exports){
+},{"./layouts/text":297,"react":270}],296:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
 
 var NotFound404 = require('./404-not-found')
+var NotAuthenticated401 = require('./401-not-authenticated')
 
 var statuses = {
+  401: NotAuthenticated401,
   404: NotFound404
 }
 
 var messages = {
+  'not-authenticated': NotAuthenticated401,
   'not-found': NotFound404
 }
 
@@ -30309,7 +30447,7 @@ module.exports = React.createClass({
   }
 
 })
-},{"./404-not-found":293,"react":270}],295:[function(require,module,exports){
+},{"./401-not-authenticated":294,"./404-not-found":295,"react":270}],297:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
@@ -30331,32 +30469,193 @@ module.exports = React.createClass({
   }
 
 })
-},{"react":270}],296:[function(require,module,exports){
+},{"react":270}],298:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
 var Link = require('react-router').Link
 
+var SessionsActions = require('./sessions/sessions-actions')
+var CurrentSessionStore = require('./sessions/current-session-store')
+
 module.exports = React.createClass({displayName: 'exports',
 
+  getInitialState: function () {
+    return this.getStateFromStores()
+  },
+
+  getStateFromStores: function () {
+    return {
+      isSessionQueried: CurrentSessionStore.isQueried()
+    }
+  },
+
+  componentDidMount: function () {
+    CurrentSessionStore.addChangeListener(this._onChange)
+    SessionsActions.fetchCurrent()
+  },
+
+  componentWillUnmount: function () {
+    CurrentSessionStore.removeChangeListener(this._onChange)
+  },
+
+  _onChange: function () {
+    this.setState(this.getStateFromStores())
+  },
+
   render: function () {
-    return (
-      React.DOM.div({className: "app"}, 
-        React.DOM.header({className: "app-header"}, 
-          React.DOM.h1({className: "app-title"}, "jaketrent-admin"), 
-          React.DOM.nav({className: "app-nav"}, 
-            Link({className: "app-nav-link", to: "books"}, "Books")
+    if (this.state.isSessionQueried)
+      return (
+        React.DOM.div({className: "app"}, 
+          React.DOM.header({className: "app-header"}, 
+            React.DOM.h1({className: "app-title"}, "jaketrent-admin"), 
+            React.DOM.nav({className: "app-nav"}, 
+              Link({className: "app-nav-link", to: "books"}, "Books")
+            )
+          ), 
+          React.DOM.div({className: "app-container"}, 
+            this.props.activeRouteHandler(null)
           )
-        ), 
-        React.DOM.div({className: "app-container"}, 
-          this.props.activeRouteHandler(null)
         )
       )
-    )
+    else
+      return React.DOM.div(null, "Loading...")
   }
 
 })
-},{"react":270,"react-router":73}],297:[function(require,module,exports){
+
+},{"./sessions/current-session-store":299,"./sessions/sessions-actions":300,"react":270,"react-router":73}],299:[function(require,module,exports){
+'use strict'
+
+var EventEmitter = require('events').EventEmitter
+var isEmpty = require('lodash-node/modern/objects/isEmpty')
+var merge = require('react/lib/merge')
+
+var AppConstants = require('../../common/app-constants')
+var AppDispatcher = require('../../common/app-dispatcher')
+var SessionsApi = require('./sessions-api')
+var SessionsConstants = require('./sessions-constants')
+
+var ActionTypes = SessionsConstants.ActionTypes
+
+var _session = {}
+var _isQueried = false
+
+var CurrentSessionStore = merge(EventEmitter.prototype, {
+
+  getSession: function () {
+    return _session
+  },
+
+  hasSession: function () {
+    return _session && !isEmpty(_session)
+  },
+
+  isQueried: function () {
+    return _isQueried
+  },
+
+  emitChange: function () {
+    this.emit(AppConstants.Events.CHANGE, arguments)
+  },
+
+  addChangeListener: function (callback) {
+    this.on(AppConstants.Events.CHANGE, callback)
+  },
+
+  removeChangeListener: function (callback) {
+    this.removeListener(AppConstants.Events.CHANGE, callback)
+  }
+})
+
+CurrentSessionStore.dispatchToken = AppDispatcher.register(function (payload) {
+  var action = payload.action
+
+  switch(action.type) {
+
+    case ActionTypes.FETCH_CURRENT:
+      SessionsApi.fetchCurrent()
+      break
+
+    case ActionTypes.FETCH_CURRENT_SUCCESS:
+      _isQueried = true
+      _session = action.model
+      CurrentSessionStore.emitChange()
+      break
+
+    case ActionTypes.FETCH_CURRENT_ERROR:
+      _isQueried = true
+      break
+  }
+})
+
+module.exports = CurrentSessionStore
+
+},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./sessions-api":301,"./sessions-constants":302,"events":1,"lodash-node/modern/objects/isEmpty":51,"react/lib/merge":255}],300:[function(require,module,exports){
+'use strict'
+
+var isEmpty = require('lodash-node/modern/objects/isEmpty')
+
+var SessionsConstants = require('./sessions-constants')
+var AppDispatcher = require('../../common/app-dispatcher')
+
+var ActionTypes = SessionsConstants.ActionTypes
+
+exports.fetchCurrent = function () {
+  AppDispatcher.handleViewAction({
+    type: ActionTypes.FETCH_CURRENT
+  })
+}
+
+exports.fetchCurrentSuccess = function (model) {
+  AppDispatcher.handleServerAction({
+    type: ActionTypes.FETCH_CURRENT_SUCCESS,
+    model: model
+  })
+}
+
+exports.fetchCurrentError = function (errors) {
+  AppDispatcher.handleServerAction({
+    type: ActionTypes.FETCH_CURRENT_ERROR,
+    errors: errors
+  })
+}
+
+},{"../../common/app-dispatcher":277,"./sessions-constants":302,"lodash-node/modern/objects/isEmpty":51}],301:[function(require,module,exports){
+'use strict'
+
+var request = require('superagent')
+
+var api = require('../../common/api')
+var SessionsActions = require('./sessions-actions')
+
+exports.fetchCurrent = function (done) {
+  request
+    .get(api.getHostBaseUrl() + '/sessions/current')
+    .set('Content-Type', 'application/json')
+    .withCredentials()
+    .end(function (err, res) {
+      if (err || res.body.errors) return SessionsActions.fetchCurrentError(err || res.body.sessions)
+
+      SessionsActions.fetchCurrentSuccess(res.body.sessions)
+    })
+}
+
+},{"../../common/api":275,"./sessions-actions":300,"superagent":271}],302:[function(require,module,exports){
+'use strict'
+
+var keyMirror = require('react/lib/keyMirror')
+
+module.exports = {
+
+  ActionTypes: keyMirror({
+    FETCH_CURRENT: null,
+    FETCH_CURRENT_SUCCESS: null,
+    FETCH_CURRENT_ERROR: null
+  })
+
+}
+},{"react/lib/keyMirror":251}],303:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
@@ -30377,4 +30676,4 @@ var routes = (
 )
 
 module.exports = routes
-},{"./components/books/books-create":285,"./components/books/books-show":288,"./components/books/books-update":291,"./components/books/index":292,"./components/errors/index":294,"./components/index":296,"react":270,"react-router":73}]},{},[274])
+},{"./components/books/books-create":286,"./components/books/books-show":289,"./components/books/books-update":292,"./components/books/index":293,"./components/errors/index":296,"./components/index":298,"react":270,"react-router":73}]},{},[274])

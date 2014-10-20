@@ -58,9 +58,6 @@ ul, ol {
   min-width: 320px;
   padding: 7px; }
 
-.btn-row {
-  display: block; }
-
 .btn {
   display: inline-block;
   height: 40px;
@@ -107,6 +104,14 @@ a.btn {
   .btn-danger:active {
     background-color: #e1261c; }
 
+.btn-row {
+  display: block; }
+
+.btn-row .btn {
+  margin-right: 10px; }
+  .btn-row .btn:last-child {
+    margin-right: 0; }
+
 .app-header {
   display: block;
   height: 50px;
@@ -152,6 +157,9 @@ a.btn {
 
 .errors-title {
   color: #ababab; }
+
+.sign-in-btn {
+  margin-top: 50px; }
 
 .sidebar {
   position: absolute;
