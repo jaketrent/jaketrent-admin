@@ -3,8 +3,7 @@
 var CurrentSessionStore = require('../components/sessions/current-session-store')
 
 function isAuthenticated() {
-return true
-//  return CurrentSessionStore.hasSession()
+  return CurrentSessionStore.hasSession()
 }
 
 var AuthenticatedRoute = {

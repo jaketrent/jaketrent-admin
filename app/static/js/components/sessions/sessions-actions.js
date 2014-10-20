@@ -7,7 +7,7 @@ var AppDispatcher = require('../../common/app-dispatcher')
 
 var ActionTypes = SessionsConstants.ActionTypes
 
-exports.fetchCurrent = function (filter) {
+exports.fetchCurrent = function () {
   AppDispatcher.handleViewAction({
     type: ActionTypes.FETCH_CURRENT
   })

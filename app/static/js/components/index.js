@@ -47,7 +47,7 @@ module.exports = React.createClass({
         </div>
       )
     else
-      return null
+      return <div>Loading...</div>
   }
 
 })

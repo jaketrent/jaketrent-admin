@@ -25,7 +25,7 @@ var CurrentSessionStore = merge(EventEmitter.prototype, {
   },
 
   isQueried: function () {
-    return true || _isQueried
+    return _isQueried
   },
 
   emitChange: function () {
