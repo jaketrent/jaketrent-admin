@@ -30051,7 +30051,7 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
       _latestLinkHeader = action.linkHeader
       cache(action.models, action.page)
 
-      if (!_latestLinkHeader)
+      if (!_latestLinkHeader && action.filter)
         BooksApi.fetch(getUrl(), null, getPage())
 
       BooksStore.emitChange()
