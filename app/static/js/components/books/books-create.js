@@ -51,7 +51,8 @@ module.exports = React.createClass({
       description: this.refs.description.getDOMNode().value,
       cover_url: this.refs.cover_url.getDOMNode().value,
       complete_date: this.refs.complete_date.getDOMNode().value,
-      review_url: this.refs.review_url.getDOMNode().value
+      review_url: this.refs.review_url.getDOMNode().value,
+      affiliate_url: this.refs.affiliate_url.getDOMNode().value
     })
   },
 
@@ -103,6 +104,13 @@ module.exports = React.createClass({
             <ErrorInline errors={this.state.errors} id="review_url" />
             <input className="form-input form-input-text"
               id="review_url" ref="review_url" type="text" value={this.state.book.review_url} />
+          </label>
+
+          <label className="form-label" htmlFor="affiliate_url">
+            Affiliate Url:
+            <ErrorInline errors={this.state.errors} id="affiliate_url" />
+            <input className="form-input form-input-text"
+              id="affiliate_url" ref="affiliate_url" type="text" value={this.state.book.affiliate_url} />
           </label>
 
           <div className="btn-row">

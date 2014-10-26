@@ -74,6 +74,7 @@ module.exports = React.createClass({
 
         <div className="books-description">{this.state.book.description}</div>
         <a href={this.state.book.review_url} className="books-review-url" target="_blank">{this.state.book.review_url}</a>
+        <a href={this.state.book.affiliate_url} className="books-affiliate-url" target="_blank">{this.state.book.affiliate_url}</a>
       </header>
     )
   }

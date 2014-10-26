@@ -112,6 +112,13 @@ module.exports = React.createClass({
              id="review_url" ref="review_url" type="text" value={this.state.book.review_url} onChange={this.updateState} />
           </label>
 
+          <label className="form-label" htmlFor="affiliate_url">
+            Affiliate Url:
+            <ErrorInline errors={this.state.errors} id="affiliate_url" />
+            <input className="form-input form-input-text" name="affiliate_url"
+             id="affiliate_url" ref="affiliate_url" type="text" value={this.state.book.affiliate_url} onChange={this.updateState} />
+          </label>
+
           <div className="btn-row">
             <input className="form-input btn btn-secondary" type="submit" value="Save Changes" />
             <button className="form-input btn" onClick={this.onClickCancel}>Cancel</button>
