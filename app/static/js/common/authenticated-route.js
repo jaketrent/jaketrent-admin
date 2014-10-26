@@ -2,19 +2,16 @@
 
 var CurrentSessionStore = require('../components/sessions/current-session-store')
 
-function isAuthenticated() {
-  return CurrentSessionStore.hasSession()
-}
-
 var AuthenticatedRoute = {
   statics: {
     willTransitionTo: function (transition) {
-      if (!isAuthenticated()) {
+      if (!CurrentSessionStore.isQueried())
+        return transition.redirect('/login', null, { redirectTo: transition.path })
+
+      if (!CurrentSessionStore.hasSession())
         return transition.redirect('/errors/not-authenticated')
-      }
     }
   }
 }
 
 module.exports = AuthenticatedRoute
- 
