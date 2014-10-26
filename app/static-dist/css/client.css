@@ -281,3 +281,8 @@ a.btn {
 .books-description {
   margin: 15px 0; }
 
+.books-review-url {
+  display: block; }
+
+.books-affiliate-url {
+  display: block; }

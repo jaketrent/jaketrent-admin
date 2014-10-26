@@ -29587,7 +29587,8 @@ module.exports = React.createClass({
       description: this.refs.description.getDOMNode().value,
       cover_url: this.refs.cover_url.getDOMNode().value,
       complete_date: this.refs.complete_date.getDOMNode().value,
-      review_url: this.refs.review_url.getDOMNode().value
+      review_url: this.refs.review_url.getDOMNode().value,
+      affiliate_url: this.refs.affiliate_url.getDOMNode().value
     })
   },
 
@@ -29639,6 +29640,13 @@ module.exports = React.createClass({
             ErrorInline({errors: this.state.errors, id: "review_url"}), 
             React.DOM.input({className: "form-input form-input-text", 
               id: "review_url", ref: "review_url", type: "text", value: this.state.book.review_url})
+          ), 
+
+          React.DOM.label({className: "form-label", htmlFor: "affiliate_url"}, 
+            "Affiliate Url:", 
+            ErrorInline({errors: this.state.errors, id: "affiliate_url"}), 
+            React.DOM.input({className: "form-input form-input-text", 
+              id: "affiliate_url", ref: "affiliate_url", type: "text", value: this.state.book.affiliate_url})
           ), 
 
           React.DOM.div({className: "btn-row"}, 
@@ -29907,7 +29915,8 @@ module.exports = React.createClass({
         ), 
 
         React.DOM.div({className: "books-description"}, this.state.book.description), 
-        React.DOM.a({href: this.state.book.review_url, className: "books-review-url", target: "_blank"}, this.state.book.review_url)
+        React.DOM.a({href: this.state.book.review_url, className: "books-review-url", target: "_blank"}, this.state.book.review_url), 
+        React.DOM.a({href: this.state.book.affiliate_url, className: "books-affiliate-url", target: "_blank"}, this.state.book.affiliate_url)
       )
     )
   }
@@ -30295,6 +30304,13 @@ module.exports = React.createClass({
             ErrorInline({errors: this.state.errors, id: "review_url"}), 
             React.DOM.input({className: "form-input form-input-text", name: "review_url", 
              id: "review_url", ref: "review_url", type: "text", value: this.state.book.review_url, onChange: this.updateState})
+          ), 
+
+          React.DOM.label({className: "form-label", htmlFor: "affiliate_url"}, 
+            "Affiliate Url:", 
+            ErrorInline({errors: this.state.errors, id: "affiliate_url"}), 
+            React.DOM.input({className: "form-input form-input-text", name: "affiliate_url", 
+             id: "affiliate_url", ref: "affiliate_url", type: "text", value: this.state.book.affiliate_url, onChange: this.updateState})
           ), 
 
           React.DOM.div({className: "btn-row"}, 
