@@ -28782,7 +28782,7 @@ var React = require('react')
 React.renderComponent(require('./routes'),
   document.getElementById('app'))
 
-},{"./routes":303,"react":270}],275:[function(require,module,exports){
+},{"./routes":304,"react":270}],275:[function(require,module,exports){
 'use strict'
 
 exports.getHostBaseUrl = function getHostBaseUrl() {
@@ -28839,23 +28839,21 @@ module.exports = copyProperties(new Dispatcher(), {
 
 var CurrentSessionStore = require('../components/sessions/current-session-store')
 
-function isAuthenticated() {
-  return CurrentSessionStore.hasSession()
-}
-
 var AuthenticatedRoute = {
   statics: {
     willTransitionTo: function (transition) {
-      if (!isAuthenticated()) {
+      if (!CurrentSessionStore.isQueried())
+        return transition.redirect('/login', null, { redirectTo: transition.path })
+
+      if (!CurrentSessionStore.hasSession())
         return transition.redirect('/errors/not-authenticated')
-      }
     }
   }
 }
 
 module.exports = AuthenticatedRoute
- 
-},{"../components/sessions/current-session-store":299}],279:[function(require,module,exports){
+
+},{"../components/sessions/current-session-store":300}],279:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -30396,7 +30394,7 @@ module.exports = React.createClass({
   }
 
 })
-},{"../../common/api":275,"../sessions/current-session-store":299,"../sessions/sessions-actions":300,"./layouts/text":297,"react":270,"react-router":73}],295:[function(require,module,exports){
+},{"../../common/api":275,"../sessions/current-session-store":300,"../sessions/sessions-actions":301,"./layouts/text":297,"react":270,"react-router":73}],295:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
@@ -30524,7 +30522,44 @@ module.exports = React.createClass({displayName: 'exports',
 
 })
 
-},{"./sessions/current-session-store":299,"./sessions/sessions-actions":300,"react":270,"react-router":73}],299:[function(require,module,exports){
+},{"./sessions/current-session-store":300,"./sessions/sessions-actions":301,"react":270,"react-router":73}],299:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react')
+var Router = require('react-router')
+
+var CurrentSessionStore = require('./sessions/current-session-store')
+
+module.exports = React.createClass({
+
+  displayName: 'Login',
+
+  componentDidMount: function () {
+    CurrentSessionStore.addChangeListener(this._onChange)
+    this.reenterNormalRouting()
+  },
+
+  componentWillMount: function () {
+    CurrentSessionStore.removeChangeListener(this._onChange)
+  },
+
+  _onChange: function () {
+    this.reenterNormalRouting()
+  },
+
+  reenterNormalRouting: function () {
+    if (CurrentSessionStore.isQueried())
+      Router.transitionTo(this.props.query.redirectTo)
+  },
+
+  render: function () {
+    return (
+      React.DOM.p(null, "Logging in...")
+    )
+  }
+
+})
+},{"./sessions/current-session-store":300,"react":270,"react-router":73}],300:[function(require,module,exports){
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
@@ -30591,7 +30626,7 @@ CurrentSessionStore.dispatchToken = AppDispatcher.register(function (payload) {
 
 module.exports = CurrentSessionStore
 
-},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./sessions-api":301,"./sessions-constants":302,"events":1,"lodash-node/modern/objects/isEmpty":51,"react/lib/merge":255}],300:[function(require,module,exports){
+},{"../../common/app-constants":276,"../../common/app-dispatcher":277,"./sessions-api":302,"./sessions-constants":303,"events":1,"lodash-node/modern/objects/isEmpty":51,"react/lib/merge":255}],301:[function(require,module,exports){
 'use strict'
 
 var isEmpty = require('lodash-node/modern/objects/isEmpty')
@@ -30621,7 +30656,7 @@ exports.fetchCurrentError = function (errors) {
   })
 }
 
-},{"../../common/app-dispatcher":277,"./sessions-constants":302,"lodash-node/modern/objects/isEmpty":51}],301:[function(require,module,exports){
+},{"../../common/app-dispatcher":277,"./sessions-constants":303,"lodash-node/modern/objects/isEmpty":51}],302:[function(require,module,exports){
 'use strict'
 
 var request = require('superagent')
@@ -30641,7 +30676,7 @@ exports.fetchCurrent = function (done) {
     })
 }
 
-},{"../../common/api":275,"./sessions-actions":300,"superagent":271}],302:[function(require,module,exports){
+},{"../../common/api":275,"./sessions-actions":301,"superagent":271}],303:[function(require,module,exports){
 'use strict'
 
 var keyMirror = require('react/lib/keyMirror')
@@ -30655,7 +30690,7 @@ module.exports = {
   })
 
 }
-},{"react/lib/keyMirror":251}],303:[function(require,module,exports){
+},{"react/lib/keyMirror":251}],304:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react')
@@ -30670,10 +30705,11 @@ var routes = (
         Route({name: "books-show", path: "/books/:id", handler: require('./components/books/books-show')}), 
         Route({name: "books-update", path: "/books/:id/edit", handler: require('./components/books/books-update')})
       ), 
+      Route({name: "login", path: "/login", handler: require('./components/login')}), 
       Route({name: "errors", path: "/errors/:type", handler: require('./components/errors/index')})
     )
   )
 )
 
 module.exports = routes
-},{"./components/books/books-create":286,"./components/books/books-show":289,"./components/books/books-update":292,"./components/books/index":293,"./components/errors/index":296,"./components/index":298,"react":270,"react-router":73}]},{},[274])
+},{"./components/books/books-create":286,"./components/books/books-show":289,"./components/books/books-update":292,"./components/books/index":293,"./components/errors/index":296,"./components/index":298,"./components/login":299,"react":270,"react-router":73}]},{},[274])
