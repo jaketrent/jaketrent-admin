@@ -1,7 +1,6 @@
-/** @jsx React.DOM */
-
 var React = require('react')
 var Router = require('react-router')
+var Navigation = Router.Navigation
 
 var api = require('../../common/api')
 var CurrentSessionStore = require('../sessions/current-session-store')
@@ -12,6 +11,8 @@ module.exports = React.createClass({
 
   displayName: '401NotAuthenticated',
 
+  mixins: [ Navigation ],
+
   componentDidMount: function () {
     CurrentSessionStore.addChangeListener(this._onChange)
   },
@@ -21,7 +22,7 @@ module.exports = React.createClass({
   },
 
   _onChange: function () {
-    Router.transitionTo('index')
+    this.transitionTo('index')
   },
 
   onClickSignIn: function () {

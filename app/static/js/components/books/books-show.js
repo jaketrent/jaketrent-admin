@@ -1,8 +1,7 @@
-/** @jsx React.DOM */
-
 var React = require('react')
 var Router = require('react-router')
-var Link = require('react-router').Link
+var Link = Router.Link
+var Navigation = Router.Navigation
 
 var AuthenticatedRoute = require('../../common/authenticated-route')
 var BooksActions = require('./books-actions')
@@ -12,7 +11,7 @@ module.exports = React.createClass({
 
   displayName: 'BooksShow',
 
-  mixins: [ AuthenticatedRoute ],
+  mixins: [ AuthenticatedRoute, Router.State, Navigation ],
 
   getInitialState: function () {
     return this.getStateFromStores()
@@ -26,7 +25,6 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     BooksShowStore.addChangeListener(this._onChange)
-    BooksActions.show({ id: this.props.params.id })
   },
 
   componentWillUnmount: function () {
@@ -38,9 +36,7 @@ module.exports = React.createClass({
       if (BooksShowStore.hasBook()) {
         this.setState(this.getStateFromStores())
       } else if (BooksShowStore.isDestroyed()) {
-        Router.transitionTo('books')
-      } else {
-        Router.replaceWith('errors', { type: 404 })
+        this.transitionTo('books')
       }
     }
   },
@@ -60,7 +56,7 @@ module.exports = React.createClass({
           </span>
         </h2>
         <div className="btn-row books-btns">
-          <Link to="books-update" id={this.props.params.id} className="btn">
+          <Link to="books-update" params={{ id: this.getParams().id}} className="btn">
             Edit
           </Link>
           <button className="btn btn-danger" onClick={this.onClickDestroy}>

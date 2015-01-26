@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var CurrentSessionStore = require('../components/sessions/current-session-store')
 
 var AuthenticatedRoute = {

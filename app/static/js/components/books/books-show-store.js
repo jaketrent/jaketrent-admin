@@ -6,10 +6,9 @@ var merge = require('react/lib/merge')
 
 var AppConstants = require('../../common/app-constants')
 var AppDispatcher = require('../../common/app-dispatcher')
+var BooksApi = require('./books-api')
 var BooksConstants = require('./books-constants')
 var BooksStore = require('./books-store')
-
-var ActionTypes = BooksConstants.ActionTypes
 
 var _book = {}
 
@@ -47,23 +46,35 @@ BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
-    case ActionTypes.SHOW:
+    case BooksConstants.ActionTypes.SHOW:
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])
       _book = BooksStore.find(action.filter) || {}
       BooksShowStore.emitChange()
       break
 
-    case ActionTypes.FETCH_SUCCESS:
+    case BooksConstants.ActionTypes.FETCH_SUCCESS:
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])
       if (action.filter && action.filter.id)
         _book = BooksStore.find(action.filter) || {}
       BooksShowStore.emitChange()
       break
 
-    case ActionTypes.DESTROY_SUCCESS:
+    case BooksConstants.ActionTypes.DESTROY_SUCCESS:
       AppDispatcher.waitFor([ BooksStore.dispatchToken ])
       _book = {}
       _destroyed = true
+      BooksShowStore.emitChange()
+      break
+
+    case AppConstants.ActionTypes.TRANSITION:
+      AppDispatcher.waitFor([ BooksStore.dispatchToken ])
+
+      var foundBooks = BooksStore.find(action.routeState.params)
+      var isBooksRoute = !!action.routeState.path.match(/\/books/);
+      if (!foundBooks && isBooksRoute)
+        BooksApi.fetch(null, action.routeState.params)
+
+      _book = foundBooks || {}
       BooksShowStore.emitChange()
       break
 

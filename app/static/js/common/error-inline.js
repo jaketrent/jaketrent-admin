@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var filter = require('lodash-node/modern/collections/filter')
 var React = require('react')
 

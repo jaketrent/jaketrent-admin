@@ -1,7 +1,7 @@
-/** @jsx React.DOM */
-
 var React = require('react')
-var Link = require('react-router').Link
+var Router = require('react-router')
+var Link = Router.Link
+var RouteHandler = Router.RouteHandler
 
 var SessionsActions = require('./sessions/sessions-actions')
 var CurrentSessionStore = require('./sessions/current-session-store')
@@ -42,7 +42,7 @@ module.exports = React.createClass({
             </nav>
           </header>
           <div className="app-container">
-            <this.props.activeRouteHandler />
+            <RouteHandler />
           </div>
         </div>
       )

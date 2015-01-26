@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react/addons')
 var Router = require('react-router')
 
@@ -74,7 +72,7 @@ module.exports = React.createClass({
   renderBook: function (book) {
     return (
       <li className="sidebar-item" key={book.id}>
-        <Link className="sidebar-link" to="books-show" id={book.id}>
+        <Link className="sidebar-link" to="books-show" params={{ id: book.id}}>
           {book.title}
         </Link>
       </li>

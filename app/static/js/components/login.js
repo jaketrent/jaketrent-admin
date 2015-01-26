@@ -1,13 +1,14 @@
-/** @jsx React.DOM */
-
 var React = require('react')
 var Router = require('react-router')
+var Navigation = Router.Navigation
 
 var CurrentSessionStore = require('./sessions/current-session-store')
 
 module.exports = React.createClass({
 
   displayName: 'Login',
+
+  mixins: [ Navigation, Router.State ],
 
   componentDidMount: function () {
     CurrentSessionStore.addChangeListener(this._onChange)
@@ -24,7 +25,7 @@ module.exports = React.createClass({
 
   reenterNormalRouting: function () {
     if (CurrentSessionStore.isQueried())
-      Router.transitionTo(this.props.query.redirectTo)
+      this.transitionTo(this.getQuery().redirectTo)
   },
 
   render: function () {

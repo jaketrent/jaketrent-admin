@@ -11,8 +11,6 @@ var AppDispatcher = require('../../common/app-dispatcher')
 var BooksApi = require('./books-api')
 var BooksConstants = require('./books-constants')
 
-var ActionTypes = BooksConstants.ActionTypes
-
 var _books = []
 var _latestLinkHeader
 
@@ -118,11 +116,11 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
-    case ActionTypes.FETCH:
+    case BooksConstants.ActionTypes.FETCH:
       BooksApi.fetch(getUrl(), action.filter, getPage())
       break
 
-    case ActionTypes.FETCH_SUCCESS:
+    case BooksConstants.ActionTypes.FETCH_SUCCESS:
       _latestLinkHeader = action.linkHeader
       cache(action.models, action.page)
 
@@ -132,18 +130,18 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
       BooksStore.emitChange()
       break
 
-    case ActionTypes.CREATE_SUCCESS:
+    case BooksConstants.ActionTypes.CREATE_SUCCESS:
       cache(action.model, getLastPage())
       BooksStore.emitChange()
       break
 
-    case ActionTypes.UPDATE_SUCCESS:
+    case BooksConstants.ActionTypes.UPDATE_SUCCESS:
       // TODO: clone out so that this is required coming back in
 //      cache.setItem(action.models, action.filter, action.page)
       BooksStore.emitChange()
       break
 
-    case ActionTypes.DESTROY_SUCCESS:
+    case BooksConstants.ActionTypes.DESTROY_SUCCESS:
       uncache(action.model)
       BooksStore.emitChange()
       break

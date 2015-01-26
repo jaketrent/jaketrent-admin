@@ -1,6 +1,5 @@
-/** @jsx React.DOM */
-
 var React = require('react')
+var RouteHandler = require('react-router').RouteHandler
 
 var AuthenticatedRoute = require('../../common/authenticated-route')
 var BooksActions = require('./books-actions')
@@ -24,7 +23,7 @@ module.exports = React.createClass({
         </header>
         <BooksList />
         <main className="page-body">
-          <this.props.activeRouteHandler />
+          <RouteHandler />
         </main>
       </div>
     )

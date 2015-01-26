@@ -1,7 +1,6 @@
-/** @jsx React.DOM */
-
 var React = require('react')
 var Router = require('react-router')
+var Navigation = Router.Navigation
 
 var AppConstants = require('../../common/app-constants')
 var AuthenticatedRoute = require('../../common/authenticated-route')
@@ -13,7 +12,7 @@ module.exports = React.createClass({
 
   displayName: 'BooksCreate',
 
-  mixins: [ AuthenticatedRoute ],
+  mixins: [ AuthenticatedRoute, Navigation ],
 
   getInitialState: function () {
     return this.getStateFromStores()
@@ -38,7 +37,7 @@ module.exports = React.createClass({
   _onChange: function () {
     this.setState(this.getStateFromStores(), function () {
       if (BooksCreateStore.isCreated()) {
-        Router.transitionTo('books-show', { id: this.state.book.id })
+        this.transitionTo('books-show', { id: this.state.book.id })
       }
     }.bind(this))
   },

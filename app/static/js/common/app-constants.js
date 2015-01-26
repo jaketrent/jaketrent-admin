@@ -4,6 +4,10 @@ var keyMirror = require('react/lib/keyMirror')
 
 module.exports = {
 
+  ActionTypes: keyMirror({
+    TRANSITION: null
+  }),
+
   Events: keyMirror({
     CHANGE: null
   }),

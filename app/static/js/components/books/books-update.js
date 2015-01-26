@@ -1,7 +1,6 @@
-/** @jsx React.DOM */
-
 var React = require('react')
 var Router = require('react-router')
+var Navigation = Router.Navigation
 
 var AppConstants = require('../../common/app-constants')
 var AuthenticatedRoute = require('../../common/authenticated-route')
@@ -14,7 +13,7 @@ module.exports = React.createClass({
 
   displayName: 'BooksUpdate',
 
-  mixins: [ AuthenticatedRoute ],
+  mixins: [ AuthenticatedRoute, Router.State, Navigation ],
 
   getInitialState: function () {
     return this.getStateFromStores()
@@ -29,7 +28,7 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     BooksUpdateStore.addChangeListener(this._onChange)
-    BooksActions.updateSelect({ id: this.props.params.id })
+    BooksActions.updateSelect({ id: this.getParams().id })
   },
 
   componentWillUnmount: function () {
@@ -41,10 +40,8 @@ module.exports = React.createClass({
       if (BooksUpdateStore.hasBook()) {
         this.setState(this.getStateFromStores(), function () {
           if (BooksUpdateStore.isPersisted())
-            Router.transitionTo('books-show', { id: this.props.params.id })
+            this.transitionTo('books-show', { id: this.getParams().id })
         })
-      } else {
-        Router.replaceWith('errors', { type: 404 })
       }
     }
   },
