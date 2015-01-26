@@ -4,7 +4,7 @@
   "description": "",
   "main": "app/app.js",
   "engines": {
-    "node": "0.11.x"
+    "node": "0.10.x"
   },
   "scripts": {
     "build": "rm -rf app/static-dist; node_modules/.bin/broccoli build app/static-dist",
