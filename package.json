@@ -38,6 +38,7 @@
     "broccoli-sass": "^0.2.1",
     "broccoli-static-compiler": "^0.1.4",
     "coffee-script": "~1.7",
+    "flux": "^2.0.1",
     "mocha": "~1.17.1",
     "node-dev": "^2.3.0",
     "react": "^0.12.2",
