@@ -94,8 +94,6 @@ var BooksStore = merge(EventEmitter.prototype, {
   hasNextPage: function () {
     return _latestLinkHeader
       && _latestLinkHeader.next
-      && _latestLinkHeader.last
-      && (_latestLinkHeader.next.page !== _latestLinkHeader.last.page)
   },
 
   emitChange: function () {
