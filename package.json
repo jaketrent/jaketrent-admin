@@ -7,43 +7,38 @@
     "node": "0.10.x"
   },
   "scripts": {
-    "build": "rm -rf app/static-dist; node_modules/.bin/broccoli build app/static-dist",
-    "install-hook": "ln -s ../../hooks/pre-commit.sh .git/hooks/pre-commit; ln -s ../../hooks/post-commit.sh .git/hooks/post-commit",
-    "start": "node_modules/.bin/broccoli serve",
+    "start": "webpack-dev-server --port 4200 --progress --debug --devtool sourcemap --output-pathinfo",
+    "server": "node server/index",
+    "dist": "NODE_ENV=production webpack -p",
     "test": "node_modules/mocha/bin/mocha \"test/unit/**/*.spec.coffee\" --watch"
   },
   "author": "jaketrent",
   "license": "MIT",
   "dependencies": {
-    "broccoli-jade": "^0.2.0",
-    "config": "^1.0.1",
-    "debug": "^1.0.4",
-    "dotenv": "^0.4.0",
-    "es6-promise": "^1.0.0",
     "express": "^4.7.1",
-    "gzippo": "^0.2.0",
-    "jade": "^1.5.0",
-    "json-linker": "^1.4.1",
-    "lodash-node": "^2.4.1",
-    "node-uuid": "^1.4.1",
-    "parse-link-header": "^0.1.0",
-    "superagent": "^0.18.2"
+    "gzippo": "^0.2.0"
   },
   "devDependencies": {
-    "broccoli": "^0.12.3",
-    "broccoli-browserify": "^0.1.0",
-    "broccoli-cli": "0.0.1",
-    "broccoli-merge-trees": "^0.1.4",
-    "broccoli-react": "^0.7.0",
-    "broccoli-sass": "^0.2.1",
-    "broccoli-static-compiler": "^0.1.4",
+    "autoprefixer-loader": "^1.1.0",
     "coffee-script": "~1.7",
+    "config": "^1.0.1",
+    "css-loader": "^0.9.1",
     "flux": "^2.0.1",
+    "html-webpack-plugin": "^1.1.0",
+    "html-webpack-template": "^1.0.1",
+    "jsx-loader": "^0.12.2",
     "mocha": "~1.17.1",
+    "parse-link-header": "^0.1.0",
     "node-dev": "^2.3.0",
     "react": "^0.12.2",
     "react-router": "^0.11.6",
+    "sass-loader": "^0.3.1",
     "should": "~3.1.1",
-    "underscore": "^1.7.0"
+    "style-loader": "^0.8.3",
+    "superagent": "^0.18.2",
+    "underscore": "^1.7.0",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.5.3",
+    "webpack-dev-server": "^1.7.0"
   }
 }
