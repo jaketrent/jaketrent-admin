@@ -13,21 +13,21 @@ module.exports = React.createClass({
 
   mixins: [ AuthenticatedRoute, Router.State, Navigation ],
 
-  getInitialState: function () {
+  getInitialState() {
     return this.getStateFromStores()
   },
 
-  getStateFromStores: function () {
+  getStateFromStores() {
     return {
       book: BooksShowStore.get()
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     BooksShowStore.addChangeListener(this._onChange)
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     BooksShowStore.removeChangeListener(this._onChange)
   },
 
@@ -41,12 +41,12 @@ module.exports = React.createClass({
     }
   },
 
-  onClickDestroy: function () {
+  onClickDestroy() {
     if (confirm('Permanently destroy?'))
       BooksActions.destroy(this.state.book)
   },
 
-  render: function () {
+  render() {
     return (
       <header className="books-header">
         <h2 className="books-title">

@@ -20,7 +20,7 @@ module.exports = React.createClass({
 
   mixins: [ Router.State ],
 
-  render: function () {
+  render() {
     var errorByStatus = statuses[this.getParams().type]
     var errorByMessage = messages[this.getParams().type]
     // TODO: default

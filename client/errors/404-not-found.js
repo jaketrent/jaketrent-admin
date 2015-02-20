@@ -6,7 +6,7 @@ module.exports = React.createClass({
 
   displayName: '404NotFound',
 
-  render: function () {
+  render() {
     return (
       <ErrorsTextLayout>
         404 Not Found

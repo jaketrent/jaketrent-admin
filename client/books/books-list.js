@@ -12,22 +12,22 @@ module.exports = React.createClass({
 
   mixins: [ React.addons.LinkedStateMixin ],
 
-  getInitialState: function () {
+  getInitialState() {
     return this.getStateFromStores()
   },
 
-  getStateFromStores: function () {
+  getStateFromStores() {
     return {
       books: BooksStore.find(),
       hasMoreBooks: BooksStore.hasNextPage()
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     BooksStore.addChangeListener(this._onChange)
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     BooksStore.removeChangeListener(this._onChange)
   },
 
@@ -35,11 +35,11 @@ module.exports = React.createClass({
     this.setState(this.getStateFromStores())
   },
 
-  handleLoadMoreClick: function () {
+  handleLoadMoreClick() {
     BooksActions.fetch()
   },
 
-  renderCreate: function () {
+  renderCreate() {
     return (
       <li className="sidebar-item sidebar-item-no-link sidebar-item-create" key="books-create">
         <Link to="books-create" className="btn btn-full btn-secondary sidebar-create-btn">
@@ -49,7 +49,7 @@ module.exports = React.createClass({
     )
   },
 
-  renderSearch: function () {
+  renderSearch() {
     return (
       <li className="sidebar-item sidebar-item-no-link sidebar-item-search" key="books-search">
         <input type="text" className="form-input form-input-text form-input-search sidebar-search-input"
@@ -58,7 +58,7 @@ module.exports = React.createClass({
     )
   },
 
-  renderBooks: function (books) {
+  renderBooks(books) {
     var filtered = books
 
     if (this.state.searchTerm)
@@ -69,7 +69,7 @@ module.exports = React.createClass({
     return filtered.map(this.renderBook)
   },
 
-  renderBook: function (book) {
+  renderBook(book) {
     return (
       <li className="sidebar-item" key={book.id}>
         <Link className="sidebar-link" to="books-show" params={{ id: book.id}}>
@@ -79,7 +79,7 @@ module.exports = React.createClass({
     )
   },
 
-  renderMoreButton: function () {
+  renderMoreButton() {
     if (this.state.hasMoreBooks)
       return (
         <li className="sidebar-item" key="loadmore-btn">
@@ -88,7 +88,7 @@ module.exports = React.createClass({
       )
   },
 
-  render: function () {
+  render() {
     return (
       <section className="sidebar">
         <ul className="sidebar-list">

@@ -4,7 +4,7 @@ module.exports = React.createClass({
 
   displayName: 'ErrorsLayoutText',
 
-  render: function () {
+  render() {
     return (
       <main className="errors-container">
         <header className="errors-header">

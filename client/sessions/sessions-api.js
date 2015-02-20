@@ -1,18 +1,22 @@
 'use strict'
 
-var request = require('superagent')
+var axios = require('axios')
 
 var api = require('../common/api')
 var SessionsActions = require('./sessions-actions')
 
-exports.fetchCurrent = function (done) {
-  request
-    .get(api.getHostBaseUrl() + '/sessions/current')
-    .set('Content-Type', 'application/json')
-    .withCredentials()
-    .end(function (err, res) {
-      if (err || res.body.errors) return SessionsActions.fetchCurrentError(err || res.body.sessions)
-
-      SessionsActions.fetchCurrentSuccess(res.body.sessions)
+exports.fetchCurrent = async (done) => {
+  var url = api.getHostBaseUrl() + '/sessions/current'
+  try {
+    var res = await axios.get(url, {
+      withCredentials: true
     })
+
+    if (res.data.errors)
+      return SessionsActions.fetchCurrentError(res.data.errors)
+
+    SessionsActions.fetchCurrentSuccess(res.data.sessions)
+  } catch (err) {
+    SessionsActions.fetchCurrentError(err)
+  }
 }

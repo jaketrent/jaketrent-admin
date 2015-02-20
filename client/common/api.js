@@ -1,5 +1,5 @@
 'use strict'
 
-exports.getHostBaseUrl = function getHostBaseUrl() {
+exports.getHostBaseUrl = () => {
   return API_HOST_BASE_URL;
 }

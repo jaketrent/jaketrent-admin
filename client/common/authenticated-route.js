@@ -2,7 +2,7 @@ var CurrentSessionStore = require('../sessions/current-session-store')
 
 var AuthenticatedRoute = {
   statics: {
-    willTransitionTo: function (transition) {
+    willTransitionTo(transition) {
       if (!CurrentSessionStore.isQueried())
         return transition.redirect('/login', null, { redirectTo: transition.path })
 

@@ -10,25 +10,25 @@ module.exports = React.createClass({
 
   mixins: [ Navigation, Router.State ],
 
-  componentDidMount: function () {
+  componentDidMount() {
     CurrentSessionStore.addChangeListener(this._onChange)
     this.reenterNormalRouting()
   },
 
-  componentWillMount: function () {
+  componentWillMount() {
     CurrentSessionStore.removeChangeListener(this._onChange)
   },
 
-  _onChange: function () {
+  _onChange() {
     this.reenterNormalRouting()
   },
 
-  reenterNormalRouting: function () {
+  reenterNormalRouting() {
     if (CurrentSessionStore.isQueried())
       this.transitionTo(this.getQuery().redirectTo)
   },
 
-  render: function () {
+  render() {
     return (
       <p>Logging in...</p>
     )

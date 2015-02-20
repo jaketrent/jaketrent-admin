@@ -15,27 +15,27 @@ module.exports = React.createClass({
 
   mixins: [ AuthenticatedRoute, Router.State, Navigation ],
 
-  getInitialState: function () {
+  getInitialState() {
     return this.getStateFromStores()
   },
 
-  getStateFromStores: function () {
+  getStateFromStores() {
     return {
       book: BooksUpdateStore.getBook() || {},
       errors: BooksUpdateStore.getErrors() || []
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     BooksUpdateStore.addChangeListener(this._onChange)
     BooksActions.updateSelect({ id: this.getParams().id })
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     BooksUpdateStore.removeChangeListener(this._onChange)
   },
 
-  _onChange: function () {
+  _onChange() {
     if (this.isMounted()) {
       if (BooksUpdateStore.hasBook()) {
         this.setState(this.getStateFromStores(), function () {
@@ -46,7 +46,7 @@ module.exports = React.createClass({
     }
   },
 
-  updateState: function (evt) {
+  updateState(evt) {
     var book = this.state.book
     book[evt.target.name] = evt.target.value
     this.setState({
@@ -54,16 +54,16 @@ module.exports = React.createClass({
     })
   },
 
-  onSubmit: function (evt) {
+  onSubmit(evt) {
     evt.preventDefault()
     BooksActions.update(this.state.book)
   },
 
-  onClickCancel: function (evt) {
+  onClickCancel() {
     Router.goBack()
   },
 
-  render: function () {
+  render() {
     return (
       <div className="body">
         <form className="form" onSubmit={this.onSubmit}>

@@ -58,7 +58,7 @@ function getLastPage() {
 
 var BooksStore = merge(EventEmitter.prototype, {
 
-  find: function (filter) {
+  find(filter) {
     var records = _books
 
     if (filter) {
@@ -91,20 +91,20 @@ var BooksStore = merge(EventEmitter.prototype, {
     }
   },
 
-  hasNextPage: function () {
+  hasNextPage() {
     return _latestLinkHeader
       && _latestLinkHeader.next
   },
 
-  emitChange: function () {
+  emitChange() {
     this.emit(AppConstants.Events.CHANGE, arguments)
   },
 
-  addChangeListener: function (callback) {
+  addChangeListener(callback) {
     this.on(AppConstants.Events.CHANGE, callback)
   },
 
-  removeChangeListener: function (callback) {
+  removeChangeListener(callback) {
     this.removeListener(AppConstants.Events.CHANGE, callback)
   }
 })

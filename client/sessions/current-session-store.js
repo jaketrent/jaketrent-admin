@@ -16,32 +16,32 @@ var _isQueried = false
 
 var CurrentSessionStore = merge(EventEmitter.prototype, {
 
-  getSession: function () {
+  getSession() {
     return _session
   },
 
-  hasSession: function () {
+  hasSession() {
     return _session && !isEmpty(_session)
   },
 
-  isQueried: function () {
+  isQueried() {
     return _isQueried
   },
 
-  emitChange: function () {
+  emitChange() {
     this.emit(AppConstants.Events.CHANGE, arguments)
   },
 
-  addChangeListener: function (callback) {
+  addChangeListener(callback) {
     this.on(AppConstants.Events.CHANGE, callback)
   },
 
-  removeChangeListener: function (callback) {
+  removeChangeListener(callback) {
     this.removeListener(AppConstants.Events.CHANGE, callback)
   }
 })
 
-CurrentSessionStore.dispatchToken = AppDispatcher.register(function (payload) {
+CurrentSessionStore.dispatchToken = AppDispatcher.register((payload) => {
   var action = payload.action
 
   switch(action.type) {

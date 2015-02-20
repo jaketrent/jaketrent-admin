@@ -16,32 +16,32 @@ var _destroyed = false
 
 var BooksShowStore = merge(EventEmitter.prototype, {
 
-  get: function () {
+  get() {
     return _book
   },
 
-  hasBook: function () {
+  hasBook() {
     return _book && !isEmpty(_book)
   },
 
-  isDestroyed: function () {
+  isDestroyed() {
     return _destroyed
   },
 
-  emitChange: function () {
+  emitChange() {
     this.emit(AppConstants.Events.CHANGE, arguments)
   },
 
-  addChangeListener: function (callback) {
+  addChangeListener(callback) {
     this.on(AppConstants.Events.CHANGE, callback)
   },
 
-  removeChangeListener: function (callback) {
+  removeChangeListener(callback) {
     this.removeListener(AppConstants.Events.CHANGE, callback)
   }
 })
 
-BooksShowStore.dispatchToken = AppDispatcher.register(function (payload) {
+BooksShowStore.dispatchToken = AppDispatcher.register((payload) => {
   var action = payload.action
 
   switch(action.type) {

@@ -12,12 +12,12 @@ function Cache() {
   this.init()
 }
 
-Cache.prototype.init = function init() {
+Cache.prototype.init = () => {
   this._cache = {}
   this._cache[NO_FILTER_KEY] = []
 }
 
-Cache.prototype.setItem = function setItem(data, filterOrPage, page) {
+Cache.prototype.setItem = (data, filterOrPage, page) => {
   var meta = normalizeMetaArgs(filterOrPage, page)
   var filter = meta.filter
   var page = meta.page
@@ -33,7 +33,7 @@ Cache.prototype.setItem = function setItem(data, filterOrPage, page) {
   return this
 }
 
-Cache.prototype.getItem = function getItem(filterOrPage, page) {
+Cache.prototype.getItem = (filterOrPage, page) => {
   var meta = normalizeMetaArgs(filterOrPage, page)
   var filter = meta.filter
   var page = meta.page
@@ -45,7 +45,7 @@ Cache.prototype.getItem = function getItem(filterOrPage, page) {
   return this._cache[key][page]
 }
 
-Cache.prototype.removeItem = function removeItem(filterOrPage, page) {
+Cache.prototype.removeItem = (filterOrPage, page) => {
   var meta = normalizeMetaArgs(filterOrPage, page)
   var filter = meta.filter
   var page = meta.page
@@ -59,7 +59,7 @@ Cache.prototype.removeItem = function removeItem(filterOrPage, page) {
   return this
 }
 
-Cache.prototype.getAllItems = function getAllItems(filter) {
+Cache.prototype.getAllItems = (filter) => {
   var key = formatFilterKey(filter, filter)
 
   return uniq(flatten(this._cache[key], true)
@@ -68,11 +68,11 @@ Cache.prototype.getAllItems = function getAllItems(filter) {
     }))
 }
 
-Cache.prototype.clear = function clear() {
+Cache.prototype.clear = () => {
   this.init()
 }
 
-Cache.prototype.getLastPageNumber = function getLastPageNumber(filter) {
+Cache.prototype.getLastPageNumber = (filter) => {
   var key = formatFilterKey(filter, filter)
 
   if (!Array.isArray(this._cache[key])) return 1
@@ -85,7 +85,7 @@ Cache.prototype.getLastPageNumber = function getLastPageNumber(filter) {
   return lastNonNullPage
 }
 
-Cache.prototype._debugCache = function _debugCache() {
+Cache.prototype._debugCache = () => {
   return this._cache
 }
 

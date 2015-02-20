@@ -1,80 +1,81 @@
 'use strict'
 
+var axios = require('axios')
 var parseLinkHeader = require('parse-link-header')
-var request = require('superagent')
 
 var api = require('../common/api')
 var BooksActions = require('./books-actions')
 
-function requestBooks(url, filter, done) {
+exports.fetch = async (url, filter, page) => {
   if (!url)
     url = api.getHostBaseUrl() + '/books'
 
   if (filter && filter.id)
     url += '/' + filter.id
 
-  request
-    .get(url)
-    .set('Content-Type', 'application/json')
-    .withCredentials()
-    .end(function (err, res) {
-      if (err || res.body.errors) return done(err || res.body.errors)
-
-      done(null, res)
+  try {
+    var res = await axios.get(url, {
+      withCredentials: true
     })
-}
 
-exports.fetch = function (url, filter, page) {
-  function requestBooksCallback(err, res) {
-    if (err) return BooksActions.fetchError(err || res.body.errors)
+    if (res.data.errors)
+      return BooksActions.fetchError(res.data.errors)
 
     var linkHeader
 
     if (res.headers && res.headers.link)
       linkHeader = parseLinkHeader(res.headers.link)
 
-    BooksActions.fetchSuccess(res.body.books, filter, page, linkHeader)
+    BooksActions.fetchSuccess(res.data.books, filter, page, linkHeader)
+  } catch (err) {
+    BooksActions.fetchError(err)
   }
-
-  requestBooks(url, filter, requestBooksCallback)
 }
 
-exports.create = function (model) {
-  request
-    .post(api.getHostBaseUrl() + '/books')
-    .set('Content-Type', 'application/json')
-    .withCredentials()
-    .send({ books: model })
-    .end(function (err, res) {
-      if (err || res.body.errors) return BooksActions.createError(err || res.body.errors)
-
-      BooksActions.createSuccess(res.body.books)
+exports.create = async (model) => {
+  var url = api.getHostBaseUrl() + '/books'
+  try {
+    var res = await axios.post(url, { books: model }, {
+      withCredentials: true
     })
+
+    if (res.data.errors)
+      return BooksActions.createError(res.data.errors)
+
+    BooksActions.createSuccess(res.data.books)
+  } catch (err) {
+    BooksActions.createError(err)
+  }
 }
 
-exports.update = function (model) {
-  request
-    .put(api.getHostBaseUrl() + '/books/' + model.id)
-    .set('Content-Type', 'application/json')
-    .withCredentials()
-    .send({ books: model })
-    .end(function (err, res) {
-
-      if (err || res.body.errors) return BooksActions.updateError(err || res.body.errors)
-
-      BooksActions.updateSuccess(res.body.books)
+exports.update = async (model) => {
+  var url = api.getHostBaseUrl() + '/books/' + model.id
+  try {
+    var res = await axios.put(url, { books: model }, {
+      withCredentials: true
     })
+
+    if (res.data.errors)
+      return BooksActions.updateError(res.data.errors)
+
+    BooksActions.updateSuccess(res.data.books)
+  } catch (err) {
+    BooksActions.updateError(err)
+  }
 }
 
-exports.destroy = function (model) {
-  request
-    .del(api.getHostBaseUrl() + '/books/' + model.id)
-    .set('Content-Type', 'application/json')
-    .withCredentials()
-    .end(function (err, res) {
-
-      if (res.status != 204) return BooksActions.destroyError(new Error('Failed to destroy book'))
-
-      BooksActions.destroySuccess(model)
+exports.destroy = async (model) => {
+  var url = api.getHostBaseUrl() + '/books/' + model.id
+  try {
+    var res = await axios.delete(url, {
+      withCredentials: true
     })
+
+    if (res.data.errors)
+      return BooksActions.destroyError(res.data.errors)
+
+    BooksActions.destroySuccess(model)
+  } catch (err) {
+    BooksActions.destroyError(err)
+  }
 }

@@ -39,36 +39,36 @@ var _persisted = false
 
 var BooksUpdateStore = merge(EventEmitter.prototype, {
 
-  getBook: function () {
+  getBook() {
     return _book
   },
 
-  getErrors: function () {
+  getErrors() {
     return _errors
   },
 
-  hasBook: function () {
+  hasBook() {
     return _book && !isEmpty(_book)
   },
 
-  isPersisted: function () {
+  isPersisted() {
     return _persisted
   },
 
-  emitChange: function () {
+  emitChange() {
     this.emit(AppConstants.Events.CHANGE, arguments)
   },
 
-  addChangeListener: function (callback) {
+  addChangeListener(callback) {
     this.on(AppConstants.Events.CHANGE, callback)
   },
 
-  removeChangeListener: function (callback) {
+  removeChangeListener(callback) {
     this.removeListener(AppConstants.Events.CHANGE, callback)
   }
 })
 
-BooksUpdateStore.dispatchToken = AppDispatcher.register(function (payload) {
+BooksUpdateStore.dispatchToken = AppDispatcher.register((payload) => {
   var action = payload.action
 
   switch(action.type) {

@@ -15,13 +15,13 @@ function ensureFindable(filter) {
     BooksApi.fetch(null, filter)
 }
 
-exports.createSelect = function () {
+exports.createSelect = () => {
   AppDispatcher.handleViewAction({
     type: ActionTypes.CREATE_SELECT
   })
 }
 
-exports.create = function (model) {
+exports.create = (model) => {
   AppDispatcher.handleViewAction({
     type: ActionTypes.CREATE,
     model: model
@@ -29,21 +29,21 @@ exports.create = function (model) {
   BooksApi.create(model)
 }
 
-exports.createSuccess = function (model) {
+exports.createSuccess = (model) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.CREATE_SUCCESS,
     model: model
   })
 }
 
-exports.createError = function (errors) {
+exports.createError = (errors) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.CREATE_ERROR,
     errors: errors
   })
 }
 
-exports.updateSelect = function (filter) {
+exports.updateSelect = (filter) => {
   ensureFindable(filter)
   AppDispatcher.handleViewAction({
     type: ActionTypes.UPDATE_SELECT,
@@ -51,7 +51,7 @@ exports.updateSelect = function (filter) {
   })
 }
 
-exports.update = function (model) {
+exports.update = (model) => {
   AppDispatcher.handleViewAction({
     type: ActionTypes.UPDATE,
     model: model
@@ -59,21 +59,21 @@ exports.update = function (model) {
   BooksApi.update(model)
 }
 
-exports.updateSuccess = function (model) {
+exports.updateSuccess = (model) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.UPDATE_SUCCESS,
     model: model
   })
 }
 
-exports.updateError = function (errors) {
+exports.updateError = (errors) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.UPDATE_ERROR,
     errors: errors
   })
 }
 
-exports.destroy = function (model) {
+exports.destroy = (model) => {
   AppDispatcher.handleViewAction({
     type: ActionTypes.DESTROY,
     model: model
@@ -81,28 +81,28 @@ exports.destroy = function (model) {
   BooksApi.destroy(model)
 }
 
-exports.destroySuccess = function (model) {
+exports.destroySuccess = (model) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.DESTROY_SUCCESS,
     model: model
   })
 }
 
-exports.destroyError = function (errors) {
+exports.destroyError = (errors) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.DESTROY_ERROR,
     errors: errors
   })
 }
 
-exports.fetch = function (filter) {
+exports.fetch = (filter) => {
   AppDispatcher.handleViewAction({
     type: ActionTypes.FETCH,
     filter: filter
   })
 }
 
-exports.fetchSuccess = function (models, filter, page, linkHeader) {
+exports.fetchSuccess = (models, filter, page, linkHeader) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.FETCH_SUCCESS,
     models: models,
@@ -112,14 +112,14 @@ exports.fetchSuccess = function (models, filter, page, linkHeader) {
   })
 }
 
-exports.fetchError = function (errors) {
+exports.fetchError = (errors) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.FETCH_ERROR,
     errors: errors
   })
 }
 
-exports.show = function (filter) {
+exports.show = (filter) => {
   ensureFindable(filter)
   AppDispatcher.handleViewAction({
     type: ActionTypes.SHOW,

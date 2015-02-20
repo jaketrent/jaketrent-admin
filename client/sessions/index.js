@@ -8,30 +8,30 @@ var CurrentSessionStore = require('./current-session-store')
 
 module.exports = React.createClass({
 
-  getInitialState: function () {
+  getInitialState() {
     return this.getStateFromStores()
   },
 
-  getStateFromStores: function () {
+  getStateFromStores() {
     return {
       isSessionQueried: CurrentSessionStore.isQueried()
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     CurrentSessionStore.addChangeListener(this._onChange)
     SessionsActions.fetchCurrent()
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     CurrentSessionStore.removeChangeListener(this._onChange)
   },
 
-  _onChange: function () {
+  _onChange() {
     this.setState(this.getStateFromStores())
   },
 
-  render: function () {
+  render() {
     if (this.state.isSessionQueried)
       return (
         <div className="app">

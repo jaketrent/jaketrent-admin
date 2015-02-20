@@ -5,7 +5,7 @@ var AppDispatcher = require('./app-dispatcher')
 
 var ActionTypes = AppConstants.ActionTypes
 
-exports.transition = function (routeState) {
+exports.transition = (routeState) => {
   AppDispatcher.handleViewAction({
     type: ActionTypes.TRANSITION,
     routeState: routeState

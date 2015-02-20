@@ -36,32 +36,32 @@ function setErrors(errors) {
 
 var BooksCreateStore = merge(EventEmitter.prototype, {
 
-  getBook: function () {
+  getBook() {
     return _book
   },
 
-  getErrors: function () {
+  getErrors() {
     return _errors
   },
 
-  isCreated: function () {
+  isCreated() {
     return _isCreated
   },
 
-  emitChange: function () {
+  emitChange() {
     this.emit(AppConstants.Events.CHANGE, arguments)
   },
 
-  addChangeListener: function (callback) {
+  addChangeListener(callback) {
     this.on(AppConstants.Events.CHANGE, callback)
   },
 
-  removeChangeListener: function (callback) {
+  removeChangeListener(callback) {
     this.removeListener(AppConstants.Events.CHANGE, callback)
   }
 })
 
-BooksCreateStore.dispatchToken = AppDispatcher.register(function (payload) {
+BooksCreateStore.dispatchToken = AppDispatcher.register((payload) => {
   var action = payload.action
 
   switch(action.type) {

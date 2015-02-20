@@ -11,11 +11,11 @@ module.exports = React.createClass({
 
   mixins: [ AuthenticatedRoute ],
 
-  componentDidMount: function () {
+  componentDidMount() {
     BooksActions.fetch()
   },
 
-  render: function () {
+  render() {
     return (
       <div className="page">
         <header className="page-header">

@@ -2,7 +2,6 @@ var React = require('react')
 var Router = require('react-router')
 var Navigation = Router.Navigation
 
-var AppConstants = require('../common/app-constants')
 var AuthenticatedRoute = require('../common/authenticated-route')
 var BooksActions = require('./books-actions')
 var BooksCreateStore = require('./books-create-store')
@@ -14,24 +13,24 @@ module.exports = React.createClass({
 
   mixins: [ AuthenticatedRoute, Navigation ],
 
-  getInitialState: function () {
+  getInitialState() {
     return this.getStateFromStores()
   },
 
-  getStateFromStores: function () {
+  getStateFromStores() {
     return {
       book: BooksCreateStore.getBook(),
       errors: BooksCreateStore.getErrors()
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     BooksCreateStore.addChangeListener(this._onChange)
     BooksActions.createSelect()
     this.clearTextArea()
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     BooksCreateStore.removeChangeListener(this._onChange)
   },
 
@@ -40,7 +39,7 @@ module.exports = React.createClass({
     document.getElementById('description').value = ''
   },
 
-  _onChange: function () {
+  _onChange() {
     this.setState(this.getStateFromStores(), function () {
       if (BooksCreateStore.isCreated()) {
         this.transitionTo('books-show', { id: this.state.book.id })
@@ -48,7 +47,7 @@ module.exports = React.createClass({
     }.bind(this))
   },
 
-  onSubmit: function (evt) {
+  onSubmit(evt) {
     evt.preventDefault()
     BooksActions.create({
       title: this.refs.title.getDOMNode().value,
@@ -61,11 +60,11 @@ module.exports = React.createClass({
     })
   },
 
-  onClickCancel: function () {
+  onClickCancel() {
     Router.goBack()
   },
 
-  render: function () {
+  render() {
     return (
       <div className="body">
         <form className="form" onSubmit={this.onSubmit}>

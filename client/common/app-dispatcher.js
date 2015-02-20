@@ -8,7 +8,7 @@ var PayloadSources = AppConstants.PayloadSources
 
 module.exports = copyProperties(new Dispatcher(), {
 
-  handleServerAction: function(action) {
+  handleServerAction(action) {
     var payload = {
       source: PayloadSources.SERVER_ACTION,
       action: action
@@ -16,7 +16,7 @@ module.exports = copyProperties(new Dispatcher(), {
     this.dispatch(payload)
   },
 
-  handleViewAction: function(action) {
+  handleViewAction(action) {
     var payload = {
       source: PayloadSources.VIEW_ACTION,
       action: action

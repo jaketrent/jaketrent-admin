@@ -1,26 +1,24 @@
 'use strict'
 
-var isEmpty = require('lodash-node/modern/objects/isEmpty')
-
 var SessionsConstants = require('./sessions-constants')
 var AppDispatcher = require('../common/app-dispatcher')
 
 var ActionTypes = SessionsConstants.ActionTypes
 
-exports.fetchCurrent = function () {
+exports.fetchCurrent = () => {
   AppDispatcher.handleViewAction({
     type: ActionTypes.FETCH_CURRENT
   })
 }
 
-exports.fetchCurrentSuccess = function (model) {
+exports.fetchCurrentSuccess = (model) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.FETCH_CURRENT_SUCCESS,
     model: model
   })
 }
 
-exports.fetchCurrentError = function (errors) {
+exports.fetchCurrentError = (errors) => {
   AppDispatcher.handleServerAction({
     type: ActionTypes.FETCH_CURRENT_ERROR,
     errors: errors
