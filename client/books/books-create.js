@@ -28,10 +28,16 @@ module.exports = React.createClass({
   componentDidMount: function () {
     BooksCreateStore.addChangeListener(this._onChange)
     BooksActions.createSelect()
+    this.clearTextArea()
   },
 
   componentWillUnmount: function () {
     BooksCreateStore.removeChangeListener(this._onChange)
+  },
+
+  clearTextArea() {
+    // for some reason, just pulling state isn't enough
+    document.getElementById('description').value = ''
   },
 
   _onChange: function () {
