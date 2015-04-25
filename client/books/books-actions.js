@@ -96,10 +96,7 @@ exports.destroyError = (errors) => {
 }
 
 exports.fetch = (filter) => {
-  AppDispatcher.handleViewAction({
-    type: ActionTypes.FETCH,
-    filter: filter
-  })
+  BooksApi.fetch(BooksStore.getUrl(), action.filter, BooksStore.getPage())
 }
 
 exports.fetchSuccess = (models, filter, page, linkHeader) => {

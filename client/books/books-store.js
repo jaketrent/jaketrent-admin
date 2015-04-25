@@ -8,7 +8,6 @@ var uniq = require('lodash-node/modern/array/uniq')
 
 var AppConstants = require('../common/app-constants')
 var AppDispatcher = require('../common/app-dispatcher')
-var BooksApi = require('./books-api')
 var BooksConstants = require('./books-constants')
 
 var _books = []
@@ -36,19 +35,6 @@ function uncache(book) {
     return b.book.id == book.id
   })
   _books.splice(indx, 1)
-}
-
-// TODO: use just pages or just urls
-function getUrl() {
-  if (BooksStore.hasNextPage())
-    return _latestLinkHeader.next.url
-}
-
-function getPage() {
-  if (BooksStore.hasNextPage())
-    return _latestLinkHeader.next.page
-  else if (!_latestLinkHeader)
-    return 1
 }
 
 function getLastPage() {
@@ -91,6 +77,19 @@ var BooksStore = merge(EventEmitter.prototype, {
     }
   },
 
+  // TODO: use just pages or just urls
+  getUrl() {
+    if (BooksStore.hasNextPage())
+      return _latestLinkHeader.next.url
+  },
+
+  getPage() {
+    if (BooksStore.hasNextPage())
+      return _latestLinkHeader.next.page
+    else if (!_latestLinkHeader)
+      return 1
+  },
+
   hasNextPage() {
     return _latestLinkHeader
       && _latestLinkHeader.next
@@ -114,16 +113,9 @@ BooksStore.dispatchToken = AppDispatcher.register(function (payload) {
 
   switch(action.type) {
 
-    case BooksConstants.ActionTypes.FETCH:
-      BooksApi.fetch(getUrl(), action.filter, getPage())
-      break
-
     case BooksConstants.ActionTypes.FETCH_SUCCESS:
       _latestLinkHeader = action.linkHeader
       cache(action.models, action.page)
-
-      if (!_latestLinkHeader && action.filter)
-        BooksApi.fetch(getUrl(), null, getPage())
 
       BooksStore.emitChange()
       break
