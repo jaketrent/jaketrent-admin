@@ -1,14 +1,13 @@
 'use strict'
 
+var SessionsApi = require('./sessions-api')
 var SessionsConstants = require('./sessions-constants')
 var AppDispatcher = require('../common/app-dispatcher')
 
 var ActionTypes = SessionsConstants.ActionTypes
 
 exports.fetchCurrent = () => {
-  AppDispatcher.handleViewAction({
-    type: ActionTypes.FETCH_CURRENT
-  })
+  SessionsApi.fetchCurrent()
 }
 
 exports.fetchCurrentSuccess = (model) => {

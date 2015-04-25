@@ -1,4 +1,4 @@
-var filter = require('lodash-node/modern/collections/filter')
+var filter = require('lodash-node/modern/collection/filter')
 var React = require('react')
 
 module.exports = React.createClass({

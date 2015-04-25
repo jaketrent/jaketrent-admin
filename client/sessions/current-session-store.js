@@ -1,12 +1,11 @@
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
-var isEmpty = require('lodash-node/modern/objects/isEmpty')
+var isEmpty = require('lodash-node/modern/lang/isEmpty')
 var merge = require('react/lib/merge')
 
 var AppConstants = require('../common/app-constants')
 var AppDispatcher = require('../common/app-dispatcher')
-var SessionsApi = require('./sessions-api')
 var SessionsConstants = require('./sessions-constants')
 
 var ActionTypes = SessionsConstants.ActionTypes
@@ -45,11 +44,6 @@ CurrentSessionStore.dispatchToken = AppDispatcher.register((payload) => {
   var action = payload.action
 
   switch(action.type) {
-
-    case ActionTypes.FETCH_CURRENT:
-      SessionsApi.fetchCurrent()
-      break
-
     case ActionTypes.FETCH_CURRENT_SUCCESS:
       _isQueried = true
       _session = action.model

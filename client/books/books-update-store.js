@@ -1,7 +1,7 @@
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
-var isEmpty = require('lodash-node/modern/objects/isEmpty')
+var isEmpty = require('lodash-node/modern/lang/isEmpty')
 var merge = require('react/lib/merge')
 
 var AppConstants = require('../common/app-constants')

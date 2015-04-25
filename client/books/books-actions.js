@@ -1,6 +1,6 @@
 'use strict'
 
-var isEmpty = require('lodash-node/modern/objects/isEmpty')
+var isEmpty = require('lodash-node/modern/lang/isEmpty')
 
 var BooksApi = require('./books-api')
 var BooksConstants = require('./books-constants')

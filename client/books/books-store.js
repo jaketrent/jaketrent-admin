@@ -1,10 +1,10 @@
 'use strict'
 
 var EventEmitter = require('events').EventEmitter
-var find = require('lodash-node/modern/collections/find')
-var findIndex = require('lodash-node/modern/arrays/findIndex')
+var find = require('lodash-node/modern/collection/find')
+var findIndex = require('lodash-node/modern/array/findIndex')
 var merge = require('react/lib/merge')
-var uniq = require('lodash-node/modern/arrays/uniq')
+var uniq = require('lodash-node/modern/array/uniq')
 
 var AppConstants = require('../common/app-constants')
 var AppDispatcher = require('../common/app-dispatcher')
