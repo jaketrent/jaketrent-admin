@@ -6,7 +6,7 @@ var merge = require('react/lib/merge')
 
 var AppConstants = require('../common/app-constants')
 var AppDispatcher = require('../common/app-dispatcher')
-var BooksApi = require('./books-api')
+var BooksActions = require('./books-actions')
 var BooksConstants = require('./books-constants')
 var BooksStore = require('./books-store')
 
@@ -72,7 +72,7 @@ BooksShowStore.dispatchToken = AppDispatcher.register((payload) => {
       var foundBooks = BooksStore.find(action.routeState.params)
       var isBooksRoute = !!action.routeState.path.match(/\/books/);
       if (!foundBooks && isBooksRoute)
-        BooksApi.fetch(null, action.routeState.params)
+        BooksActions.fetch(action.routeState.params)
 
       _book = foundBooks || {}
       BooksShowStore.emitChange()
