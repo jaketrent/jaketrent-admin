@@ -5,8 +5,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   entry: {
     main: [
-      '6to5/polyfill',
-      '6to5/runtime',
       './client/index.js'
     ]
   },
@@ -17,7 +15,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'jsx-loader?harmony!6to5-loader?experimental&runtime', exclude: /node_modules/ },
+      {test: /\.js$/, loader: 'babel-loader?stage=0', exclude: /node_modules/ },
       {test: /\.scss/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version!sass-loader'},
       {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
     ]
