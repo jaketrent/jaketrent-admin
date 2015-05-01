@@ -96,7 +96,7 @@ exports.destroyError = (errors) => {
 }
 
 exports.fetch = (filter) => {
-  BooksApi.fetch(BooksStore.getUrl(), action.filter, BooksStore.getPage())
+  BooksApi.fetch(BooksStore.getUrl(), filter, BooksStore.getPage())
 }
 
 exports.fetchSuccess = (models, filter, page, linkHeader) => {
