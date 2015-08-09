@@ -6,7 +6,7 @@ module.exports = {
 
   api: {
     // string of a string for the webpack DefinePlugin
-    hostBaseUrl: '"http://localhost:3000/api/v1"'
+    hostBaseUrl: '"http://localhost:4000/api/v1"'
   },
 
   env: process.env.NODE_ENV,
