@@ -1,12 +1,6 @@
-var React = require('react')
-var Router = require('react-router')
+import * as routes from './config/routes'
 
-var AppActions = require('./common/app-actions')
+//require('./common/styles/client.scss')
 
-require('./common/styles/client.scss')
-
-Router.run(require('./config/routes'), (Handler, state) => {
-  React.render(<Handler/>, document.body);
-  AppActions.transition(state)
-})
+routes.map()
 

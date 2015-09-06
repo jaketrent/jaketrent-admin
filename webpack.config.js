@@ -1,6 +1,7 @@
 var config = require('config')
-var DefinePlugin = require('webpack').DefinePlugin
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const PORT = 3000
 
 module.exports = {
   entry: {
@@ -22,17 +23,21 @@ module.exports = {
     ]
   },
   plugins: [
-    new DefinePlugin({
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-      API_HOST_BASE_URL: config.api.hostBaseUrl
-    }),
     new HtmlWebpackPlugin({
       title: 'jaketrent-admin',
       template: 'node_modules/html-webpack-template/index.html',
-      mobile: true
+      mobile: true,
+      appMountId: 'app',
+      window: {
+        env: config
+      }
     })
   ],
   resolve: {
     extensions: ['', '.js', '.json']
+  },
+  devServer: {
+    port: PORT,
+    historyApiFallback: true
   }
 }

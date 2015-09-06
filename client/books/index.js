@@ -1,31 +1,49 @@
-var React = require('react')
-var RouteHandler = require('react-router').RouteHandler
+import React from 'react'
 
-var AuthenticatedRoute = require('../common/authenticated-route')
-var BooksActions = require('./books-actions')
-var BooksList = require('./books-list')
+import * as actions from './actions'
 
-module.exports = React.createClass({
-
-  displayName: 'BooksIndex',
-
-  mixins: [ AuthenticatedRoute ],
-
-  componentDidMount() {
-    BooksActions.fetch()
-  },
-
+//@connect([], [actions])
+class BooksIndex extends React.Component {
   render() {
     return (
-      <div className="page">
-        <header className="page-header">
-          <h2 className="page-title">Books</h2>
-        </header>
-        <BooksList />
-        <main className="page-body">
-          <RouteHandler />
-        </main>
-      </div>
+      <div>BooksIndex</div>
     )
   }
-})
+}
+
+export default function render(el, params) {
+  React.render(<BooksIndex params={params} />, el)
+}
+
+
+
+//var React = require('react')
+//
+////var AuthenticatedRoute = require('../common/authenticated-route')
+//var actions = require('./actions')
+//var BooksList = require('./list')
+//
+//module.exports = React.createClass({
+//
+//  displayName: 'BooksIndex',
+//
+//  mixins: [ AuthenticatedRoute ],
+//
+//  componentDidMount() {
+//    actions.fetch()
+//  },
+//
+//  render() {
+//    return (
+//      <div className="page">
+//        <header className="page-header">
+//          <h2 className="page-title">Books</h2>
+//        </header>
+//        <BooksList />
+//        <main className="page-body">
+//          RouteHandler
+//        </main>
+//      </div>
+//    )
+//  }
+//})

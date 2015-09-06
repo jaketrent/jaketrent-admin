@@ -1,5 +1,4 @@
 var React = require('react')
-var Router = require('react-router')
 var Navigation = Router.Navigation
 
 var AppConstants = require('../common/app-constants')
@@ -13,7 +12,7 @@ module.exports = React.createClass({
 
   displayName: 'BooksUpdate',
 
-  mixins: [ AuthenticatedRoute, Router.State, Navigation ],
+  mixins: [ AuthenticatedRoute ],
 
   getInitialState() {
     return this.getStateFromStores()

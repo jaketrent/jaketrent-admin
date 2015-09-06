@@ -1,7 +1,4 @@
 var React = require('react')
-var Router = require('react-router')
-var Link = Router.Link
-var Navigation = Router.Navigation
 
 var AuthenticatedRoute = require('../common/authenticated-route')
 var BooksActions = require('./books-actions')
@@ -11,7 +8,7 @@ module.exports = React.createClass({
 
   displayName: 'BooksShow',
 
-  mixins: [ AuthenticatedRoute, Router.State, Navigation ],
+  mixins: [ AuthenticatedRoute ],
 
   getInitialState() {
     return this.getStateFromStores()

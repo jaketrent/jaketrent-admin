@@ -1,5 +1,4 @@
 var React = require('react')
-var Router = require('react-router')
 
 var NotFound404 = require('./404-not-found')
 var NotAuthenticated401 = require('./401-not-authenticated')
@@ -17,8 +16,6 @@ var messages = {
 module.exports = React.createClass({
 
   displayName: 'ErrorsIndex',
-
-  mixins: [ Router.State ],
 
   render() {
     var errorByStatus = statuses[this.getParams().type]

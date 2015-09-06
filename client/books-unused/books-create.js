@@ -1,5 +1,4 @@
 var React = require('react')
-var Router = require('react-router')
 var Navigation = Router.Navigation
 
 var AuthenticatedRoute = require('../common/authenticated-route')
@@ -61,7 +60,7 @@ module.exports = React.createClass({
   },
 
   onClickCancel() {
-    Router.goBack()
+    window.location.go(-1)
   },
 
   render() {

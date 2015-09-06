@@ -1,6 +1,4 @@
 var React = require('react')
-var Router = require('react-router')
-var Navigation = Router.Navigation
 
 var api = require('../common/api')
 var CurrentSessionStore = require('../sessions/current-session-store')
@@ -10,8 +8,6 @@ var SessionsActions = require('../sessions/sessions-actions')
 module.exports = React.createClass({
 
   displayName: '401NotAuthenticated',
-
-  mixins: [ Navigation ],
 
   componentDidMount() {
     CurrentSessionStore.addChangeListener(this._onChange)

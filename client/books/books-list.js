@@ -1,10 +1,9 @@
 var React = require('react/addons')
-var Router = require('react-router')
 
 var BooksActions = require('./books-actions')
 var BooksStore = require('./books-store')
 
-var Link = Router.Link
+var Link = require('../common/components/link')
 
 module.exports = React.createClass({
 
@@ -42,7 +41,7 @@ module.exports = React.createClass({
   renderCreate() {
     return (
       <li className="sidebar-item sidebar-item-no-link sidebar-item-create" key="books-create">
-        <Link to="books-create" className="btn btn-full btn-secondary sidebar-create-btn">
+        <Link href="/books/create" className="btn btn-full btn-secondary sidebar-create-btn">
           Create New
         </Link>
       </li>
@@ -72,7 +71,7 @@ module.exports = React.createClass({
   renderBook(book) {
     return (
       <li className="sidebar-item" key={book.id}>
-        <Link className="sidebar-link" to="books-show" params={{ id: book.id}}>
+        <Link className="sidebar-link" href={`/books/${book.id}`}>
           {book.title}
         </Link>
       </li>
