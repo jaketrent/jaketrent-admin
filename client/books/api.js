@@ -3,22 +3,15 @@ import axios from 'axios'
 import * as actions from './actions'
 import * as config from '../config'
 
-function deserializeBooks(resBody) {
-  return resBody.data
-}
-
-// TODO: redo impl like auth
-
-export async function fetch() {
-  let url = `${config.at('apiHost')}/books`
-  try {
-    let res = await axios({
+export const books = {
+  deserialize(res) {
+    return res.data.data
+  },
+  fetch() {
+    return axios({
       method: 'get',
-      url,
+      url: `${config.at('apiHost')}/api/v1/books`,
       withCredentials: true
     })
-    actions.fetchSuccess(deserializeBooks(res.data))
-  } catch (resOrError) {
-    throw resOrError // TODO: handle
   }
 }

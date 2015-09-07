@@ -13,7 +13,6 @@ function handleFetchCurrentSession(state, action) {
   }
 }
 function handleFetchCurrentSessionSuccess(state, action) {
-  console.log('-----------success action', action)
   return {
     ...state,
     errors: [],
