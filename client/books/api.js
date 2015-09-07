@@ -8,7 +8,6 @@ export const books = {
     return res.data.data
   },
   fetch(id) {
-    console.log('id', id)
     let url = `${config.at('apiHost')}/api/v1/books`
     if (!!id)
       url += `/${id}`
@@ -16,6 +15,20 @@ export const books = {
       method: 'get',
       url,
       withCredentials: true
+    })
+  },
+  create(book) {
+    function serialize(b) {
+      return {
+        data: b
+      }
+    }
+
+    return axios({
+      method: 'post',
+      url: `${config.at('apiHost')}/api/v1/books`,
+      withCredentials: true,
+      data: serialize(book)
     })
   }
 }

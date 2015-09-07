@@ -1,3 +1,4 @@
+import autobind from 'autobind-decorator'
 import React from 'react'
 
 import { books } from './reducer'
@@ -17,6 +18,7 @@ class Create extends React.Component {
   }
 }
 
+@autobind
 class Search extends React.Component {
   static propTypes = {
     onChange: React.PropTypes.func.isRequired
@@ -61,6 +63,7 @@ class BooksList extends React.Component {
   }
 }
 
+@autobind
 class SearchableBooks extends React.Component {
   static propTypes = {
     books: arrayOf(object)

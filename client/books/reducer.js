@@ -4,21 +4,52 @@ import uniq from 'lodash/array/uniq'
 import TYPES from './types'
 
 export const initialState = {
-  books: [],
-  page: 1
+  newBook: {},
+  newBookErrors: [],
+  books: []
+}
+
+function createSuccess(state, action) {
+  return {
+    ...state,
+    books: action.books.concat(state.books)
+  }
+}
+
+function createError(state, action) {
+  return {
+    ...state,
+    newBookErrors: action.errors
+  }
 }
 
 function fetchSuccess(state, action) {
   return {
     ...state,
     books: uniq(state.books.concat(action.books), b => b.id),
-    page: action.page
+    newBookErrors: []
+  }
+}
+
+// TODO: impl a set or startNewBook
+
+function updateNewBook(state, action) {
+  return {
+    ...state,
+    newBook: {
+      ...state.newBook,
+      [action.fieldName]: action.value
+    }
   }
 }
 
 export default function(state = initialState, action = {}) {
+  // TODO: use 'handle*' name
   const handlers = {
-    [TYPES.FETCH_SUCCESS]: fetchSuccess
+    [TYPES.CREATE_SUCCESS]: createSuccess,
+    [TYPES.CREATE_ERROR]: createError,
+    [TYPES.FETCH_SUCCESS]: fetchSuccess,
+    [TYPES.UPDATE_NEW_BOOK]: updateNewBook
   }
   return handlers[action.type]
     ? handlers[action.type](state, action)
