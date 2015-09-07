@@ -1,7 +1,7 @@
 import React from 'react'
 
 import connect from '../common/store/connect'
-import { books, find } from './reducer'
+import { books, findBook } from './reducer'
 import renderWithState from '../common/store/render'
 
 const { object } = React.PropTypes
@@ -48,7 +48,7 @@ class BooksShowContainer extends React.Component {
   render() {
     return (
       <div>
-        <BooksShow book={find(this.props.books, this.props.params.bookId)} />
+        <BooksShow book={findBook(this.props.books, this.props.params.bookId)} />
       </div>
     )
   }

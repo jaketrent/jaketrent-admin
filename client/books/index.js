@@ -7,7 +7,7 @@ import connect from '../common/store/connect'
 import renderWithState from '../common/store/render'
 
 @connect([books], [actions])
-class BooksIndex extends React.Component {
+class BooksIndexContainer extends React.Component {
   componentDidMount() {
     this.props.books.fetch()
   }
@@ -22,5 +22,5 @@ class BooksIndex extends React.Component {
 }
 
 export default function render(el, params) {
-  renderWithState(BooksIndex, { params }, el)
+  renderWithState(BooksIndexContainer, { params }, el)
 }

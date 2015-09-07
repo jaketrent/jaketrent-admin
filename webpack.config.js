@@ -13,6 +13,7 @@ module.exports = {
   output: {
     path: './dist',
     filename: 'main.[hash].js',
+    publicPath: '/',
     chunkFilename: 'chunk.[hash].[id].js'
   },
   module: {

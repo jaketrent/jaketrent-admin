@@ -5,9 +5,10 @@ import TYPES from './types'
 
 export const name = 'books'
 
-export function request() {
+export function request(id) {
   return {
-    type: TYPES.FETCH
+    type: TYPES.FETCH,
+    id
   }
 }
 
@@ -25,12 +26,12 @@ export function fetchErrors(errors) {
   }
 }
 
-export function fetch() {
+export function fetch(id) {
   return async (dispatch) => {
     try {
       const { fetch, deserialize } = api.books
-      dispatch(request())
-      const res = await fetch()
+      dispatch(request(id))
+      const res = await fetch(id)
       dispatch(fetchSuccess(deserialize(res)))
     } catch (resOrError) {
       if (resOrError instanceof Error) throw resOrError
