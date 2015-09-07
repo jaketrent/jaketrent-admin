@@ -24,7 +24,7 @@ function toReducers(reducers) {
 
 function toActions(actions) {
   return function mapDispatchToProps() {
-    return actions.reduce((combinedActionCreators, actions) => {
+    return (actions || []).reduce((combinedActionCreators, actions) => {
       const { name, ...actionFns } = actions
       if (!name)
         throw new Error('`name` (String) export required for every connected action', boundActions)

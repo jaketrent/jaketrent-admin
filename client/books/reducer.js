@@ -1,3 +1,5 @@
+import _find from 'lodash/collection/find'
+
 import TYPES from './types'
 
 export const initialState = {
@@ -27,4 +29,8 @@ export const books = {
   select(state) {
     return state.books
   }
+}
+
+export function find(state, id) {
+  return _find(state.books, book => book.id === parseInt(id, 10))
 }

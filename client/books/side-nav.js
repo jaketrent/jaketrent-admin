@@ -41,7 +41,6 @@ class BooksList extends React.Component {
     books: []
   }
   renderBook(book) {
-    console.log('book', book)
     return (
       <li key={book.id}>
         <Link href={`/books/${book.id}`}>
