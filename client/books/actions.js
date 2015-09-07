@@ -2,6 +2,8 @@ import * as api from './api'
 import { books } from './reducer'
 import TYPES from './types'
 
+export const name = 'books'
+
 export function fetch(planId) {
   return (dispatch, getState) => {
     const state = books.select(getState())

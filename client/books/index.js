@@ -1,8 +1,10 @@
 import React from 'react'
 
 import * as actions from './actions'
+import connect from '../common/store/connect'
+import renderWithState from '../common/store/render'
 
-//@connect([], [actions])
+@connect([], [actions])
 class BooksIndex extends React.Component {
   render() {
     return (
@@ -12,7 +14,7 @@ class BooksIndex extends React.Component {
 }
 
 export default function render(el, params) {
-  React.render(<BooksIndex params={params} />, el)
+  renderWithState(BooksIndex, { params }, el)
 }
 
 

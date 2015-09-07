@@ -1,9 +1,14 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
-import reduxThunk from 'redux-thunk'
+import thunk from 'redux-thunk'
 
 import * as reducers from './reducers'
 
-const combinedReducers = combineReducers(reducers)
-const finalCreateStore = applyMiddleware(reduxThunk)(createStore)
+const rootReducer = combineReducers(reducers)
+const createStoreWidthMiddleware = applyMiddleware(
+  thunk
+)(createStore)
 
-export default finalCreateStore(combinedReducers)
+// TODO: wrap in init() where we can set initialState for easier bootstrapping
+const store = createStoreWidthMiddleware(rootReducer)
+
+export default store

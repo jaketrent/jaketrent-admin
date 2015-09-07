@@ -1,11 +1,13 @@
 import axios from 'axios'
 
-import actions from './actions'
+import * as actions from './actions'
 import * as config from '../config'
 
 function deserializeBooks(resBody) {
   return resBody.data
 }
+
+// TODO: redo impl like auth
 
 export async function fetch() {
   let url = `${config.at('apiHost')}/books`
