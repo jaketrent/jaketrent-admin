@@ -12,6 +12,8 @@ export const initialState = {
 function createSuccess(state, action) {
   return {
     ...state,
+    newBook: {},
+    newBooksErrors: [],
     books: action.books.concat(state.books)
   }
 }
