@@ -5,6 +5,7 @@ import * as actions from './actions'
 import { books } from './reducer'
 import connect from '../common/store/connect'
 import FieldErrors from '../common/components/field-errors'
+import * as router from '../common/router'
 import renderWithState from '../common/store/render'
 
 const { func, object, arrayOf } = React.PropTypes
@@ -77,6 +78,11 @@ class BookForm extends React.Component {
 
 @connect([books], [actions])
 class BooksCreateContainer extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    const isBookCreated = !!nextProps.books.newBook.id
+    if (isBookCreated)
+      router.redirect(`/books/${nextProps.books.newBook.id}`)
+  }
   render() {
     return (
       <div>

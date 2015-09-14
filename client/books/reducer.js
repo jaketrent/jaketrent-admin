@@ -1,3 +1,4 @@
+import clone from 'lodash/lang/clone'
 import find from 'lodash/collection/find'
 import uniq from 'lodash/array/uniq'
 
@@ -9,12 +10,21 @@ export const initialState = {
   books: []
 }
 
+function destroySuccess(state, action) {
+  const books = clone(state.books)
+  books.splice(indexOfBook(state, action.id), 1)
+  return {
+    ...state,
+    books
+  }
+}
+
 function createSuccess(state, action) {
   return {
     ...state,
-    newBook: {},
+    newBook: action.book,
     newBooksErrors: [],
-    books: action.books.concat(state.books)
+    books: [action.book].concat(state.books)
   }
 }
 
@@ -48,6 +58,7 @@ function updateNewBook(state, action) {
 export default function(state = initialState, action = {}) {
   // TODO: use 'handle*' name
   const handlers = {
+    [TYPES.DESTROY_SUCCESS]: destroySuccess,
     [TYPES.CREATE_SUCCESS]: createSuccess,
     [TYPES.CREATE_ERROR]: createError,
     [TYPES.FETCH_SUCCESS]: fetchSuccess,
@@ -65,6 +76,10 @@ export const books = {
   select(state) {
     return state.books
   }
+}
+
+function indexOfBook(state, id) {
+  return state.books.map(book => book.id).indexOf(id)
 }
 
 export function findBook(state, id) {

@@ -6,6 +6,10 @@ export default actionTypes('books',
   'CREATE_SUCCESS',
   'CREATE_ERROR',
 
+  'DESTROY',
+  'DESTROY_SUCCESS',
+  'DESTROY_ERROR',
+
   'FETCH',
   'FETCH_SUCCESS',
   'FETCH_ERROR',

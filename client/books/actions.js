@@ -19,9 +19,9 @@ export function fetchSuccess(books) {
   }
 }
 
-export function fetchErrors(errors) {
+export function fetchError(errors) {
   return {
-    type: TYPES.FETCH_ERRORS,
+    type: TYPES.FETCH_ERROR,
     errors
   }
 }
@@ -29,13 +29,13 @@ export function fetchErrors(errors) {
 export function fetch(id) {
   return async (dispatch) => {
     try {
-      const { fetch, deserialize } = api.books
+      const { request, deserialize } = api.fetchBooks
       dispatch(fetchRequest(id))
-      const res = await fetch(id)
+      const res = await request(id)
       dispatch(fetchSuccess(deserialize(res)))
     } catch (resOrError) {
       if (resOrError instanceof Error) throw resOrError
-      dispatch(fetchErrors(deserializeErrors(resOrError)))
+      dispatch(fetchError(deserializeErrors(resOrError)))
     }
   }
 }
@@ -47,10 +47,10 @@ function createRequest(book) {
   }
 }
 
-function createSuccess(books) {
+function createSuccess(book) {
   return {
     type: TYPES.CREATE_SUCCESS,
-    books
+    book
   }
 }
 
@@ -64,9 +64,9 @@ function createError(errors) {
 export function create(book) {
   return async (dispatch) => {
     try {
-      const { create, deserialize } = api.books
+      const { request, serialize, deserialize } = api.createBook
       dispatch(createRequest(book))
-      const res = await create(book)
+      const res = await request(serialize(book))
       dispatch(createSuccess(deserialize(res)))
     } catch (resOrError) {
       if (resOrError instanceof Error) throw resOrError
@@ -75,8 +75,42 @@ export function create(book) {
   }
 }
 
+export function destroyRequest(id) {
+  return {
+    type: TYPES.DESTROY,
+    id
+  }
+}
+
+export function destroySuccess(id) {
+  return {
+    type: TYPES.DESTROY_SUCCESS,
+    id
+  }
+}
+
+export function destroyError(errors) {
+  return {
+    type: TYPES.DESTROY_ERROR,
+    errors
+  }
+}
+
+export function destroy(id) {
+  return async (dispatch) => {
+    try {
+      const { request } = api.destroyBook
+      dispatch(destroyRequest(id))
+      const res = await request(id)
+      dispatch(destroySuccess(id))
+    } catch (resOrError) {
+      if (resOrError instanceof Error) throw resOrError
+      dispatch(destroyError(deserializeErrors(resOrError)))
+    }
+  }
+}
+
 export function updateNewBook(fieldName, value) {
-  console.log('updatenewbook action!')
   return {
     type: TYPES.UPDATE_NEW_BOOK,
     fieldName,

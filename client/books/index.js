@@ -2,7 +2,7 @@ import React from 'react'
 
 import * as actions from './actions'
 import { books } from './reducer'
-import BooksSideNav from './side-nav'
+import BooksLayout from './layout'
 import connect from '../common/store/connect'
 import renderWithState from '../common/store/render'
 
@@ -13,10 +13,9 @@ class BooksIndexContainer extends React.Component {
   }
   render() {
     return (
-      <div>
-        BooksIndex
-        <BooksSideNav books={this.props.books.books} />
-      </div>
+      <BooksLayout books={this.props.books.books}>
+        Go away, read some books!
+      </BooksLayout>
     )
   }
 }
