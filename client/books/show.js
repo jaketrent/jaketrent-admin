@@ -70,6 +70,7 @@ class BooksShow extends React.Component {
 
 @connect([books], [actions])
 class BooksShowContainer extends React.Component {
+
   componentWillReceiveProps(nextProps) {
     const isBookDeleted = !this.getBook(nextProps)
     if (isBookDeleted)

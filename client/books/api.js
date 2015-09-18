@@ -3,35 +3,69 @@ import axios from 'axios'
 import * as actions from './actions'
 import * as config from '../config'
 
+function formatUrl() {
+  return `${config.at('apiHost')}/api/v1/books`
+}
+
+function formatUrlSingleBook(id) {
+  return `${config.at('apiHost')}/api/v1/books/${id}`
+}
+
+function serialize(book) {
+  return {
+    data: book
+  }
+}
+
+function deserialize(res) {
+  return res.data.data
+}
+
+function deserializeSingleBook(res) {
+  return res.data.data[0]
+}
+
+function request(url) {
+  return axios({
+    method: 'get',
+    url,
+    withCredentials: true
+  })
+}
+
+export const fetchBook = {
+  formatUrl: formatUrlSingleBook,
+  deserialize,
+  request
+}
+
 export const fetchBooks = {
-  deserialize(res) {
-    return res.data.data
-  },
-  request(id) {
-    let url = `${config.at('apiHost')}/api/v1/books`
-    if (!!id)
-      url += `/${id}`
+  formatUrl,
+  deserialize,
+  request
+}
+
+export const createBook = {
+  serialize,
+  deserialize: deserializeSingleBook,
+  request(book) {
     return axios({
-      method: 'get',
-      url,
-      withCredentials: true
+      method: 'post',
+      url: formatUrl(),
+      withCredentials: true,
+      data: book
     })
   }
 }
 
-export const createBook = {
-  serialize(book) {
-    return {
-      data: book
-    }
-  },
-  deserialize(res) {
-    return res.data.data[0]
-  },
-  request(book) {
+export const updateBook = {
+  formatUrl: formatUrlSingleBook,
+  serialize,
+  deserialize: deserializeSingleBook,
+  request(url, book) {
     return axios({
-      method: 'post',
-      url: `${config.at('apiHost')}/api/v1/books`,
+      method: 'put',
+      url,
       withCredentials: true,
       data: book
     })
@@ -39,10 +73,11 @@ export const createBook = {
 }
 
 export const destroyBook = {
-  request(bookId) {
+  formatUrl: formatUrlSingleBook,
+  request(url) {
     return axios({
       method: 'delete',
-      url: `${config.at('apiHost')}/api/v1/books/${bookId}`,
+      url,
       withCredentials: true
     })
   }

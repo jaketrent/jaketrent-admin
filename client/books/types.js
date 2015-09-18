@@ -2,6 +2,7 @@ import actionTypes from '../common/util/action-types'
 
 // TODO: perhaps centralize the reducer name here
 export default actionTypes('books',
+  'CREATE_BOOK_CHANGE',
   'CREATE',
   'CREATE_SUCCESS',
   'CREATE_ERROR',
@@ -14,5 +15,10 @@ export default actionTypes('books',
   'FETCH_SUCCESS',
   'FETCH_ERROR',
 
-  'UPDATE_NEW_BOOK'
+  'UPDATE_TRANSITION',
+  'UPDATE_BOOK_CHANGE',
+  'UPDATE_REQUEST',
+  'UPDATE_SUCCESS',
+  'UPDATE_ERROR',
+  'UPDATE_COMPLETE'
 )

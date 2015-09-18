@@ -7,7 +7,7 @@ export default class SiteLayout extends React.Component {
     return (
       <div>
         <header>
-          <h2>jaketrent-admin</h2>
+          <h2>puppetmaster</h2>
         </header>
         <nav>
           <Link href="/books">Books</Link>

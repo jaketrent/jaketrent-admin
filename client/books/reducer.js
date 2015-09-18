@@ -7,6 +7,12 @@ import TYPES from './types'
 export const initialState = {
   newBook: {},
   newBookErrors: [],
+
+  updateBook: null,
+  updateBookErrors: [],
+  updateIsRequesting: false,
+  updateIsComplete: false,
+
   books: []
 }
 
@@ -16,6 +22,16 @@ function destroySuccess(state, action) {
   return {
     ...state,
     books
+  }
+}
+
+function createBookChange(state, action) {
+  return {
+    ...state,
+    newBook: {
+        ...state.newBook,
+      [action.fieldName]: action.value
+    }
   }
 }
 
@@ -35,6 +51,58 @@ function createError(state, action) {
   }
 }
 
+function updateTransition(state, action) {
+  return {
+    ...state,
+    updateBook: action.book,
+    updateIsComplete: false
+  }
+}
+
+function updateRequest(state, action) {
+  return {
+    ...state,
+    updateIsRequesting: true,
+    updateIsComplete: false
+  }
+}
+
+function updateSuccess(state, action) {
+  const books = clone(state.books)
+  books[indexOfBook(state, action.book.id)] = action.book
+  return {
+    ...state,
+    updateBook: action.book,
+    updateBooksErrors: [],
+    books: books
+  }
+}
+
+function updateError(state, action) {
+  return {
+    ...state,
+    updateBookErrors: action.errors
+  }
+}
+
+function updateComplete(state, action) {
+  return {
+    ...state,
+    updateIsRequesting: false,
+    updateIsComplete: true
+  }
+}
+
+function updateBookChange(state, action) {
+  return {
+    ...state,
+    updateBook: {
+      ...state.updateBook,
+      [action.fieldName]: action.value
+    }
+  }
+}
+
 function fetchSuccess(state, action) {
   return {
     ...state,
@@ -43,26 +111,19 @@ function fetchSuccess(state, action) {
   }
 }
 
-// TODO: impl a set or startNewBook
-
-function updateNewBook(state, action) {
-  return {
-    ...state,
-    newBook: {
-      ...state.newBook,
-      [action.fieldName]: action.value
-    }
-  }
-}
-
 export default function(state = initialState, action = {}) {
-  // TODO: use 'handle*' name
   const handlers = {
     [TYPES.DESTROY_SUCCESS]: destroySuccess,
+    [TYPES.CREATE_BOOK_CHANGE]: createBookChange,
     [TYPES.CREATE_SUCCESS]: createSuccess,
     [TYPES.CREATE_ERROR]: createError,
-    [TYPES.FETCH_SUCCESS]: fetchSuccess,
-    [TYPES.UPDATE_NEW_BOOK]: updateNewBook
+    [TYPES.UPDATE_TRANSITION]: updateTransition,
+    [TYPES.UPDATE_BOOK_CHANGE]: updateBookChange,
+    [TYPES.UPDATE_REQUEST]: updateRequest,
+    [TYPES.UPDATE_SUCCESS]: updateSuccess,
+    [TYPES.UPDATE_ERROR]: updateError,
+    [TYPES.UPDATE_COMPLETE]: updateComplete,
+    [TYPES.FETCH_SUCCESS]: fetchSuccess
   }
   return handlers[action.type]
     ? handlers[action.type](state, action)
@@ -71,6 +132,7 @@ export default function(state = initialState, action = {}) {
 
 // TODO: think about where besides reducer.js that these functions might belong
 
+// TODO: refactor these to top-level on the reducer (match the actions, easier to extend, connect verbage is right), can import the reducer itself in the components
 export const books = {
   name: 'books',
   select(state) {
@@ -87,5 +149,9 @@ export function findBook(state, id) {
 }
 
 export function hasBook(state, id) {
-  return find(state, id) !== undefined
+  return findBook(state, id) !== undefined
+}
+
+export function hasBooks(state) {
+  return (state.books || []).length > 0
 }

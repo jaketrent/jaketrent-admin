@@ -1,9 +1,16 @@
 import * as actions from './actions'
 import { hasBook } from './reducer'
-import store from '../common/store'
 
-export default function fetchBook(params, next) {
-  if (!hasBook(store.getState().books, params.bookId))
-    store.dispatch(actions.fetch(params.bookId))
-  next()
+export function initFetchBooks(dispatch) {
+  return function fetchBooks(params, next) {
+    dispatch(actions.fetch())
+    next()
+  }
+}
+
+export function initFetchBook(dispatch) {
+  return function fetchBook(params, next) {
+    dispatch(actions.fetchById(params.bookId))
+    next()
+  }
 }
