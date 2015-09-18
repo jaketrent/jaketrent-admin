@@ -19,7 +19,7 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.js$/, loader: 'babel-loader?stage=0', exclude: /node_modules/ },
-      {test: /\.scss/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version!sass-loader'},
+      {test: /\.css/, loader: 'style!css?modules&localIdentName=[local]---[hash:base64:5]!cssnext'},
       {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
     ]
   },
