@@ -1,0 +1,19 @@
+:root {
+  --colorBrandPrimaryLighter: #A9B8D9;
+  --colorBrandPrimaryLight: #5E739F;
+  --colorBrandPrimary: #2F4574;
+  --colorBrandPrimaryDark: #102249;
+  --colorBrandPrimaryDarker: #020B1D;
+
+  --colorBrandSecondaryLighter: #B1AEDC;
+  --colorBrandSecondaryLight: #6965A6;
+  --colorBrandSecondary: #383579;
+  --colorBrandSecondaryDark: #17134C;
+  --colorBrandSecondaryDarker: #05031E;
+
+  --colorBrandTertiaryLighter: #A4C4D5;
+  --colorBrandTertiaryLight: #568197;
+  --colorBrandTertiary: #29566E;
+  --colorBrandTertiaryDark: #0C3145;
+  --colorBrandTertiaryDarker: #01121B;
+}
