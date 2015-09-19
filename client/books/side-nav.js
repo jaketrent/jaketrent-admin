@@ -1,7 +1,9 @@
 import autobind from 'autobind-decorator'
 import React from 'react'
+import styleable from 'react-styleable'
 
 import { books } from './reducer'
+import css from './side-nav.css'
 import Link from '../common/components/link'
 
 const { arrayOf, object } = React.PropTypes
@@ -35,6 +37,7 @@ class Search extends React.Component {
   }
 }
 
+@styleable(css)
 class BooksList extends React.Component {
   static propTypes = {
     books: arrayOf(object)
@@ -42,22 +45,22 @@ class BooksList extends React.Component {
   static defaultProps = {
     books: []
   }
-  renderBook(book) {
+  renderBook(css, book) {
     return (
-      <li key={book.id}>
-        <Link href={`/books/${book.id}`}>
+      <li className={css.item} key={book.id}>
+        <Link href={`/books/${book.id}`} className={css.link}>
           {book.title}
         </Link>
       </li>
     )
   }
-  renderBooks(books) {
-    return books.map(this.renderBook)
+  renderBooks(css, books) {
+    return books.map(this.renderBook.bind(this, css))
   }
   render() {
     return (
-      <ul>
-        {this.renderBooks(this.props.books)}
+      <ul className={this.props.css.list}>
+        {this.renderBooks(this.props.css, this.props.books)}
       </ul>
     )
   }
@@ -94,6 +97,7 @@ class SearchableBooks extends React.Component {
   }
 }
 
+@styleable(css)
 export default class BooksSideNav extends React.Component {
   static propTypes = {
     books: arrayOf(object)
@@ -103,7 +107,7 @@ export default class BooksSideNav extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className={this.props.css.root}>
         <Create />
         <SearchableBooks books={this.props.books} />
       </div>

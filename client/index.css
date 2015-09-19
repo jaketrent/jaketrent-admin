@@ -1,0 +1,11 @@
+@import "./common/styles/colors.css";
+@import "./common/styles/type.css";
+
+html {
+  background: var(--colorBrandPrimary);
+  color: var(--colorLightest);
+  font-family: 'Source Sans Pro', sans-serif;
+}
+body {
+  margin: 0;
+}

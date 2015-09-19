@@ -1,0 +1,52 @@
+@import "../styles/colors.css";
+@import "../styles/layout.css";
+
+:root {
+  --topbarHeight: 50px;
+  --topbarMarginTop: 30px;
+}
+
+.root {
+  margin: 0 auto;
+  max-width: 1600px;
+}
+.topbar {
+  display: flex;
+  margin-top: calc((var(--topbarMarginTop) / 2) + 10px);
+  height: var(--topbarHeight);
+  background: var(--colorBrandPrimaryLight);
+}
+.header {
+  display: flex;
+  align-content: center;
+  width: var(--sidebarWidth);
+}
+.title {
+  position: relative;
+  top: calc(-.5 * var(--topbarMarginTop));
+  height: var(--topbarHeight);
+  line-height: calc(var(--topbarHeight) - (var(--topbarMarginTop) / 2));
+  margin: 0 auto;
+  padding: calc(var(--topbarMarginTop) / 2) 25px 0 25px;
+  text-align: center;
+  font-weight: 200;
+  background: var(--colorLightest);
+  display: inline-block;
+  border-radius: 7px 7px 0 0;
+  color: var(--colorBrandPrimary);
+}
+
+.nav {
+  display: flex;
+  align-content: flex-start;
+}
+.link {
+  display: inline-block;
+  padding: 0 30px;
+  line-height: var(--topbarHeight);
+  color: var(--colorLightest);
+  text-decoration: none;
+}
+.link:hover {
+  color: var(--colorBrandTertiaryLighter);
+}
