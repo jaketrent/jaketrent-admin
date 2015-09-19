@@ -15,6 +15,7 @@
   margin-top: calc((var(--topbarMarginTop) / 2) + 10px);
   height: var(--topbarHeight);
   background: var(--colorBrandPrimaryLight);
+  border-bottom: 5px solid var(--colorLightest);
 }
 .header {
   display: flex;
@@ -34,6 +35,7 @@
   display: inline-block;
   border-radius: 7px 7px 0 0;
   color: var(--colorBrandPrimary);
+  box-shadow: 1px -2px 2px rgba(0, 0, 0, .3);
 }
 
 .nav {
@@ -49,4 +51,8 @@
 }
 .link:hover {
   color: var(--colorBrandTertiaryLighter);
+}
+
+.main {
+  display: flex;
 }

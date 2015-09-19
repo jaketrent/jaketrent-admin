@@ -17,7 +17,9 @@ export default class SiteLayout extends React.Component {
             <Link className={this.props.css.link} href="/books">Books</Link>
           </nav>
         </div>
-        {this.props.children}
+        <div className={this.props.css.main}>
+          {this.props.children}
+        </div>
       </div>
     )
   }
