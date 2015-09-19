@@ -9,37 +9,6 @@ import Link from '../common/components/link'
 const { arrayOf, object } = React.PropTypes
 
 @styleable(css)
-class Create extends React.Component {
-  render() {
-    return (
-      <div className={this.props.css.createRoot}>
-        <Link className={this.props.css.createBtn} href="/books/create">
-          Create New
-        </Link>
-      </div>
-    )
-  }
-}
-
-@styleable(css)
-@autobind
-class Search extends React.Component {
-  static propTypes = {
-    onChange: React.PropTypes.func.isRequired
-  }
-  handleChange(evt) {
-    this.props.onChange(evt.target.value)
-  }
-  render() {
-    return (
-      <div className={this.props.css.searchRoot}>
-        <input className={this.props.css.searchInput} onChange={this.handleChange} type="search" placeholder="Search" />
-      </div>
-    )
-  }
-}
-
-@styleable(css)
 class BooksList extends React.Component {
   static propTypes = {
     books: arrayOf(object)
@@ -110,7 +79,6 @@ export default class BooksSideNav extends React.Component {
   render() {
     return (
       <div className={this.props.css.root}>
-        <Create />
         <SearchableBooks books={this.props.books} />
       </div>
     )

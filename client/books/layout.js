@@ -1,7 +1,7 @@
 import React from 'react'
 import styleable from 'react-styleable'
 
-import BooksSideNav from './side-nav'
+import BooksTopNav from './top-nav'
 import css from './layout.css'
 import SiteLayout from '../common/components/layout'
 
@@ -18,6 +18,7 @@ export default class BooksLayout extends React.Component {
   render() {
     return (
       <SiteLayout>
+        <BooksTopNav />
         <main className={this.props.css.root}>
           {this.props.children}
         </main>
