@@ -17,6 +17,10 @@
   --colorBrandTertiaryDark: #0C3145;
   --colorBrandTertiaryDarker: #01121B;
 
+  --colorBrandHighlightLight: #f2f059;
+  --colorBrandHighlight: #dbd950;
+  --colorBrandHighlightDark: #d5ca4f;
+
   --colorLightest: #fff;
   --colorLight: #bce1f5;
 }

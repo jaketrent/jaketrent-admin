@@ -4,6 +4,7 @@
 :root {
   --sidenavWidth: 250px;
   --createBtnHeight: 40px;
+  --searchInputHeight: 40px;
 }
 
 .root {
@@ -37,7 +38,26 @@
   border-bottom: 1px solid var(--colorBrandPrimaryLighter);
   border-right: 1px solid var(--colorBrandPrimaryLighter);
 }
+
+.searchRoot {
+  display: flex;
+}
+.searchInput {
+  flex: 1;
+  margin: 0;
+  border-radius: 0;
+  border: none;
+  height: var(--searchInputHeight);
+  font-size: 16px;
+  color: var(--colorBrandPrimary);
+}
+.searchInput:focus {
+  outline: none;
+  box-shadow: inset 0 0 7px var(--colorBrandHighlightLight);
+}
+
 .list {
+  margin: 0;
   padding: var(--layoutContentPaddingHorz);
   background: var(--colorBrandPrimaryLight);
   list-style: none;

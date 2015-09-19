@@ -21,6 +21,7 @@ class Create extends React.Component {
   }
 }
 
+@styleable(css)
 @autobind
 class Search extends React.Component {
   static propTypes = {
@@ -31,8 +32,8 @@ class Search extends React.Component {
   }
   render() {
     return (
-      <div>
-        <input onChange={this.handleChange} type="text" placeholder="Search" />
+      <div className={this.props.css.searchRoot}>
+        <input className={this.props.css.searchInput} onChange={this.handleChange} type="search" placeholder="Search" />
       </div>
     )
   }
