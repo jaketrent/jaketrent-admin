@@ -1,4 +1,5 @@
 :root {
+  --layoutContentPaddingVert: 30px;
   --layoutContentPaddingHorz: 15px;
   --sidebarWidth: 250px;
 }
