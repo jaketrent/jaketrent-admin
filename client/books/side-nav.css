@@ -3,10 +3,39 @@
 
 :root {
   --sidenavWidth: 250px;
+  --createBtnHeight: 40px;
 }
 
 .root {
   width: var(--sidenavWidth);
+}
+
+.createRoot {
+  display: flex;
+  padding: 20px;
+  background: var(--colorBrandPrimaryLight);
+}
+.createBtn {
+  flex: 1;
+  height: var(--createBtnHeight);
+  line-height: var(--createBtnHeight);
+  border-top: 1px solid var(--colorBrandPrimaryLighter);
+  border-left: 1px solid var(--colorBrandPrimaryLighter);
+  border-bottom: 1px solid var(--colorBrandPrimaryDark);
+  border-right: 1px solid var(--colorBrandPrimaryDark);
+  background: var(--colorBrandPrimary);
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--colorLightest);
+}
+.createBtn:active {
+  line-height: calc(var(--createBtnHeight) - 1);
+  padding-right: 2px;
+  border-top: 1px solid var(--colorBrandPrimaryDark);
+  border-left: 1px solid var(--colorBrandPrimaryDark);
+  border-bottom: 1px solid var(--colorBrandPrimaryLighter);
+  border-right: 1px solid var(--colorBrandPrimaryLighter);
 }
 .list {
   padding: var(--layoutContentPaddingHorz);

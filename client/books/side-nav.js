@@ -8,14 +8,15 @@ import Link from '../common/components/link'
 
 const { arrayOf, object } = React.PropTypes
 
+@styleable(css)
 class Create extends React.Component {
   render() {
     return (
-      <li>
-        <Link href="/books/create">
+      <div className={this.props.css.createRoot}>
+        <Link className={this.props.css.createBtn} href="/books/create">
           Create New
         </Link>
-      </li>
+      </div>
     )
   }
 }
@@ -30,9 +31,9 @@ class Search extends React.Component {
   }
   render() {
     return (
-      <li>
+      <div>
         <input onChange={this.handleChange} type="text" placeholder="Search" />
-      </li>
+      </div>
     )
   }
 }
