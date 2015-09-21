@@ -2,6 +2,7 @@ import React from 'react'
 
 import { books } from './reducer'
 import BooksLayout from './layout'
+import BooksTable from './components/table'
 import connect from '../common/store/connect'
 import renderWithState from '../common/store/render'
 
@@ -9,8 +10,8 @@ import renderWithState from '../common/store/render'
 class BooksIndexContainer extends React.Component {
   render() {
     return (
-      <BooksLayout books={this.props.books.books}>
-        Go away, read some books!
+      <BooksLayout>
+        <BooksTable books={this.props.books.books} />
       </BooksLayout>
     )
   }

@@ -1,0 +1,40 @@
+@import "../../common/styles/colors.css";
+@import "../../common/styles/layout.css";
+
+:root {
+  --coverImgWidth: 30px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.row {
+  flex: 1;
+  display: flex;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--colorBrandPrimaryLight);
+  margin-bottom: 15px;
+}
+.cell {
+  flex: 1;
+  text-align: left;
+}
+.cellHeader {
+  composes: cell;
+  text-transform: uppercase;
+  color: var(--colorBrandPrimaryLighter);
+}
+.cellCreate {
+  composes: cell;
+  padding-bottom: 20px;
+}
+.cellCover {
+  composes: cellHeader;
+  flex: none;
+  width: calc(var(--coverImgWidth) + 10px);
+}
+.img {
+  width: var(--coverImgWidth);
+}

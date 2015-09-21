@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as actions from './actions'
-import BookForm from './form'
+import BookForm from './components/form'
 import BooksLayout from './layout'
 import { books, findBook } from './reducer'
 import connect from '../common/store/connect'

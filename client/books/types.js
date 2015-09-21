@@ -2,10 +2,12 @@ import actionTypes from '../common/util/action-types'
 
 // TODO: perhaps centralize the reducer name here
 export default actionTypes('books',
+  'CREATE_TRANSITION',
   'CREATE_BOOK_CHANGE',
-  'CREATE',
+  'CREATE_REQUEST',
   'CREATE_SUCCESS',
   'CREATE_ERROR',
+  'CREATE_COMPLETE',
 
   'DESTROY',
   'DESTROY_SUCCESS',

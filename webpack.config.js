@@ -25,7 +25,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'jaketrent-admin',
+      title: 'puppetmaster',
       template: 'node_modules/html-webpack-template/index.html',
       mobile: true,
       appMountId: 'app',

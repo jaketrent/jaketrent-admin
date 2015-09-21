@@ -8,11 +8,9 @@ import Link from '../../common/components/link'
 export default class Create extends React.Component {
   render() {
     return (
-      <div className={this.props.css.root}>
-        <Link className={this.props.css.btn} href="/books/create">
-          Create New
-        </Link>
-      </div>
+      <Link className={this.props.css.btn} href="/books/create">
+        +
+      </Link>
     )
   }
 }

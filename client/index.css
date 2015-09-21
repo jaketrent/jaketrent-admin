@@ -1,6 +1,10 @@
 @import "./common/styles/colors.css";
 @import "./common/styles/type.css";
 
+* {
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
+}
 html {
   background: var(--colorBrandPrimary);
   color: var(--colorLightest);

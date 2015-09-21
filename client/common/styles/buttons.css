@@ -1,0 +1,18 @@
+@import "./colors.css";
+
+:root {
+  --buttonHeight: 40px;
+}
+
+.button {
+  height: var(--buttonHeight);
+  line-height: var(--buttonHeight);
+  padding: 0 30px;
+  background: var(--colorBrandSecondaryLight);
+  border: none;
+  border-radius: 2px;
+  color: var(--colorLightest);
+  font-size: 14px;
+  font-weight: 200;
+  letter-spacing: 1px;
+}

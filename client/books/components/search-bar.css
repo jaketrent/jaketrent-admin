@@ -14,7 +14,8 @@
   border: none;
   height: var(--searchInputHeight);
   font-size: 16px;
-  color: var(--colorBrandPrimary);
+  color: var(--colorDark);
+  background: var(--colorBrandPrimaryLighter);
 }
 .input:focus {
   outline: none;

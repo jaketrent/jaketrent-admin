@@ -2,6 +2,7 @@
 @import "../styles/layout.css";
 
 :root {
+  --topbarBorderWidth: 5px;
   --topbarHeight: 50px;
   --topbarMarginTop: 30px;
 }
@@ -15,7 +16,7 @@
   margin-top: calc((var(--topbarMarginTop) / 2) + 10px);
   height: var(--topbarHeight);
   background: var(--colorBrandPrimaryLight);
-  border-bottom: 5px solid var(--colorLightest);
+  border-bottom: var(--topbarBorderWidth) solid var(--colorLightest);
 }
 .header {
   display: flex;
@@ -25,7 +26,7 @@
 .title {
   position: relative;
   top: calc(-.5 * var(--topbarMarginTop));
-  height: var(--topbarHeight);
+  height: calc(var(--topbarHeight) + (var(--topbarMarginTop) / 2));
   line-height: calc(var(--topbarHeight) - (var(--topbarMarginTop) / 2));
   margin: 0 auto;
   padding: calc(var(--topbarMarginTop) / 2) 25px 0 25px;
@@ -45,7 +46,7 @@
 .link {
   display: inline-block;
   padding: 0 30px;
-  line-height: var(--topbarHeight);
+  line-height: calc(var(--topbarHeight) - var(--topbarBorderWidth));
   color: var(--colorLightest);
   text-decoration: none;
 }
@@ -55,4 +56,5 @@
 
 .main {
   display: flex;
+  flex-direction: column;
 }

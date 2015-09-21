@@ -1,32 +1,25 @@
 @import "../../common/styles/colors.css";
 
 :root {
-  --createBtnHeight: 40px;
+  --createBtnHeight: 60px;
+  --createBtnPaddingHorz: 30px;
 }
 
-.root {
-  display: flex;
-  padding: 20px;
-}
 .btn {
-  flex: 1;
+  display: block;
+  text-align: center;
   height: var(--createBtnHeight);
   line-height: var(--createBtnHeight);
-  border-top: 1px solid var(--colorBrandPrimaryLighter);
-  border-left: 1px solid var(--colorBrandPrimaryLighter);
-  border-bottom: 1px solid var(--colorBrandPrimaryDark);
-  border-right: 1px solid var(--colorBrandPrimaryDark);
-  background: var(--colorBrandPrimary);
-  border-radius: 2px;
-  text-align: center;
+  font-size: 30px;
+  color: var(--colorBrandPrimaryLight);
+  border: 1px dashed var(--colorBrandPrimaryLight);
   text-decoration: none;
-  color: var(--colorLightest);
+  transition: all .3s;
+}
+.btn:hover {
+  font-size: 40px;
+  color: var(--colorBrandPrimaryLighter);
 }
 .btn:active {
-  line-height: calc(var(--createBtnHeight) - 1);
-  padding-right: 2px;
-  border-top: 1px solid var(--colorBrandPrimaryDark);
-  border-left: 1px solid var(--colorBrandPrimaryDark);
-  border-bottom: 1px solid var(--colorBrandPrimaryLighter);
-  border-right: 1px solid var(--colorBrandPrimaryLighter);
+  color: var(--colorBrandPrimaryLight);
 }

@@ -58,9 +58,15 @@ export function fetch() {
   }
 }
 
+export function createTransition() {
+  return {
+    type: TYPES.CREATE_TRANSITION
+  }
+}
+
 export function createBookChange(fieldName, value) {
   return {
-    type: TYPES.UPDATE_NEW_BOOK,
+    type: TYPES.CREATE_BOOK_CHANGE,
     fieldName,
     value
   }
@@ -87,6 +93,13 @@ function createError(errors) {
   }
 }
 
+function createComplete() {
+  return {
+    type: TYPES.CREATE_COMPLETE
+  }
+}
+
+
 export function create(book) {
   return async (dispatch) => {
     try {
@@ -97,6 +110,8 @@ export function create(book) {
     } catch (resOrError) {
       if (resOrError instanceof Error) throw resOrError
       dispatch(createError(deserializeErrors(resOrError)))
+    } finally {
+      dispatch(createComplete())
     }
   }
 }

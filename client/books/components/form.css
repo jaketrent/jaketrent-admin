@@ -1,0 +1,33 @@
+@import "../../common/styles/colors.css";
+@import "../../common/styles/buttons.css";
+@import "../../common/components/field-errors.css";
+
+.grid {
+  display: flex;
+}
+.gridBtns {
+  composes: grid;
+  align-content: flex-end;
+}
+.field {
+  flex: 1;
+}
+.col {
+  flex: 1;
+  flex-direction: column;
+  align-content: flex-start;
+  display: flex;
+  padding: 0 7px;
+}
+.col:first-child {
+  padding-left: 0;
+}
+.col:last-child {
+  padding-right: 0;
+}
+
+.btn {
+  composes: button;
+  margin-top: var(--fieldErrorsMinHeight);
+  flex: 1;
+}

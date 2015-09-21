@@ -7,6 +7,8 @@ import TYPES from './types'
 export const initialState = {
   newBook: {},
   newBookErrors: [],
+  createIsRequesting: false,
+  createIsComplete: false,
 
   updateBook: null,
   updateBookErrors: [],
@@ -25,6 +27,15 @@ function destroySuccess(state, action) {
   }
 }
 
+function createTransition(state, action) {
+  return {
+    ...state,
+    newBook: {},
+    newBookErrors: [],
+    createIsComplete: false
+  }
+}
+
 function createBookChange(state, action) {
   return {
     ...state,
@@ -34,6 +45,15 @@ function createBookChange(state, action) {
     }
   }
 }
+
+function createRequest(state, action) {
+  return {
+    ...state,
+    createIsRequesting: true,
+    createIsComplete: false
+  }
+}
+
 
 function createSuccess(state, action) {
   return {
@@ -50,6 +70,15 @@ function createError(state, action) {
     newBookErrors: action.errors
   }
 }
+
+function createComplete(state, action) {
+  return {
+    ...state,
+    createIsRequesting: false,
+    createIsComplete: true
+  }
+}
+
 
 function updateTransition(state, action) {
   return {
@@ -114,9 +143,12 @@ function fetchSuccess(state, action) {
 export default function(state = initialState, action = {}) {
   const handlers = {
     [TYPES.DESTROY_SUCCESS]: destroySuccess,
+    [TYPES.CREATE_TRANSITION]: createTransition,
     [TYPES.CREATE_BOOK_CHANGE]: createBookChange,
+    [TYPES.CREATE_REQUEST]: createRequest,
     [TYPES.CREATE_SUCCESS]: createSuccess,
     [TYPES.CREATE_ERROR]: createError,
+    [TYPES.CREATE_COMPLETE]: createComplete,
     [TYPES.UPDATE_TRANSITION]: updateTransition,
     [TYPES.UPDATE_BOOK_CHANGE]: updateBookChange,
     [TYPES.UPDATE_REQUEST]: updateRequest,

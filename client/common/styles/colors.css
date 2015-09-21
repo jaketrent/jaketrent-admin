@@ -23,4 +23,8 @@
 
   --colorLightest: #fff;
   --colorLight: #bce1f5;
+
+  --colorDark: #212121;
+
+  --colorError: #cb2810;
 }

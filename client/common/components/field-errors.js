@@ -1,7 +1,12 @@
+import autobind from 'autobind-decorator'
 import React from 'react'
+import styleable from 'react-styleable'
 
+import css from './field-errors.css'
 import errorsUtil from '../errors'
 
+@styleable(css)
+@autobind
 export default class FieldErrors extends React.Component {
   static propTypes = {
     name: React.PropTypes.string.isRequired,
@@ -15,23 +20,24 @@ export default class FieldErrors extends React.Component {
   }
   renderError(error, i) {
     return (
-      <li key={i}>
+      <li key={i} className={this.props.css.error}>
         {error.detail}
       </li>
     )
   }
   renderErrors(errors) {
-    return errors.filter(errorsUtil.isFor.bind(null, this.props.name)).map(this.renderError)
-  }
-  render() {
     if (errorsUtil.existFor(this.props.name, this.props.errors))
       return (
-        <div>
-          <div>Error</div>
-          <ul>{this.renderErrors(this.props.errors)}</ul>
-        </div>
+        <ul className={this.props.css.errors}>
+          {errors.filter(errorsUtil.isFor.bind(null, this.props.name)).map(this.renderError)}
+        </ul>
       )
-    else
-      return null
+  }
+  render() {
+    return (
+      <div className={this.props.css.container}>
+        {this.renderErrors(this.props.errors)}
+      </div>
+    )
   }
 }
