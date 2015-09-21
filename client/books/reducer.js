@@ -8,11 +8,13 @@ export const initialState = {
   newBook: {},
   newBookErrors: [],
   createIsRequesting: false,
+  createIsSuccess: false,
   createIsComplete: false,
 
   updateBook: null,
   updateBookErrors: [],
   updateIsRequesting: false,
+  updateIsSuccess: false,
   updateIsComplete: false,
 
   books: []
@@ -32,6 +34,7 @@ function createTransition(state, action) {
     ...state,
     newBook: {},
     newBookErrors: [],
+    createIsSuccess: false,
     createIsComplete: false
   }
 }
@@ -60,7 +63,8 @@ function createSuccess(state, action) {
     ...state,
     newBook: action.book,
     newBooksErrors: [],
-    books: [action.book].concat(state.books)
+    books: [action.book].concat(state.books),
+    createIsSuccess: true
   }
 }
 
@@ -84,6 +88,7 @@ function updateTransition(state, action) {
   return {
     ...state,
     updateBook: action.book,
+    updateIsSuccess: false,
     updateIsComplete: false
   }
 }
@@ -103,7 +108,8 @@ function updateSuccess(state, action) {
     ...state,
     updateBook: action.book,
     updateBooksErrors: [],
-    books: books
+    books: books,
+    updateIsSuccess: true
   }
 }
 

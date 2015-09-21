@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as actions from './actions'
-import BooksCreateForm from './components/create-form'
+import BooksForm from './components/form'
 import BooksLayout from './layout'
 import BooksTable from './components/table'
 import { books } from './reducer'
@@ -15,7 +15,7 @@ class BooksCreateContainer extends React.Component {
     this.props.books.createTransition()
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.books.createIsComplete)
+    if (nextProps.books.createIsSuccess)
       router.redirect('/books')
   }
   render() {
@@ -23,10 +23,11 @@ class BooksCreateContainer extends React.Component {
       <BooksLayout>
         <BooksTable books={this.props.books.books}
                     isCreating={true}>
-          <BooksCreateForm book={this.props.books.newBook}
-                           errors={this.props.books.newBookErrors}
-                           onSubmit={this.props.books.create}
-                           onChangeField={this.props.books.createBookChange} />
+          <BooksForm book={this.props.books.newBook}
+                     errors={this.props.books.newBookErrors}
+                     onSubmit={this.props.books.create}
+                     onChangeField={this.props.books.createBookChange}
+                     title="Create" />
         </BooksTable>
       </BooksLayout>
     )

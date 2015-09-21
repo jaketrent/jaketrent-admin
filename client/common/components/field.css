@@ -33,5 +33,7 @@
 }
 .inputTextarea {
   composes: input;
+  padding: 15px;
   height: calc((3 * (var(--inputHeight) + var(--inputMarginBottom) - (2 * var(--borderWidth)))) + (2 * var(--fieldErrorsMinHeight)));
+  line-height: 1.4em;
 }

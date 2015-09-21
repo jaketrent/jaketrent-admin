@@ -4,6 +4,7 @@ import styleable from 'react-styleable'
 
 import CreateBtn from './create-btn'
 import css from './table.css'
+import Link from '../../common/components/link'
 
 const { arrayOf, object, bool, number, string, oneOfType } = React.PropTypes
 
@@ -18,12 +19,14 @@ class Row extends React.Component {
   render() {
     const book = this.props.book
     return (
-      <article className={this.props.css.row}>
-        <div className={this.props.css.cellCover}><img src={book.coverUrl} className={this.props.css.img} /></div>
-        <div className={this.props.css.cell}>{book.title}</div>
-        <div className={this.props.css.cell}>{book.author}</div>
-        <div className={this.props.css.cell}>{book.completeDate}</div>
-      </article>
+      <Link href={`/books/${book.id}/edit`} className={this.props.css.link}>
+        <article className={this.props.css.row}>
+          <div className={this.props.css.cellCover}><img src={book.coverUrl} className={this.props.css.img} /></div>
+          <div className={this.props.css.cell}>{book.title}</div>
+          <div className={this.props.css.cell}>{book.author}</div>
+          <div className={this.props.css.cell}>{book.completeDate}</div>
+        </article>
+      </Link>
     )
   }
 }

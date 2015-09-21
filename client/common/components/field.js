@@ -4,13 +4,14 @@ import styleable from 'react-styleable'
 import css from './field.css'
 import FieldErrors from './field-errors'
 
-const { arrayOf, func, object, string, node } = React.PropTypes
+const { arrayOf, bool, func, object, string, node } = React.PropTypes
 
 @styleable(css)
 export default class Field extends React.Component {
   static propTypes = {
     css: object,
     errors: arrayOf(object),
+    isFocused: bool,
     label: string.isRequired,
     name: string.isRequired,
     onFieldChange: func.isRequired,
@@ -18,7 +19,12 @@ export default class Field extends React.Component {
     value: node
   }
   static defaultProps = {
+    isFocused: false,
     type: 'text'
+  }
+  componentDidMount() {
+    if (this.props.isFocused)
+      React.findDOMNode(this.refs.input).focus()
   }
   renderField() {
     return this.props.type === 'textarea'
@@ -33,7 +39,8 @@ export default class Field extends React.Component {
              name={this.props.name}
              placeholder={this.props.label}
              value={this.props.value}
-             onChange={this.props.onFieldChange} />
+             onChange={this.props.onFieldChange}
+             ref="input" />
     )
   }
   renderTextarea() {
@@ -43,7 +50,8 @@ export default class Field extends React.Component {
                 name={this.props.name}
                 placeholder={this.props.label}
                 value={this.props.value}
-                onChange={this.props.onFieldChange} />
+                onChange={this.props.onFieldChange}
+                ref="input" />
     )
   }
   render() {

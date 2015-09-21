@@ -15,4 +15,14 @@
   font-size: 14px;
   font-weight: 200;
   letter-spacing: 1px;
+  text-decoration: none;
+  text-align: center;
+}
+.buttonSecondary {
+  composes: button;
+  background: var(--colorBland);
+}
+.buttonDestructive {
+  composes: button;
+  background: var(--colorError);
 }

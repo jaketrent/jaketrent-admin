@@ -10,6 +10,10 @@
   flex-direction: column;
   width: 100%;
 }
+.link {
+  color: var(--colorLightest);
+  text-decoration: none;
+}
 .row {
   flex: 1;
   display: flex;
