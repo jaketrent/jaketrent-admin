@@ -17,9 +17,23 @@ class BooksEditContainer extends React.Component {
     this.transitionMaybe(this.props)
   }
   componentWillReceiveProps(nextProps) {
-    // TODO: test for 2nd update clobbering first book
-    if (!nextProps.books.updateBook)
-      this.transitionMaybe(nextProps)
+    const noBookToUpdate = !nextProps.books.updateBook
+
+    if (noBookToUpdate) {
+      const currentIds = this.props.books.books.map(b => b.id).sort()
+      const nextIds = nextProps.books.books.map(b => b.id).sort()
+      const booksListDiffers = currentIds !== nextIds
+
+      if (booksListDiffers)
+        this.transitionMaybe(nextProps)
+    } else {
+      const currentUrl = this.props.params.bookId
+      const nextUrl = nextProps.params.bookId
+      const urlChanged = currentUrl !== nextUrl
+
+      if (urlChanged)
+        this.transitionMaybe(nextProps)
+    }
 
     if (nextProps.books.updateIsSuccess)
       router.redirect(`/books`)
