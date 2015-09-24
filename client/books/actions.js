@@ -1,5 +1,5 @@
 import * as api from './api'
-import { books, hasBooks, hasBook } from './reducer'
+import { books, hasBooks, hasBook, getNextPage, hasNextPage } from './reducer'
 import deserializeErrors from '../common/api/deserialize-errors'
 import TYPES from './types'
 
@@ -12,10 +12,10 @@ function fetchRequest(id) {
   }
 }
 
-function fetchSuccess(books) {
+function fetchSuccess(deserialized) {
   return {
     type: TYPES.FETCH_SUCCESS,
-    books
+    ...deserialized
   }
 }
 
@@ -28,13 +28,13 @@ function fetchError(errors) {
 
 async function doFetch(dispatch, apiEndpoint, url) {
   try {
-    const { request, deserialize } = apiEndpoint
+    const { request, deserializeSuccess, deserializeError } = apiEndpoint
     dispatch(fetchRequest())
     const res = await request(url)
-    dispatch(fetchSuccess(deserialize(res)))
+    dispatch(fetchSuccess(deserializeSuccess(res)))
   } catch (resOrError) {
     if (resOrError instanceof Error) throw resOrError
-    dispatch(fetchError(deserializeErrors(resOrError)))
+    dispatch(fetchError(deserializeError(resOrError)))
   }
 }
 
@@ -55,6 +55,15 @@ export function fetch() {
 
     if (!hasBooks(state))
       doFetch(dispatch, apiEndpoint, formatUrl())
+  }
+}
+
+export function fetchMore() {
+  return async (dispatch, getState) => {
+    const state = books.select(getState())
+
+    if (hasNextPage(state))
+      doFetch(dispatch, api.fetchBooks, getNextPage(state))
   }
 }
 

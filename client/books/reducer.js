@@ -17,7 +17,8 @@ export const initialState = {
   updateIsSuccess: false,
   updateIsComplete: false,
 
-  books: []
+  books: [],
+  paging: null
 }
 
 function destroySuccess(state, action) {
@@ -142,7 +143,7 @@ function fetchSuccess(state, action) {
   return {
     ...state,
     books: uniq(state.books.concat(action.books), b => b.id),
-    newBookErrors: []
+    paging: action.paging
   }
 }
 
@@ -193,3 +194,12 @@ export function hasBook(state, id) {
 export function hasBooks(state) {
   return (state.books || []).length > 0
 }
+
+export function hasNextPage(state) {
+  return !!state.paging && !!state.paging.next && !!state.paging.next.url
+}
+
+export function getNextPage(state) {
+  return hasNextPage(state) ? state.paging.next.url : null
+}
+

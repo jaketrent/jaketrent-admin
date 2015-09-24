@@ -1,7 +1,9 @@
 import axios from 'axios'
+import parseLinkHeader from 'parse-link-header'
 
 import * as actions from './actions'
 import * as config from '../config'
+import deserializeErrors from '../common/api/deserialize-errors'
 
 function formatUrl() {
   return `${config.at('apiHost')}/api/v1/books`
@@ -18,11 +20,15 @@ function serialize(book) {
 }
 
 function deserialize(res) {
-  return res.data.data
+  return {
+    books: res.data.data
+  }
 }
 
 function deserializeSingleBook(res) {
-  return res.data.data[0]
+  return {
+    book: res.data.data[0]
+  }
 }
 
 function request(url) {
@@ -41,7 +47,13 @@ export const fetchBook = {
 
 export const fetchBooks = {
   formatUrl,
-  deserialize,
+  deserializeSuccess(res) {
+    return {
+      books: res.data.data,
+      paging: parseLinkHeader(res.headers.link)
+    }
+  },
+  deserializeError: deserializeErrors,
   request
 }
 

@@ -1,0 +1,7 @@
+@import "../styles/buttons.css";
+
+.btn {
+  composes: button;
+  display: block;
+  margin: 0 auto;
+}
