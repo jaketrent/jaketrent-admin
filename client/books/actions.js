@@ -1,6 +1,5 @@
 import * as api from './api'
 import { books, hasBooks, hasBook, getNextPage, hasNextPage } from './reducer'
-import deserializeErrors from '../common/api/deserialize-errors'
 import TYPES from './types'
 
 export const name = 'books'
@@ -88,10 +87,10 @@ function createRequest(book) {
   }
 }
 
-function createSuccess(book) {
+function createSuccess(deserialized) {
   return {
     type: TYPES.CREATE_SUCCESS,
-    book
+    ...deserialized
   }
 }
 
@@ -112,13 +111,13 @@ function createComplete() {
 export function create(book) {
   return async (dispatch) => {
     try {
-      const { request, serialize, deserialize } = api.createBook
+      const { request, serialize, deserializeSuccess, deserializeError } = api.createBook
       dispatch(createRequest(book))
       const res = await request(serialize(book))
-      dispatch(createSuccess(deserialize(res)))
+      dispatch(createSuccess(deserializeSuccess(res)))
     } catch (resOrError) {
       if (resOrError instanceof Error) throw resOrError
-      dispatch(createError(deserializeErrors(resOrError)))
+      dispatch(createError(deserializeError(resOrError)))
     } finally {
       dispatch(createComplete())
     }
@@ -148,13 +147,13 @@ function destroyError(errors) {
 export function destroy(id) {
   return async (dispatch) => {
     try {
-      const { formatUrl, request } = api.destroyBook
+      const { formatUrl, request, deserializeError } = api.destroyBook
       dispatch(destroyRequest())
       const res = await request(formatUrl(id))
       dispatch(destroySuccess(id))
     } catch (resOrError) {
       if (resOrError instanceof Error) throw resOrError
-      dispatch(destroyError(deserializeErrors(resOrError)))
+      dispatch(destroyError(deserializeError(resOrError)))
     }
   }
 }
@@ -180,10 +179,10 @@ function updateRequest() {
   }
 }
 
-function updateSuccess(book) {
+function updateSuccess(deserialized) {
   return {
     type: TYPES.UPDATE_SUCCESS,
-    book
+    ...deserialized
   }
 }
 
@@ -203,13 +202,13 @@ function updateComplete() {
 export function update(book) {
   return async (dispatch) => {
     try {
-      const { formatUrl, request, serialize, deserialize } = api.updateBook
+      const { formatUrl, request, serialize, deserializeError, deserializeSuccess } = api.updateBook
       dispatch(updateRequest())
       const res = await request(formatUrl(book.id), serialize(book))
-      dispatch(updateSuccess(deserialize(res)))
+      dispatch(updateSuccess(deserializeSuccess(res)))
     } catch (resOrError) {
       if (resOrError instanceof Error) throw resOrError
-      dispatch(updateError(deserializeErrors(resOrError)))
+      dispatch(updateError(deserializeError(resOrError)))
     } finally {
       dispatch(updateComplete())
     }

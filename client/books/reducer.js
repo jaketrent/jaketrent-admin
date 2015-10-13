@@ -109,7 +109,7 @@ function updateSuccess(state, action) {
     ...state,
     updateBook: action.book,
     updateBooksErrors: [],
-    books: books,
+    books,
     updateIsSuccess: true
   }
 }

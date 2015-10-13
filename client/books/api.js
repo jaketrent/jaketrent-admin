@@ -60,7 +60,8 @@ export const fetchBooks = {
 
 export const createBook = {
   serialize,
-  deserialize: deserializeSingleBook,
+  deserializeSuccess: deserializeSingleBook,
+  deserializeError: deserializeErrors,
   request(book) {
     return axios({
       method: 'post',
@@ -74,7 +75,8 @@ export const createBook = {
 export const updateBook = {
   formatUrl: formatUrlSingleBook,
   serialize,
-  deserialize: deserializeSingleBook,
+  deserializeSuccess: deserializeSingleBook,
+  deserializeError: deserializeErrors,
   request(url, book) {
     return axios({
       method: 'put',
@@ -87,6 +89,7 @@ export const updateBook = {
 
 export const destroyBook = {
   formatUrl: formatUrlSingleBook,
+  deserializeError: deserializeErrors,
   request(url) {
     return axios({
       method: 'delete',
