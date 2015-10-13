@@ -1,3 +1,4 @@
+import { findDOMNode } from 'react-dom'
 import React from 'react'
 import styleable from 'react-styleable'
 
@@ -24,7 +25,7 @@ export default class Field extends React.Component {
   }
   componentDidMount() {
     if (this.props.isFocused)
-      React.findDOMNode(this.refs.input).focus()
+      findDOMNode(this.refs.input).focus()
   }
   renderField() {
     return this.props.type === 'textarea'
