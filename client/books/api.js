@@ -19,7 +19,7 @@ function serialize(book) {
   }
 }
 
-function deserialize(res) {
+function deserializeSuccess(res) {
   return {
     books: res.data.data
   }
@@ -41,7 +41,8 @@ function request(url) {
 
 export const fetchBook = {
   formatUrl: formatUrlSingleBook,
-  deserialize,
+  deserializeSuccess,
+  deserializeError: deserializeErrors,
   request
 }
 
