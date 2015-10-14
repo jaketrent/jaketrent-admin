@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as actions from './actions'
-import BooksLayout from './layout'
+import BooksLayout from './components/layout'
 import { books, findBook } from './reducer'
 import connect from '../common/store/connect'
 import Link from '../common/components/link'

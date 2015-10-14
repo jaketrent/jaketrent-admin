@@ -17,6 +17,8 @@ export default actionTypes('books',
   'FETCH_SUCCESS',
   'FETCH_ERROR',
 
+  'SEARCH_CHANGE',
+
   'UPDATE_TRANSITION',
   'UPDATE_BOOK_CHANGE',
   'UPDATE_REQUEST',

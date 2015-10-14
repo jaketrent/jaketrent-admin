@@ -1,4 +1,4 @@
-@import "../common/styles/layout.css";
+@import "../../common/styles/layout.css";
 
 .root {
   padding: var(--layoutContentPaddingVert) var(--layoutContentPaddingHorz);

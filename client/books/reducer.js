@@ -18,7 +18,9 @@ export const initialState = {
   updateIsComplete: false,
 
   books: [],
-  paging: null
+  paging: null,
+
+  searchTerm: ''
 }
 
 function destroySuccess(state, action) {
@@ -147,6 +149,13 @@ function fetchSuccess(state, action) {
   }
 }
 
+function searchChange(state, action) {
+  return {
+    ...state,
+    searchTerm: action.term
+  }
+}
+
 export default function(state = initialState, action = {}) {
   const handlers = {
     [TYPES.DESTROY_SUCCESS]: destroySuccess,
@@ -162,7 +171,8 @@ export default function(state = initialState, action = {}) {
     [TYPES.UPDATE_SUCCESS]: updateSuccess,
     [TYPES.UPDATE_ERROR]: updateError,
     [TYPES.UPDATE_COMPLETE]: updateComplete,
-    [TYPES.FETCH_SUCCESS]: fetchSuccess
+    [TYPES.FETCH_SUCCESS]: fetchSuccess,
+    [TYPES.SEARCH_CHANGE]: searchChange
   }
   return handlers[action.type]
     ? handlers[action.type](state, action)
@@ -181,6 +191,10 @@ export const books = {
 
 function indexOfBook(state, id) {
   return state.books.map(book => book.id).indexOf(id)
+}
+
+function hasFilter(state) {
+  return state.searchTerm.length > 0
 }
 
 export function findBook(state, id) {
@@ -203,3 +217,14 @@ export function getNextPage(state) {
   return hasNextPage(state) ? state.paging.next.url : null
 }
 
+export function filter(state) {
+  if (!hasFilter(state)) return state.books
+
+  const regex = new RegExp(state.searchTerm.toLowerCase())
+  return state.books.filter(book => {
+    return regex.test(book.title.toLowerCase()) ||
+           regex.test(book.author.toLowerCase()) ||
+           regex.test(book.description.toLowerCase())
+
+  })
+}

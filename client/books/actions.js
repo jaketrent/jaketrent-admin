@@ -214,3 +214,10 @@ export function update(book) {
     }
   }
 }
+
+export function searchChange(term) {
+  return {
+    type: TYPES.SEARCH_CHANGE,
+    term
+  }
+}

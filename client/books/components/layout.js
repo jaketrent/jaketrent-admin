@@ -2,7 +2,7 @@ import React from 'react'
 import styleable from 'react-styleable'
 
 import css from './layout.css'
-import SiteLayout from '../common/components/layout'
+import SiteLayout from '../../common/components/layout'
 
 const { arrayOf, object } = React.PropTypes
 

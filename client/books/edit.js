@@ -3,7 +3,7 @@ import React from 'react'
 
 import * as actions from './actions'
 import BookForm from './components/form'
-import BooksLayout from './layout'
+import BooksLayout from './components/layout'
 import BooksTable from './components/table'
 import { books, findBook } from './reducer'
 import connect from '../common/store/connect'

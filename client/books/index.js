@@ -1,8 +1,9 @@
 import React from 'react'
 
 import * as actions from './actions'
-import { books, hasNextPage } from './reducer'
-import BooksLayout from './layout'
+import { books, hasNextPage, filter } from './reducer'
+import BooksFilter from './components/filter'
+import BooksLayout from './components/layout'
 import BooksTable from './components/table'
 import connect from '../common/store/connect'
 import LoadMore from '../common/components/load-more'
@@ -17,7 +18,9 @@ class BooksIndexContainer extends React.Component {
   render() {
     return (
       <BooksLayout>
-        <BooksTable books={this.props.books.books} />
+        <BooksFilter term={this.props.books.searchTerm}
+                     onTermChange={this.props.books.searchChange} />
+        <BooksTable books={filter(this.props.books)} />
         {this.renderLoadMore(this.props.books)}
       </BooksLayout>
     )
