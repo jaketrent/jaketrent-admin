@@ -13,6 +13,7 @@ export default class Field extends React.Component {
     css: object,
     errors: arrayOf(object),
     isFocused: bool,
+    isWithErrors: bool,
     label: string.isRequired,
     name: string.isRequired,
     onFieldChange: func.isRequired,
@@ -21,7 +22,8 @@ export default class Field extends React.Component {
   }
   static defaultProps = {
     isFocused: false,
-    type: 'text'
+    type: 'text',
+    isWithErrors: true
   }
   componentDidMount() {
     if (this.props.isFocused)
@@ -55,12 +57,16 @@ export default class Field extends React.Component {
                 ref="input" />
     )
   }
+  renderErrors() {
+    if (this.props.isWithErrors)
+      return <FieldErrors name={this.props.name}
+                          errors={this.props.errors} />
+  }
   render() {
     return (
       <label htmlFor={this.props.name}
              className={this.props.css.field}>
-        <FieldErrors name={this.props.name}
-                     errors={this.props.errors} />
+        {this.renderErrors()}
         <span className={this.props.css.labelText}>
           {this.props.label}
         </span>

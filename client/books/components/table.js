@@ -2,7 +2,6 @@ import autobind from 'autobind-decorator'
 import React from 'react'
 import styleable from 'react-styleable'
 
-import CreateBtn from './create-btn'
 import css from './table.css'
 import Link from '../../common/components/link'
 
@@ -53,17 +52,8 @@ export default class BooksTable extends React.Component {
       </header>
     )
   }
-  renderCreateBtn() {
-    return (
-      <div className={this.props.css.row}>
-        <div className={this.props.css.cellCreate}>
-          <CreateBtn />
-        </div>
-      </div>
-    )
-  }
   renderCreate() {
-    return this.props.isCreating ? this.renderChildForm() : this.renderCreateBtn()
+    return this.props.isCreating ? this.renderChildForm() : null
   }
   renderRow(book) {
     return !!this.props.updatingId && parseInt(this.props.updatingId) === book.id

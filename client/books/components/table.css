@@ -30,10 +30,6 @@
   text-transform: uppercase;
   color: var(--colorBrandPrimaryLighter);
 }
-.cellCreate {
-  composes: cell;
-  padding-bottom: 20px;
-}
 .cellCover {
   composes: cellHeader;
   flex: none;

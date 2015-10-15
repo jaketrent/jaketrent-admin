@@ -21,6 +21,7 @@ export default class BooksFilter extends React.Component {
     return (
       <div className={this.props.css.container}>
         <Field isFocused={true}
+               isWithErrors={false}
                label="Filter"
                name="filter"
                onFieldChange={this.onTermChange}

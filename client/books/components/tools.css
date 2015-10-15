@@ -1,0 +1,19 @@
+@import "../../common/styles/buttons.css";
+
+.container {
+  display: flex;
+  width: 100%;
+}
+.filter {
+  composes: container from "./filter.css";
+  margin-right: 30px;
+}
+.create {
+  composes: button;
+}
+.createIcon {
+  font-size: 1.5rem;
+  vertical-align: bottom;
+  padding-right: 4px;
+}
+

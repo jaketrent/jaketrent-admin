@@ -5,6 +5,7 @@
 }
 
 .button {
+  display: inline-block;
   height: var(--buttonHeight);
   line-height: var(--buttonHeight);
   padding: 0 30px;
