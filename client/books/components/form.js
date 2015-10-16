@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator'
 import React from 'react'
 import styleable from 'react-styleable'
 
@@ -8,108 +7,111 @@ import Link from '../../common/components/link'
 
 const { func, object, arrayOf, node, string } = React.PropTypes
 
-@styleable(css)
-@autobind
-export default class BookForm extends React.Component {
-  static propTypes = {
-    book: object,
-    errors: arrayOf(object),
-    onChangeField: func.isRequired,
-    onDestroy: func,
-    onSubmit: func.isRequired,
-    submitLabel: string,
-    title: node
-  }
-  static defaultProps = {
-    book: {},
-    errors: [],
-    submitLabel: 'Create'
-  }
-  handleSubmit(evt) {
-    evt.preventDefault()
-    this.props.onSubmit(this.props.book)
-  }
-  handleChange(evt) {
-    const fieldName = evt.target.name
-    const value = evt.target.value
-    this.props.onChangeField(fieldName, value)
-  }
-  renderDestroyButton() {
-    if (typeof this.props.onDestroy === 'function')
-      return <button onClick={this.props.onDestroy.bind(this, this.props.book.id)}
-                     rel="nofollow"
-                     type="button"
-                     className={this.props.css.btnDestroy}>Delete</button>
-  }
-  renderTitle() {
-    if (!!this.props.title)
-      return <h1 className={this.props.css.title}>{this.props.title}</h1>
-  }
-  render() {
-    return (
-      <div className={this.props.css.container}>
-      {this.renderTitle()}
-        <form onSubmit={this.handleSubmit} className={this.props.css.form}>
-          <div className={this.props.css.grid}>
-            <div className={this.props.css.col}>
-              <Field errors={this.props.errors}
-                     label="Title"
-                     isFocused={true}
-                     name="title"
-                     value={this.props.book.title}
-                     onFieldChange={this.handleChange}
-              />
-              <Field errors={this.props.errors}
-                     label="Author"
-                     name="author"
-                     value={this.props.book.author}
-                     onFieldChange={this.handleChange}
-              />
-              <Field errors={this.props.errors}
-                     label="Cover URL"
-                     name="coverUrl"
-                     value={this.props.book.coverUrl}
-                     onFieldChange={this.handleChange}
-              />
-            </div>
-            <div className={this.props.css.col}>
-              <Field css={{ input: this.props.css.inputDescription }}
-                     type="textarea"
-                     errors={this.props.errors}
-                     label="Description"
-                     name="description"
-                     value={this.props.book.description}
-                     onFieldChange={this.handleChange}
-              />
-            </div>
-            <div className={this.props.css.col}>
-              <Field errors={this.props.errors}
-                     label="Complete Date"
-                     name="completeDate"
-                     value={this.props.book.completeDate}
-                     onFieldChange={this.handleChange}
-              />
-              <Field errors={this.props.errors}
-                     label="Affiliate URL"
-                     name="affiliateUrl"
-                     value={this.props.book.affiliateUrl}
-                     onFieldChange={this.handleChange}
-              />
-              <Field errors={this.props.errors}
-                     label="Review URL"
-                     name="reviewUrl"
-                     value={this.props.book.reviewUrl}
-                     onFieldChange={this.handleChange}
-              />
-              <div className={this.props.css.btns}>
-                {this.renderDestroyButton()}
-                <Link href="/books" className={this.props.css.btnCancel}>Cancel</Link>
-                <input type="submit" value={this.props.submitLabel} className={this.props.css.btn} />
-              </div>
+function handleSubmit(props, evt) {
+  evt.preventDefault()
+  props.onSubmit(props.book)
+}
+
+function handleChange(props, evt) {
+  const fieldName = evt.target.name
+  const value = evt.target.value
+  props.onChangeField(fieldName, value)
+}
+
+function renderDestroyButton(props) {
+  if (typeof props.onDestroy === 'function')
+    return <button onClick={props.onDestroy.bind(null, props.book.id)}
+                   rel="nofollow"
+                   type="button"
+                   className={props.css.btnDestroy}>Delete</button>
+}
+
+function renderTitle(props) {
+  if (!!props.title)
+    return <h1 className={props.css.title}>{props.title}</h1>
+}
+
+function BooksForm(props) {
+  return (
+    <div className={props.css.container}>
+      {renderTitle(props)}
+      <form onSubmit={handleSubmit.bind(null, props)} className={props.css.form}>
+        <div className={props.css.grid}>
+          <div className={props.css.col}>
+            <Field errors={props.errors}
+                   label="Title"
+                   isFocused={true}
+                   name="title"
+                   value={props.book.title}
+                   onFieldChange={handleChange.bind(null, props)}
+            />
+            <Field errors={props.errors}
+                   label="Author"
+                   name="author"
+                   value={props.book.author}
+                   onFieldChange={handleChange.bind(null, props)}
+            />
+            <Field errors={props.errors}
+                   label="Cover URL"
+                   name="coverUrl"
+                   value={props.book.coverUrl}
+                   onFieldChange={handleChange.bind(null, props)}
+            />
+          </div>
+          <div className={props.css.col}>
+            <Field css={{ input: props.css.inputDescription }}
+                   type="textarea"
+                   errors={props.errors}
+                   label="Description"
+                   name="description"
+                   value={props.book.description}
+                   onFieldChange={handleChange.bind(null, props)}
+            />
+          </div>
+          <div className={props.css.col}>
+            <Field errors={props.errors}
+                   label="Complete Date"
+                   name="completeDate"
+                   value={props.book.completeDate}
+                   onFieldChange={handleChange.bind(null, props)}
+            />
+            <Field errors={props.errors}
+                   label="Affiliate URL"
+                   name="affiliateUrl"
+                   value={props.book.affiliateUrl}
+                   onFieldChange={handleChange.bind(null, props)}
+            />
+            <Field errors={props.errors}
+                   label="Review URL"
+                   name="reviewUrl"
+                   value={props.book.reviewUrl}
+                   onFieldChange={handleChange.bind(null, props)}
+            />
+            <div className={props.css.btns}>
+              {renderDestroyButton(props)}
+              <Link href="/books" className={props.css.btnCancel}>Cancel</Link>
+              <input type="submit" value={props.submitLabel} className={props.css.btn} />
             </div>
           </div>
-        </form>
-      </div>
-    )
-  }
+        </div>
+      </form>
+    </div>
+  )
 }
+
+BooksForm.propTypes = {
+  book: object,
+  errors: arrayOf(object),
+  onChangeField: func.isRequired,
+  onDestroy: func,
+  onSubmit: func.isRequired,
+  submitLabel: string,
+  title: node
+}
+BooksForm.defaultProps = {
+  book: {},
+  errors: [],
+  submitLabel: 'Create'
+}
+
+export default styleable(css)(BooksForm)

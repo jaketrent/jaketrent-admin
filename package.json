@@ -40,7 +40,7 @@
     "parse-link-header": "^0.4.1",
     "react": "^0.13.3",
     "react-redux": "^2.1.0",
-    "react-styleable": "^1.4.0",
+    "react-styleable": "^2.0.0",
     "redux": "^2.0.0",
     "redux-thunk": "^0.1.0",
     "should": "~3.1.1",

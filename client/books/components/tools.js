@@ -7,22 +7,21 @@ import Link from '../../common/components/link'
 
 const { func, string } = React.PropTypes
 
-@styleable(css)
-export default class BooksTools extends React.Component {
-  static propTypes = {
-    onTermChange: func.isRequired,
-    term: string
-  }
-  render() {
-    const { css, ...filterProps } = this.props
-    return (
-      <div className={this.props.css.container}>
-        <BooksFilter {...filterProps} css={{ container: this.props.css.filter }} />
-        <Link className={this.props.css.create} href="/books/create">
-          <span className={this.props.css.createIcon}>+</span>
-          New Book
-        </Link>
-      </div>
-    )
-  }
+function BooksTools({ css, ...filterProps }) {
+  return (
+    <div className={css.container}>
+      <BooksFilter {...filterProps} css={{ container: css.filter }} />
+      <Link className={css.create} href="/books/create">
+        <span className={css.createIcon}>+</span>
+        New Book
+      </Link>
+    </div>
+  )
 }
+
+BooksTools.propTypes = {
+  onTermChange: func.isRequired,
+  term: string
+}
+
+export default styleable(css)(BooksTools)

@@ -9,25 +9,26 @@ import SiteLayout from '../../common/components/layout'
 
 const { arrayOf, object } = React.PropTypes
 
-@styleable(css)
-export default class BooksLayout extends React.Component {
-  static propTypes = {
-    books: object.isRequired
-  }
-  renderLoadMore(state) {
-    if (hasNextPage(state))
-      return <LoadMore onLoad={this.props.books.fetchMore} />
-  }
-  render() {
-    return (
-      <SiteLayout>
-        <main className={this.props.css.root}>
-          <BooksTools term={this.props.books.searchTerm}
-                      onTermChange={this.props.books.searchChange} />
-          {this.props.children}
-          {this.renderLoadMore(this.props.books)}
-        </main>
-      </SiteLayout>
-    )
-  }
+function renderLoadMore(state) {
+  if (hasNextPage(state))
+    return <LoadMore onLoad={state.fetchMore} />
 }
+
+function BooksLayout(props) {
+  return (
+    <SiteLayout>
+      <main className={props.css.root}>
+        <BooksTools term={props.books.searchTerm}
+                    onTermChange={props.books.searchChange} />
+        {props.children}
+        {renderLoadMore(props.books)}
+      </main>
+    </SiteLayout>
+  )
+}
+
+BooksLayout.propTypes = {
+  books: object.isRequired
+}
+
+export default styleable(css)(BooksLayout)
