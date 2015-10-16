@@ -194,7 +194,7 @@ function indexOfBook(state, id) {
 }
 
 function hasFilter(state) {
-  return state.searchTerm.length > 0
+  return state.searchTerm && state.searchTerm.length > 0
 }
 
 export function findBook(state, id) {

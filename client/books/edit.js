@@ -5,7 +5,7 @@ import * as actions from './actions'
 import BookForm from './components/form'
 import BooksLayout from './components/layout'
 import BooksTable from './components/table'
-import { books, findBook } from './reducer'
+import { books, filter, findBook } from './reducer'
 import connect from '../common/store/connect'
 import * as router from '../common/router'
 import renderWithState from '../common/store/render'
@@ -49,16 +49,16 @@ class BooksEditContainer extends React.Component {
   }
   renderLoading(props) {
     return (
-      <BooksLayout books={props.books.books}>
-        <BooksTable books={props.books.books}>
+      <BooksLayout books={props.books}>
+        <BooksTable books={filter(props.books)}>
         </BooksTable>
       </BooksLayout>
     )
   }
   renderPage(props, book) {
     return (
-      <BooksLayout books={props.books.books}>
-        <BooksTable books={props.books.books}
+      <BooksLayout books={props.books}>
+        <BooksTable books={filter(props.books)}
                     updatingId={book.id}>
           <BookForm book={book}
                     errors={props.books.updateBookErrors}

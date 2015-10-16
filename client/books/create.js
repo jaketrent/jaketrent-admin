@@ -4,7 +4,7 @@ import * as actions from './actions'
 import BooksForm from './components/form'
 import BooksLayout from './components/layout'
 import BooksTable from './components/table'
-import { books } from './reducer'
+import { books, filter } from './reducer'
 import connect from '../common/store/connect'
 import * as router from '../common/router'
 import renderWithState from '../common/store/render'
@@ -20,8 +20,8 @@ class BooksCreateContainer extends React.Component {
   }
   render() {
     return (
-      <BooksLayout>
-        <BooksTable books={this.props.books.books}
+      <BooksLayout books={this.props.books}>
+        <BooksTable books={filter(this.props.books)}
                     isCreating={true}>
           <BooksForm book={this.props.books.newBook}
                      errors={this.props.books.newBookErrors}
