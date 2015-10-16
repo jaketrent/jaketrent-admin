@@ -9,5 +9,5 @@ export default function renderWithState(Component, props, el) {
     <Provider store={store}>
       <Component {...props} />
     </Provider>
-    , el)
+  , el)
 }
