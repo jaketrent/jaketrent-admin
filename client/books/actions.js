@@ -112,7 +112,6 @@ export function create(book) {
   return async (dispatch) => {
     const { request, serialize, deserializeSuccess, deserializeError } = api.createBook
     try {
-      console.log("deserializeError", deserializeError)
       dispatch(createRequest(book))
       const res = await request(serialize(book))
       dispatch(createSuccess(deserializeSuccess(res)))
