@@ -1,0 +1,25 @@
+@import "../common/components/layout.css";
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100vh - var(--topbarHeight));
+}
+.text {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 100;
+  animation: appear 1s;
+}
