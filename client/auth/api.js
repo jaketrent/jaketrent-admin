@@ -17,3 +17,13 @@ export const currentSession = {
     })
   }
 }
+
+export const logout = {
+  request() {
+    return axios({
+      method: 'get',
+      url: `${config.at('apiHost')}/auth/logout`,
+      withCredentials: true
+    })
+  }
+}

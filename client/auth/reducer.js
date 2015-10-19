@@ -28,11 +28,20 @@ function handleFetchCurrentSessionError(state, action) {
   }
 }
 
+function handleLogout(state, action) {
+  return {
+    ...state,
+    currentSessionQueried: false,
+    currentSession: null
+  }
+}
+
 export default function reducer(state = initialState, action = {}) {
   const handlers = {
     [TYPES.FETCH_CURRENT_SESSION]: handleFetchCurrentSession,
     [TYPES.FETCH_CURRENT_SESSION_SUCCESS]: handleFetchCurrentSessionSuccess,
     [TYPES.FETCH_CURRENT_SESSION_ERROR]: handleFetchCurrentSessionError,
+    [TYPES.LOGOUT]: handleLogout
   }
 
   return handlers[action.type]

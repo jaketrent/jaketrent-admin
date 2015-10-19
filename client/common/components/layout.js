@@ -14,6 +14,9 @@ function SiteLayout(props) {
         <nav className={props.css.nav}>
           <Link className={props.css.link} href="/books">Books</Link>
         </nav>
+        <div className={props.css.meta}>
+          <Link className={props.css.link} href="/logout">Logout</Link>
+        </div>
       </div>
       <div className={props.css.main}>
         {props.children}

@@ -37,3 +37,11 @@ export function fetchCurrentSession() {
     }
   }
 }
+
+export function logout() {
+  const { request } = api.logout
+  request()
+  return {
+    type: TYPES.LOGOUT
+  }
+}

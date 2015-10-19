@@ -4,9 +4,8 @@ import styleable from 'react-styleable'
 import css from './welcome.css'
 
 function Welcome(props) {
-  console.log("props", props)
   return (
-    <div className={props.css.container}>
+    <div className={props.css.root}>
       <h2 className={props.css.text}>
         Welcome back, puppetmaster
       </h2>
